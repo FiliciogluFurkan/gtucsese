@@ -28,13 +28,13 @@ pipeline {
         
         stage('Test') {
             steps {
-                script {
+                /* script {
                     // Run tests
                     //def result = sh(script: 'npm run test', returnStatus: true)
                     //if (result != 0) {
                     //    error "Tests failed!"
                     //}
-                }
+                } */
             }
         }
         
