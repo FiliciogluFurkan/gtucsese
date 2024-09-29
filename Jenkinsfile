@@ -28,6 +28,8 @@ pipeline {
         
         stage('Test') {
             steps {
+
+                echo "Testing the project..."
                 /* script {
                     // Run tests
                     //def result = sh(script: 'npm run test', returnStatus: true)
