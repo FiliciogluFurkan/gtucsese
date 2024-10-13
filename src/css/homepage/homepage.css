@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.homepage {
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    width: 100%;
+}
+
+.image-homepage {
+    background-image: url('/src/images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    padding: 20px;
+    height: 500px;
+}
+
+.homepage-first-text {
+    padding-left: 100px;
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    font-family: 'open sans', sans-serif;
+    font-weight: 600;
+}
+
+.homepage-second-text {
+    padding-left: 100px;
+    padding-top: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Inter', sans-serif;
+    width: 300px;
+    font-weight: 300;
+}
+
+.homepage-appointment-section {
+    width: 600px;
+    height: 80px;
+    margin-left: 100px;
+    background-color: rgba(240, 240, 240, 0.736);
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+
+}
+
+.homepage-our-services-title {
+    padding-top: 30px;
+    padding-left: 600px;
+    font-size: 30px;
+    font-weight: 400;
+    color: rgba(139, 136, 136);
+    font-family: 'roboto', sans-serif;
+}
+
+.homepage-our-services-section {
+    margin-top: 30px;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.homepage-our-services-section-card-first {
+    width: 280px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.736);
+    display: flex;
+    flex-direction: column;
+    border: 5px solid rgba(210, 210, 210, 0.752);
+}
+
+
+.homepage-our-services-section-card-second {
+    width: 280px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.736);
+    display: flex;
+    flex-direction: column;
+    border: 5px solid rgba(210, 210, 210, 0.752);
+
+}
+
+.homepage-our-services-section-card-third {
+    width: 280px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.736);
+    display: flex;
+    flex-direction: column;
+    border: 5px solid rgba(210, 210, 210, 0.752);
+
+}
+
+.homepage-our-services-section-card-fourth {
+    width: 280px;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.736);
+    display: flex;
+    flex-direction: column;
+    border: 5px solid rgba(210, 210, 210, 0.752);
+
+}
+
+.homepage-our-services-section-card-first-image {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.homepage-statistics-section {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: rgba(240, 240, 240, 0.736);
+    height: 200px;
+}
+
+.homepage-about-section {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: rgba(240, 240, 240, 0.736);
+    height: 500px;
+}
+
+
+.homepage-about-us-highlight {
+    padding: 100px 0;
+    text-align: center;
+    color: white;
+}
+
+.homepage-about-us-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 40px;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.homepage-about-us-highlight h2 {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    font-family: Inter, sans-serif;
+
+
+}
+
+.homepage-about-us-highlight p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.homepage-btn-learn-more {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff9800;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.homepage-btn-learn-more:hover {
+    background-color: #e68900;
+    transform: translateY(-3px);
+}
+
+.homepage-lowest-section {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: rgb(44, 44, 44, 0.9);
+    height: 300px;
+}
+
+.homepage-lowest-section-logo {
+    padding-left: 70px;
+    padding-top: 100px;
+
+}
+
+.homepage-lowest-section-first {
+    display: flex;
+    flex-direction: column;
+    padding-left: 100px;
+    padding-top: 80px;
+}
+
+.homepage-lowest-section-second {
+    display: flex;
+    flex-direction: column;
+    padding-left: 100px;
+    padding-top: 80px;
+}
+
+.homepage-lowest-section-third {
+    display: flex;
+    flex-direction: column;
+    padding-left: 100px;
+    padding-top: 80px;
+
+}
