@@ -40,7 +40,7 @@ function FootballCourtCarts({ field, number }: FootballCourtsCartProps) {
         }
         return stars;
     };
-    const navigate = useNavigate(); // Hook burada çağrılır
+    const navigate = useNavigate(); 
     return (
 
         <div className='fieldspage-list-fields-section-card'>
