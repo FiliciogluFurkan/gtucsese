@@ -2,9 +2,9 @@
 import { useParams } from 'react-router-dom';
 
 
-function FieldDetails() {
-  const patchId = useParams();
-  console.log(patchId);
+function FootballCourtsDetails() {
+  const footballCourtId = useParams();
+  console.log(footballCourtId);
   return (
     <div>
       Field details will be added
@@ -12,4 +12,4 @@ function FieldDetails() {
   )
 }
 
-export default FieldDetails
+export default FootballCourtsDetails

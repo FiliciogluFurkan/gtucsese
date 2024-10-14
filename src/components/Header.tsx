@@ -2,15 +2,15 @@
 //import React from 'react';
 import { useState } from 'react';
 import './../css/header/header.css';
-import logo from '/src/images/logo.png';
+import logo from '/src/assets/images/logo.png';
 import { Link } from 'react-router-dom';
 
 function Header() {
 
-    const [showMenu, setShowMenu] = useState(false); 
+    const [showMenu, setShowMenu] = useState(false);
 
     const toggleMenu = () => {
-        setShowMenu(!showMenu); 
+        setShowMenu(!showMenu);
     };
 
 
@@ -41,23 +41,29 @@ function Header() {
                 <div className='menu-button'
                     style={{ display: "flex", flexDirection: "row", alignItems: "flex-end", position: 'relative' }}
                 >
-                   <div className='menu-button-material-symbols-outlined'>
-                   <span
-                        className='material-symbols-outlined'
-                        onClick={toggleMenu} 
-                        style={{ cursor: 'pointer', marginRight: '10px' }}
-                    >
-                        Menu
-                    </span>
-                   </div>
-
-                    {showMenu && ( 
-                        <div
-                            className="dropdown-menu"        
+                    <div className='menu-button-material-symbols-outlined'>
+                        <span
+                            className='material-symbols-outlined'
+                            onClick={toggleMenu}
+                            style={{ cursor: 'pointer', marginRight: '10px' }}
                         >
-                            <div style={{ cursor: 'pointer', padding: '5px' }}>Giriş Yap</div>
-                            <div style={{ cursor: 'pointer', padding: '5px' }}>Kayıt Ol</div>
-                            <div style={{ cursor: 'pointer', padding: '5px' }}>Şifre Yenile</div>
+                            Menu
+                        </span>
+                    </div>
+
+                    {showMenu && (
+                        <div
+                            className="dropdown-menu"
+                        >
+                            <div style={{ cursor: 'pointer', padding: '5px' }}>
+                                <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>Giriş Yap</Link>
+                            </div>
+                            <div style={{ cursor: 'pointer', padding: '5px' }}>
+                                <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>Kayıt Ol</Link>
+                            </div>
+                            <div style={{ cursor: 'pointer', padding: '5px' }}>
+                                <Link to="/password-reset" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>Şifre Yenile</Link>
+                            </div>
                         </div>
                     )}
                 </div>

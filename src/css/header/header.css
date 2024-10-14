@@ -2,23 +2,22 @@
     display: flex;
     flex-direction: row;
     background-color: aliceblue;
-    height: 75px;
+    height: 4.6875rem;
     position: fixed;
     z-index: 1;
     position: relative;
 }
 
-
 .image {
-    padding-left: 150px;
+    padding-left: 9.375rem;
 }
 
 .first-text {
     text-align: center;
     position: relative;
-    font-size: 15px;
-    margin: 25px 0;
-    padding-left: 250px;
+    font-size: 0.9375rem;
+    margin: 1.5625rem 0;
+    padding-left: 15.625rem;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -26,50 +25,51 @@
 .first-text::after {
     content: "";
     position: absolute;
-    width: 80px;
-    height: 2px;
+    width: 5rem;
+    height: 0.125rem;
     background: black;
 }
 
 .first-text::before {
-    top: -5px;
+    top: -0.3125rem;
     /* Üst çizginin konumu */
-    left: 250px;
+    left: 15.625rem;
 }
 
 .first-text::after {
     bottom: 0px;
     /* Alt çizginin konumu */
-    left: 250px;
+    left: 15.625rem;
 }
 
 .second-text {
-    font-size: 15px;
-    padding-top: 24px;
-    padding-left: 80px;
+    font-size: 0.9375rem;
+    padding-top: 1.5rem;
+    padding-left: 5rem;
     font-family: 'Roboto', sans-serif;
 }
 
 .third-text {
-    font-size: 15px;
-    padding-top: 24px;
-    padding-left: 80px;
+    font-size: 0.9375rem;
+    padding-top: 1.5rem;
+    padding-left: 5rem;
     font-family: 'Roboto', sans-serif;
 }
 
 .fourth-text {
-    font-size: 15px;
-    padding-top: 24px;
-    padding-left: 80px;
+    font-size: 0.9375rem;
+    padding-top: 1.5rem;
+    padding-left: 5rem;
     font-family: 'Roboto', sans-serif;
 }
 
 .fifth-text {
-    font-size: 15px;
-    padding-top: 25px;
-    padding-left: 80px;
+    font-size: 0.9375rem;
+    padding-top: 1.5625rem;
+    padding-left: 5rem;
     font-family: 'Roboto', sans-serif;
 }
+
 
 .material-symbols-outlined {
     font-variation-settings:
@@ -80,32 +80,33 @@
 }
 
 .menu-button-material-symbols-outlined {
-    margin-top: 24px;
-    margin-left: 150px;
-    height: 50px;
+    margin-top: 1.5rem;
+    margin-left: 9.375rem;
+    height: 3.125rem;
     cursor: pointer;
 }
 
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 120px;
+    left: 7.5rem;
     background-color: #f8f9fa;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 10px;
-    margin-top: 5px;
-    width: 90px;
+    padding: 0.625rem;
+    margin-top: 0.3125rem;
+    width: 5.625rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
 }
+
 
 @media (max-width: 768px) {
     .header {
         display: flex;
         flex-direction: row;
         height: auto;
-        padding: 10px;
+        padding: 0.625rem;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
@@ -120,26 +121,26 @@
     }
 
     .first-text {
-        font-size: 13px;
-        padding-left: 10px;
+        font-size: 0.8125rem;
+        padding-left: 0.625rem;
         margin: 0;
     }
-
 
     .second-text,
     .third-text,
     .fourth-text,
     .fifth-text {
-        font-size: 13px;
-        padding-left: 10px;
+        font-size: 0.8125rem;
+        padding-left: 0.625rem;
         margin: 0;
-        padding-bottom: 25px;
+        padding-bottom: 1.5625rem;
     }
 
     .first-text::before,
     .first-text::after {
         display: none;
     }
+
 
     .material-symbols-outlined {
         font-size: 24px;
@@ -157,29 +158,29 @@
     }
 
     .first-text {
- 
-        font-size: 13px;
-        padding-bottom: 10px;
+        font-size: 0.8125rem;
+        padding-bottom: 0.625rem;
     }
 
     .second-text,
     .third-text,
     .fourth-text,
     .fifth-text {
-        font-size: 13px;
-        padding-left: 10px;
+        font-size: 0.8125rem;
+        padding-left: 0.625rem;
         width: 100%;
     }
 
     .material-symbols-outlined {
-        margin-top: 10px;
-        margin-right: 10000px;
+        margin-top: 0.625rem;
+        margin-right: 625rem;
     }
 
     .menu-button {
-        margin-top: 10px;
-        margin-right: 10000px;
+        margin-top: 0.625rem;
+        margin-right: 625rem;
     }
+
 }
 
 
@@ -188,7 +189,7 @@
         display: flex;
         flex-direction: row;
         height: auto;
-        padding: 10px;
+        padding: 0.625rem;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
@@ -199,20 +200,19 @@
     }
 
     .first-text {
-        font-size: 13px;
-        padding-left: 10px;
+        font-size: 0.8125rem;
+        padding-left: 0.625rem;
         margin: 0;
     }
-
 
     .second-text,
     .third-text,
     .fourth-text,
     .fifth-text {
-        font-size: 13px;
-        padding-left: 10px;
+        font-size: 0.8125rem;
+        padding-left: 0.625rem;
         margin: 0;
-        padding-bottom: 25px;
+        padding-bottom: 1.5625rem;
     }
 
     .first-text::before,
@@ -221,21 +221,24 @@
     }
 
     .material-symbols-outlined {
-        font-size: 24px;
-        margin-left: -10px;
+        font-size: 1.5rem;
+        margin-left: -0.625rem;
         margin-top: 0;
         display: flex;
         align-items: flex-start;
     }
 }
 
+
 @media (max-width: 360px) {
     .header {
         display: flex;
-        flex-direction: column; /* Sütun şeklinde sıralama */
+        flex-direction: column;
+        /* Sütun şeklinde sıralama */
         height: auto;
-        padding: 10px;
-        align-items: flex-start; /* Soldan hizalama */
+        padding: 0.625rem;
+        align-items: flex-start;
+        /* Soldan hizalama */
     }
 
     .image {
@@ -243,8 +246,8 @@
     }
 
     .first-text {
-        font-size: 13px;
-        padding-left: 10px;
+        font-size: 0.8125rem;
+        padding-left: 0.625rem;
         margin: 0;
     }
 
@@ -252,43 +255,47 @@
     .third-text,
     .fourth-text,
     .fifth-text {
-        font-size: 13px;
-        padding-left: 10px;
+        font-size: 0.8125rem;
+        padding-left: 0.625rem;
         margin: 0;
-        padding-bottom: 10px; /* Dikey boşluk için */
+        padding-bottom: 0.625rem;
+        /* Dikey boşluk için */
     }
 
     .first-text::before,
     .first-text::after {
-        display: none; /* Ön ve arka pseudo-elementleri gizle */
+        display: none;
+        /* Ön ve arka pseudo-elementleri gizle */
     }
 
     .material-symbols-outlined {
-        font-size: 24px;
-        margin-left: -10px;
+        font-size: 1.5rem;
+        margin-left: -0.625rem;
         display: flex;
-        align-items: center; /* Simgeyi ortala */
+        align-items: center;
+        /* Simgeyi ortala */
     }
 
     .menu-button-material-symbols-outlined {
-        margin-top: 0; /* Yukarıdan boşluk bırakma */
-        margin-left: 20px;
-        height: 50px;
+        margin-top: 0;
+        /* Yukarıdan boşluk bırakma */
+        margin-left: 1.25rem;
+        height: 3.125rem;
         cursor: pointer;
     }
 
     .dropdown-menu {
-        position: absolute; 
-        top: 0; 
+        position: absolute;
+        top: 0;
         left: 0;
         transform: translateX(100%);
-        background-color: #f8f9fa; 
-        border: 1px solid #ccc; 
-        border-radius: 8px; 
-        padding: 10px; 
-        margin-top: 5px; 
-        width: 90px; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-        transition: all 0.3s ease-in-out; 
+        background-color: #f8f9fa;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        padding: 0.625rem;
+        margin-top: 0.3125rem;
+        width: 5.625rem;
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
     }
 }

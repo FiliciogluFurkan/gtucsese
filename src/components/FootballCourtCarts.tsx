@@ -1,24 +1,10 @@
 //import React from 'react';
-import './../css/fields/Fields.css';
+import './../css/footballcourts/FootballCourts.css';
 import { useNavigate } from 'react-router-dom';
-
-interface Field {
-    id: number;
-    name: string;
-    description?: string;
-    image: string;
-    rating: number;
-    place: string;
-}
-
-interface FieldsCartProps {
-    field: Field;
-    number: string;
-}
+import { FootballCourtsCartProps } from '../interface/FootballCourt';
 
 
-
-function FieldsCart({ field, number }: FieldsCartProps) {
+function FootballCourtCarts({ field, number }: FootballCourtsCartProps) {
     const fieldId = field.id;
     const rating = field.rating;
     const renderStars = () => {
@@ -104,4 +90,4 @@ function FieldsCart({ field, number }: FieldsCartProps) {
     );
 }
 
-export default FieldsCart;
+export default FootballCourtCarts;

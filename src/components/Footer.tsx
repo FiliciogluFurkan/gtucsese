@@ -1,11 +1,11 @@
 //import React from 'react'
 import { Link } from 'react-router-dom'
 
-function LowestSection() {
+function Footer() {
   return (
     <div className='homepage-lowest-section'>
     <div className='homepage-lowest-section-logo'>
-      <img src="/src/images/logo2.png" alt="logo" style={{ width: '270px', height: 'auto' }} />
+      <img src="/src/assets/images/logo2.png" alt="logo" style={{ width: '270px', height: 'auto' }} />
     </div>
     <div className='homepage-lowest-section-first'>
       <div style={{ fontFamily: 'Inter', fontWeight: '500', fontSize: '24px', color: 'white' }}>
@@ -56,9 +56,9 @@ function LowestSection() {
           Sosyal Medya
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', paddingTop: '15px' }}>
-          <img src="/src/images/facebook.png" alt="logo" style={{ width: '40px', height: 'auto' }} />
-          <img src="/src/images/x_icon.png" alt="logo" style={{ width: '70px', height: 'auto', paddingLeft: "20px" }} />
-          <img src="/src/images/instagram_icon.png" alt="logo" style={{ width: '70px', height: 'auto', paddingLeft: "20px" }} />
+          <img src="/src/assets/images/facebook.png" alt="logo" style={{ width: '40px', height: 'auto' }} />
+          <img src="/src/assets/images/x_icon.png" alt="logo" style={{ width: '70px', height: 'auto', paddingLeft: "20px" }} />
+          <img src="/src/assets/images/instagram_icon.png" alt="logo" style={{ width: '70px', height: 'auto', paddingLeft: "20px" }} />
         </div>
       </div>
     </div>
@@ -66,4 +66,4 @@ function LowestSection() {
   )
 }
 
-export default LowestSection
+export default Footer

@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import FieldsCart from '../components/FieldsCart';
+import FootballCourtCarts from '../components/FootballCourtCarts';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -15,7 +15,7 @@ const MenuProps = {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       width: 300,
-      borderRadius: '8px',
+      borderRadius: '0.5rem',
     },
   },
 };
@@ -24,49 +24,49 @@ const fields = [
   {
     id: 1,
     name: 'Aydın Halısaha',
-    image: '/src/images/fields/aydınHalısaha.png',
+    image: '/src/assets/images/fields/aydınHalısaha.png',
     rating: 4.5,
     place: 'Sakarya/erenler'
   },
   {
     id: 2,
     name: 'Kolezyum Halısaha',
-    image: '/src/images/fields/kolezyum.png',
+    image: '/src/assets/images/fields/kolezyum.png',
     rating: 3,
     place: 'Sakarya/erenler'
   },
   {
     id: 3,
     name: 'Bora halısaha',
-    image: '/src/images/fields/boraHalısaha.png',
+    image: '/src/assets/images/fields/boraHalısaha.png',
     rating: 1.5,
     place: 'Sakarya/erenler'
   },
   {
     id: 4,
     name: 'Serdivan Halısaha',
-    image: '/src/images/fields/serdivanhalısaha.png',
+    image: '/src/assets/images/fields/serdivanhalısaha.png',
     rating: 4.5,
     place: 'Sakarya/erenler'
   },
   {
     id: 5,
     name: 'Alianz arena',
-    image: '/src/images/fields/alianz.png',
+    image: '/src/assets/images/fields/alianz.png',
     rating: 2,
     place: 'Almanya/Munih'
   },
   {
     id: 6,
     name: 'Ada arena',
-    image: '/src/images/fields/evin.jpg',
+    image: '/src/assets/images/fields/evin.jpg',
     rating: 5,
     place: 'Sakarya/erenler'
   },
   {
     id: 7,
     name: 'Şampiyonlar sahası',
-    image: '/src/images/fields/cl.png',
+    image: '/src/assets/images/fields/cl.png',
     rating: 3.5,
     place: 'Sakarya/erenler'
   },
@@ -98,7 +98,7 @@ function getStyles(name: string, selected: readonly string[], theme: Theme) {
   };
 }
 
-export default function Fields() {
+export default function FootballCourts() {
   const theme = useTheme();
   const [selectedCity, setSelectedCity] = React.useState<string>('');
   const [selectedDistrict, setSelectedDistrict] = React.useState<string>('');
@@ -130,7 +130,7 @@ export default function Fields() {
         <div>
           <Grid container spacing={4} justifyContent="center">
             <Grid item xs={12} sm={6} md={4}>
-              <FormControl sx={{ width: '100%', mt: 3, backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}>
+              <FormControl sx={{ width: '100%', mt: 3, backgroundColor: 'white', borderRadius: '0.5rem', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}>
                 <Select
                   displayEmpty
                   value={selectedCity}
@@ -161,7 +161,7 @@ export default function Fields() {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <FormControl sx={{ width: '100%', mt: 3, backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}>
+              <FormControl sx={{ width: '100%', mt: 3, backgroundColor: 'white', borderRadius: '0.5rem', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}>
                 <Select
                   displayEmpty
                   value={selectedDistrict}
@@ -194,18 +194,19 @@ export default function Fields() {
           </Grid>
         </div>
       </div>
-      <div style={{ marginTop: '30px' }}>
+      <div style={{ marginTop: '1.875rem' }}>
         <hr />
       </div>
-      <div style={{ marginTop: '50px' }}>
+      <div style={{ marginTop: '3.125rem' }}>
       </div>
+
 
       <div className='fieldspage-list-fields-section'>
         {fields.map((field, index) => {
           const number = String(index + 1).padStart(2, '0');
 
           return (
-            <FieldsCart key={field.id} field={field} number={number} />
+            <FootballCourtCarts key={field.id} field={field} number={number} />
           );
         })}
       </div>
