@@ -7,10 +7,10 @@ import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import FootballCourtCarts from '../components/FootballCourtCarts';
-import aydinFootballCourt from '/src/assets/images/fields/aydınHalısaha.png'
+import aydinFootballCourt from '/src/assets/images/fields/aydinHalisaha.png'
 import kolezyumFootballCourt from '/src/assets/images/fields/kolezyum.png'
-import boraFootballCourt from '/src/assets/images/fields/boraHalısaha.png'
-import serdivanFootballCourt from '/src/assets/images/fields/serdivanhalısaha.png'
+import boraFootballCourt from '/src/assets/images/fields/boraHalisaha.png'
+import serdivanFootballCourt from '/src/assets/images/fields/serdivanhalisaha.png'
 import alianzFootballCourt from '/src/assets/images/fields/alianz.png'
 import adaFootballCourt from '/src/assets/images/fields/evin.jpg'
 import clFootballCourt from '/src/assets/images/fields/cl.png'
