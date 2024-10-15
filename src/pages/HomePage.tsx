@@ -5,6 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import logo2 from '/src/assets/images/logo2.png'
+import pana from '/src/assets/images/pana.png'
 
 
 
@@ -38,7 +40,7 @@ function Homepage() {
     <div className='homepage'>
       <div className='image-homepage'>
         <div style={{ paddingLeft: '56.25rem' }}>
-          <img src="/src/assets/images/logo2.png" alt="logo" style={{ width: '25rem', height: 'auto' }} />
+          <img src={logo2} alt="logo" style={{ width: '25rem', height: 'auto' }} />
         </div>
         <div>
           <div>
@@ -272,7 +274,7 @@ function Homepage() {
 
       <div className='homepage-about-section'>
         <div style={{ paddingLeft: '6.25rem', paddingTop: '3.75rem' }}>
-          <img src="/src/assets/images/pana.png" alt="logo" style={{ width: '400px', height: 'auto' }} />
+          <img src={pana} alt="logo" style={{ width: '400px', height: 'auto' }} />
         </div>
         <div style={{ paddingLeft: '9.375rem', paddingTop: '0rem' }}>
           <section className="homepage-about-us-highlight">
