@@ -16,7 +16,7 @@ import adaFootballCourt from '/src/assets/images/fields/evin.jpg'
 import clFootballCourt from '/src/assets/images/fields/cl.png'
 
 const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_PADDING_TOP = 10;
 const MenuProps = {
   PaperProps: {
     style: {
