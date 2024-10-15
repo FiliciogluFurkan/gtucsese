@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom'
 import logo2 from '/src/assets/images/logo2.png'
 import facebook from '/src/assets/images/facebook.png'
-import instagram from '/src/assets/images/instagram_icon.png'
+import instagram from '/src/assets/images/Instagram_icon.png'
 import x from '/src/assets/images/x_icon.png'
 
 function Footer() {
