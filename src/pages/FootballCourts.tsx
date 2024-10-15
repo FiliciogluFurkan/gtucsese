@@ -10,7 +10,7 @@ import FootballCourtCarts from '../components/FootballCourtCarts';
 import aydinFootballCourt from '/src/assets/images/fields/aydinHalisaha.png'
 import kolezyumFootballCourt from '/src/assets/images/fields/kolezyum.png'
 import boraFootballCourt from '/src/assets/images/fields/boraHalisaha.png'
-import serdivanFootballCourt from '/src/assets/images/fields/serdivanhalisaha.png'
+import serdivanFootballCourt from '/src/assets/images/fields/serdivanHalisaha.png'
 import alianzFootballCourt from '/src/assets/images/fields/alianz.png'
 import adaFootballCourt from '/src/assets/images/fields/evin.jpg'
 import clFootballCourt from '/src/assets/images/fields/cl.png'
