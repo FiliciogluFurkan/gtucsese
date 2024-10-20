@@ -73,12 +73,11 @@ function Login() {
           <div className='login-container-section-password-title'>Password</div>
 
           <div className='login-container-section-password-textfield'>
-            <TextField
+            <TextField className='login-container-section-password-textfield-input'
               style={{
                 backgroundColor: 'rgba(247,251,255)',
                 borderRadius: '1rem',
                 width: 400,
-                fontSize: 16,
               }}
               id="filled-password"
               variant="filled"

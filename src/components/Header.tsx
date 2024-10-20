@@ -20,25 +20,26 @@ function Header() {
                 <img src={logo} alt="logo" style={{ width: '150px', height: '70px' }} />
             </div>
 
-            <div className={`header-tab first-text ${isSelected('/') ? 'selected' : ''}`}>
-                <Link to="/" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>ANA SAYFA</Link>
-            </div>
-            <div className={`header-tab second-text ${isSelected('/fields') ? 'selected' : ''}`}>
-                <Link to="/fields" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>HALI SAHALAR</Link>
-            </div>
-            <div className={`header-tab third-text ${isSelected('/createteam') ? 'selected' : ''}`}>
-                <Link to="/createteam" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>KADRO KUR</Link>
-            </div>
-            <div className={`header-tab fourth-text ${isSelected('/about') ? 'selected' : ''}`}>
-                <Link to="/about" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>HAKKIMIZDA</Link>
-            </div>
-            <div className={`header-tab fifth-text ${isSelected('/help') ? 'selected' : ''}`}>
-                <Link to="/help" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>DESTEK</Link>
+            <div className='header-tab-container'>
+                <div className={`header-tab ${isSelected('/') ? 'selected' : ''}`}>
+                    <Link className='header-tab-text' to="/" >ANA SAYFA</Link>
+                </div>
+                <div className={`header-tab ${isSelected('/fields') ? 'selected' : ''}`}>
+                    <Link className='header-tab-text' to="/fields">HALI SAHALAR</Link>
+                </div>
+                <div className={`header-tab ${isSelected('/createteam') ? 'selected' : ''}`}>
+                    <Link className='header-tab-text' to="/createteam">KADRO KUR</Link>
+                </div>
+                <div className={`header-tab  ${isSelected('/about') ? 'selected' : ''}`}>
+                    <Link className='header-tab-text' to="/about" >HAKKIMIZDA</Link>
+                </div>
+                <div className={`header-tab ${isSelected('/help') ? 'selected' : ''}`}>
+                    <Link className='header-tab-text' to="/help">DESTEK</Link>
+                </div>
             </div>
 
 
             <div className='menu-button'
-                style={{ display: "flex", flexDirection: "row", alignItems: "flex-end", position: 'relative' }}
             >
                 <div className='menu-button-material-symbols-outlined'>
                     <span

@@ -58,7 +58,7 @@ function FootballCourtsDetails() {
           {footballCourt.name}
         </div>
         
-<div className='footballcourtsdetails-informations-section-informations-Rezervation'>
+<div className='footballcourtsdetails-informations-section-informations-reservation'>
           Rezervasyon Yap
         </div>
         
