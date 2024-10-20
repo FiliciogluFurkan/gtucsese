@@ -178,37 +178,3 @@ body {
     transform: translateY(-3px);
 }
 
-.homepage-lowest-section {
-    margin-top: 3.125rem; 
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: rgba(44, 44, 44, 0.9); 
-    height: 18.75rem; 
-}
-
-.homepage-lowest-section-logo {
-    padding-left: 4.375rem; 
-    padding-top: 6.25rem; 
-}
-
-.homepage-lowest-section-first {
-    display: flex;
-    flex-direction: column;
-    padding-left: 6.25rem; 
-    padding-top: 5rem; 
-}
-
-.homepage-lowest-section-second {
-    display: flex;
-    flex-direction: column;
-    padding-left: 6.25rem;
-    padding-top: 5rem; 
-}
-
-.homepage-lowest-section-third {
-    display: flex;
-    flex-direction: column;
-    padding-left: 6.25rem;
-    padding-top: 5rem; 
-}

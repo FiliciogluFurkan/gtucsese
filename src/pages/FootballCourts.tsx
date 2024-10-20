@@ -14,6 +14,7 @@ import serdivanFootballCourt from '/src/assets/images/fields/serdivanHalisaha.pn
 import alianzFootballCourt from '/src/assets/images/fields/alianz.png'
 import adaFootballCourt from '/src/assets/images/fields/evin.jpg'
 import clFootballCourt from '/src/assets/images/fields/cl.png'
+import { FootballCourt } from '../interface/FootballCourt';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 10;
@@ -27,7 +28,7 @@ const MenuProps = {
   },
 };
 
-const fields = [
+ const fields: FootballCourt[] = [
   {
     id: 1,
     name: 'Aydın Halısaha',

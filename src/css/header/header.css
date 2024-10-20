@@ -1,6 +1,7 @@
 .header {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     background-color: aliceblue;
     height: 4.6875rem;
     position: fixed;
@@ -8,67 +9,77 @@
     position: relative;
 }
 
-.image {
-    padding-left: 9.375rem;
+body {
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
-.first-text {
+.image {
+    /* padding-left: 9.375rem; */
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-tab-container {
+    width: 52%;
+    max-width: 52%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.header-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     position: relative;
     font-size: 0.9375rem;
-    margin: 1.5625rem 0;
-    padding-left: 15.625rem;
     font-family: 'Roboto', sans-serif;
+    height: 46%;
 }
 
-.first-text::before,
-.first-text::after {
+
+.menu-button
+{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Seçili sekmenin görünümü */
+.header-tab.selected {
+    font-weight: bold; /* Seçili sekmede kalın yazı */
+    border: solid;
+    border-width: 3px;
+    border-color: rgb(28, 28, 28);
+    border-left: 0;
+    border-right: 0;
+}
+
+.header-tab-text {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    font-size: 1rem !important;
+    font-weight: 400;
+    font-family:  "Poppins";
+    color: rgb(23, 23, 23) !important;
+    text-decoration: none !important;
+}
+
+/* .header-tab.selected::after,
+.header-tab.selected::before {
     content: "";
-    position: absolute;
-    width: 5rem;
-    height: 0.125rem;
-    background: black;
-}
+    width: 100%;
+    height: 2px;
+    background: rgb(41, 41, 41);
+} */
 
-.first-text::before {
-    top: -0.3125rem;
-    /* Üst çizginin konumu */
-    left: 15.625rem;
-}
-
-.first-text::after {
-    bottom: 0px;
-    /* Alt çizginin konumu */
-    left: 15.625rem;
-}
-
-.second-text {
-    font-size: 0.9375rem;
-    padding-top: 1.5rem;
-    padding-left: 5rem;
-    font-family: 'Roboto', sans-serif;
-}
-
-.third-text {
-    font-size: 0.9375rem;
-    padding-top: 1.5rem;
-    padding-left: 5rem;
-    font-family: 'Roboto', sans-serif;
-}
-
-.fourth-text {
-    font-size: 0.9375rem;
-    padding-top: 1.5rem;
-    padding-left: 5rem;
-    font-family: 'Roboto', sans-serif;
-}
-
-.fifth-text {
-    font-size: 0.9375rem;
-    padding-top: 1.5625rem;
-    padding-left: 5rem;
-    font-family: 'Roboto', sans-serif;
-}
 
 
 .material-symbols-outlined {
@@ -80,16 +91,16 @@
 }
 
 .menu-button-material-symbols-outlined {
-    margin-top: 1.5rem;
-    margin-left: 9.375rem;
-    height: 3.125rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 7.5rem;
+    left: 92%;
     background-color: #f8f9fa;
     border: 1px solid #ccc;
     border-radius: 8px;

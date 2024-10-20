@@ -4,14 +4,15 @@ import logo2 from '/src/assets/images/logo2.png'
 import facebook from '/src/assets/images/facebook.png'
 import instagram from '/src/assets/images/Instagram_icon.png'
 import x from '/src/assets/images/x_icon.png'
+import './../css/footer/Footer.css';
 
 function Footer() {
   return (
-    <div className='homepage-lowest-section'>
-    <div className='homepage-lowest-section-logo'>
+    <div className='footer-section'>
+    <div className='footer-section-logo'>
       <img src={logo2} alt="logo" style={{ width: '270px', height: 'auto' }} />
     </div>
-    <div className='homepage-lowest-section-first'>
+    <div className='footer-section-first'>
       <div style={{ fontFamily: 'Inter', fontWeight: '500', fontSize: '24px', color: 'white' }}>
         Kurumsal
       </div>
@@ -29,7 +30,7 @@ function Footer() {
 
       </div>
     </div>
-    <div className='homepage-lowest-section-second'>
+    <div className='footer-section-second'>
       <div style={{ fontFamily: 'Inter', fontWeight: '500', fontSize: '24px', color: 'white' }}>
         İletişim
       </div>
@@ -54,7 +55,7 @@ function Footer() {
         </div>
       </div>
     </div>
-    <div className='homepage-lowest-section-third'>
+    <div className='footer-section-third'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontFamily: 'Inter', fontWeight: '500', fontSize: '24px', color: 'white' }}>
           Sosyal Medya
