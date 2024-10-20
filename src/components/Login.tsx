@@ -7,7 +7,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import Logo from '../assets/images/logo.png';
 
 
 function Login() {

@@ -12,6 +12,10 @@
     padding-left: 9.375rem;
 }
 
+
+
+
+/* İlk sekme */
 .first-text {
     text-align: center;
     position: relative;
@@ -21,27 +25,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.first-text::before,
-.first-text::after {
-    content: "";
-    position: absolute;
-    width: 5rem;
-    height: 0.125rem;
-    background: black;
-}
-
-.first-text::before {
-    top: -0.3125rem;
-    /* Üst çizginin konumu */
-    left: 15.625rem;
-}
-
-.first-text::after {
-    bottom: 0px;
-    /* Alt çizginin konumu */
-    left: 15.625rem;
-}
-
+/* İkinci sekme */
 .second-text {
     font-size: 0.9375rem;
     padding-top: 1.5rem;
@@ -49,6 +33,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
+/* Üçüncü sekme */
 .third-text {
     font-size: 0.9375rem;
     padding-top: 1.5rem;
@@ -56,6 +41,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
+/* Dördüncü sekme */
 .fourth-text {
     font-size: 0.9375rem;
     padding-top: 1.5rem;
@@ -63,12 +49,123 @@
     font-family: 'Roboto', sans-serif;
 }
 
+/* Beşinci sekme */
 .fifth-text {
     font-size: 0.9375rem;
     padding-top: 1.5625rem;
     padding-left: 5rem;
-    font-family: 'Roboto', sans-serif;
 }
+
+
+/* Seçili sekmenin görünümü */
+.header-tab.selected {
+    font-weight: bold; /* Seçili sekmede kalın yazı */
+}
+
+.first-text.selected::before,
+.first-text.selected::after {
+    content: "";
+    position: absolute;
+    width: 5rem;
+    height: 0.125rem;
+    background: black;
+}
+
+.first-text.selected::before {
+    top: -0.3125rem;
+    /* Üst çizginin konumu */
+    left: 15.625rem;
+}
+
+.first-text.selected::after {
+    bottom: 0px;
+    /* Alt çizginin konumu */
+    left: 15.625rem;
+}
+.second-text.selected::before,
+.second-text.selected::after {
+    content: "";
+    position: absolute;
+    width: 7rem;
+    height: 0.125rem;
+    background: black;
+}
+
+.second-text.selected::before {
+top: 1rem;
+    /* Üst çizginin konumu */
+    left:44rem;
+}
+
+.second-text.selected::after {
+    bottom: 1.5rem;
+    /* Alt çizginin konumu */
+    left: 44rem;
+}
+
+.third-text.selected::before,
+.third-text.selected::after {
+    content: "";
+    position: absolute;
+    width: 5.5rem;
+    height: 0.125rem;
+    background: black;
+}
+
+.third-text.selected::before {
+top: 1rem;
+    /* Üst çizginin konumu */
+    left:55.5rem;
+}
+
+.third-text.selected::after {
+    bottom: 1.5rem;
+    /* Alt çizginin konumu */
+    left: 55.5rem;
+}
+
+.fourth-text.selected::before,
+.fourth-text.selected::after {
+    content: "";
+    position: absolute;
+    width: 5.7rem;
+    height: 0.125rem;
+    background: black;
+}
+
+.fourth-text.selected::before {
+    top: 1rem;
+    /* Üst çizginin konumu */
+    left:65.7rem;
+}
+
+.fourth-text.selected::after {
+    bottom: 1.5rem;
+    /* Alt çizginin konumu */
+    left:65.7rem;
+}
+
+.fifth-text.selected::before,
+.fifth-text.selected::after {
+    content: "";
+    position: absolute;
+    width: 4rem;
+    height: 0.125rem;
+    background: black;
+}
+
+.fifth-text.selected::before {
+    top: 1rem;
+    /* Üst çizginin konumu */
+    left:76rem;
+}
+
+.fifth-text.selected::after {
+    bottom: 1.5rem;
+    /* Alt çizginin konumu */
+    left:76rem;
+}
+
 
 
 .material-symbols-outlined {
