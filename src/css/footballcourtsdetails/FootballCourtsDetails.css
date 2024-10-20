@@ -1,0 +1,99 @@
+.footballcourtsdetails-informations-section {
+    display: flex;
+    flex-direction: row;
+    padding-top: 3.75rem;
+    background-color: rgba(240, 240, 240, 0.736);
+    height: 50rem;
+}
+
+
+.footballcourtsdetails-informations-section-image-container {
+    margin-left: 2.5rem;
+    object-fit: cover;
+    width: 44.5rem;
+    height: 36.625rem;
+    border-radius: 1.0625rem;
+}
+
+.footballcourtsdetails-informations-section-informations {
+    display: flex;
+    flex-direction: column;
+    padding-left: 4rem;
+    padding-top: 1.5rem;
+}
+
+.footballcourtsdetails-informations-section-informations-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: rgb(26, 26, 26);
+    opacity: 0.6;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footballcourtsdetails-informations-section-informations-Rezervation {
+    padding-top: 0.60rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: rgb(26, 26, 26);
+    font-family: 'Roboto', sans-serif;
+}
+
+.footballcourtsdetails-informations-section-informations-availableFootballCourts {
+    display: flex;
+    flex-direction: row;
+    padding-top: 2.5rem;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.footballcourtsdetails-informations-section-informations-availableFootballCourts-icon {
+    color: rgb(26, 26, 26, 0.6);
+
+}
+
+.footballcourtsdetails-informations-section-informations-availableFootballCourts-text {
+    font-size: 1.425rem;
+    font-weight: 700;
+    color: rgb(26, 26, 26);
+    opacity: 0.6;
+    font-family: 'Roboto', sans-serif;
+    padding-left: 0.5rem;
+}
+.footballcourtsdetails-informations-section-informations-communication{
+    display: flex;
+    flex-direction: row;
+    padding-top: 0.2rem;
+    padding-top: 0.5rem;
+}
+
+.footballcourtsdetails-informations-section-informations-communication-icon {
+    color: rgb(26, 26, 26, 0.6);
+}
+
+.footballcourtsdetails-informations-section-informations-communication-text {
+    font-size: 1.425rem;
+    font-weight: 600;
+    color: rgb(26, 26, 26);
+    opacity: 0.6;
+    font-family: 'Roboto', sans-serif;
+    padding-left: 0.5rem;
+}
+.footballcourtdetails-informations-section-footballcourt-explaining-title{
+    padding-top: 3rem;
+    font-family: 'roboto',sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.footballcourtdetails-informations-section-footballcourt-explanation{
+    width: 34.5rem;
+    font-size: 1.5rem;
+    font-family: 'roboto',sans-serif;
+    padding-top: 1.5rem;
+
+}

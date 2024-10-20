@@ -12,7 +12,29 @@ function Header() {
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
-
+/*     function routedLink() {
+        const location = useLocation();
+      
+        return (
+          <div className="header">
+            <div className={`header-tab ${location.pathname === '/' ? 'selected' : ''}`}>
+              <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>ANA SAYFA</Link>
+            </div>
+            <div className={`header-tab ${location.pathname === '/fields' ? 'selected' : ''}`}>
+              <Link to="/fields" style={{ textDecoration: 'none', color: 'inherit' }}>HALI SAHALAR</Link>
+            </div>
+            <div className={`header-tab ${location.pathname === '/createteam' ? 'selected' : ''}`}>
+              <Link to="/createteam" style={{ textDecoration: 'none', color: 'inherit' }}>KADRO KUR</Link>
+            </div>
+            <div className={`header-tab ${location.pathname === '/about' ? 'selected' : ''}`}>
+              <Link to="/about" style={{ textDecoration: 'none', color: 'inherit' }}>HAKKIMIZDA</Link>
+            </div>
+            <div className={`header-tab ${location.pathname === '/help' ? 'selected' : ''}`}>
+              <Link to="/help" style={{ textDecoration: 'none', color: 'inherit', fontFamily: 'Roboto' }}>DESTEK</Link>
+            </div>
+          </div>
+        );
+      } */
 
     return (
         <>
