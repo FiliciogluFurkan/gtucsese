@@ -13,7 +13,8 @@ import boraFootballCourt from '/src/assets/images/fields/boraHalisaha.png'
 import serdivanFootballCourt from '/src/assets/images/fields/serdivanHalisaha.png'
 import alianzFootballCourt from '/src/assets/images/fields/alianz.png'
 import adaFootballCourt from '/src/assets/images/fields/evin.jpg'
-import clFootballCourt from '/src/assets/images/fields/cl.png' */
+import clFootballCourt from '/src/assets/images/fields/cl.png' */ 
+
 import { FootballCourt } from '../interface/FootballCourt';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
