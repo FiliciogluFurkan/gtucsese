@@ -7,15 +7,16 @@ import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import FootballCourtCarts from '../components/FootballCourtCarts';
-import aydinFootballCourt from '/src/assets/images/fields/aydinHalisaha.png'
+/* import aydinFootballCourt from '/src/assets/images/fields/aydinHalisaha.png'
 import kolezyumFootballCourt from '/src/assets/images/fields/kolezyum.png'
 import boraFootballCourt from '/src/assets/images/fields/boraHalisaha.png'
 import serdivanFootballCourt from '/src/assets/images/fields/serdivanHalisaha.png'
 import alianzFootballCourt from '/src/assets/images/fields/alianz.png'
 import adaFootballCourt from '/src/assets/images/fields/evin.jpg'
-import clFootballCourt from '/src/assets/images/fields/cl.png'
+import clFootballCourt from '/src/assets/images/fields/cl.png' */
 import { FootballCourt } from '../interface/FootballCourt';
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 10;
 const MenuProps = {
@@ -28,7 +29,9 @@ const MenuProps = {
   },
 };
 
- const fields: FootballCourt[] = [
+
+
+/*  const fields: FootballCourt[] = [
   {
     id: 1,
     name: 'Aydın Halısaha',
@@ -78,7 +81,9 @@ const MenuProps = {
     rating: 3.5,
     place: 'Sakarya/erenler'
   },
-];
+]; */
+
+
 
 const cities = [
   'İstanbul',
@@ -107,6 +112,23 @@ function getStyles(name: string, selected: readonly string[], theme: Theme) {
 }
 
 export default function FootballCourts() {
+
+  const [fields, setFields] = useState<FootballCourt[]>([]); // Başlangıç değeri boş dizi
+
+
+  useEffect(() => {
+    const fetchFields = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/fields'); // db.json dosyasının URL'si
+        setFields(response.data); // Verileri state'e ata
+      } catch (err) {
+      } finally {
+      }
+    };
+    fetchFields(); // Verileri almak için fonksiyonu çağır
+    console.log(fields);
+  }, []);
+
   const theme = useTheme();
   const [selectedCity, setSelectedCity] = React.useState<string>('');
   const [selectedDistrict, setSelectedDistrict] = React.useState<string>('');

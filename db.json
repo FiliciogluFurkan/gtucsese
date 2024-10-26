@@ -1,0 +1,60 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "mail": "test@example.com",
+      "password": "password123"
+    }
+  ],
+  "fields": [
+    {
+      "id": 1,
+      "name": "Aydın Halısaha",
+      "image": "https://skupit.com.tr/uploads/2023/02/aydin-halisaha-akcaabat.jpg",
+      "rating": 5,
+      "place": "Sakarya/erenler"
+    },
+    {
+      "id": 2,
+      "name": "Kolezyum Halısaha",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkOREMt9spAiPAXEimAysKFe580eAkTSTTA&s",
+      "rating": 3,
+      "place": "Sakarya/erenler"
+    },
+    {
+      "id": 3,
+      "name": "Bora halısaha",
+      "image": "https://www.borapark.com.tr/dokuman/kurumsal/1694595542_EV8ECS_orta.jpg",
+      "rating": 1.5,
+      "place": "Sakarya/erenler"
+    },
+    {
+      "id": 4,
+      "name": "Serdivan Halısaha",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT64cadm0BGvjPmA6gM-TzjJ1izoirnbnyFYA&s",
+      "rating": 4.5,
+      "place": "Sakarya/erenler"
+    },
+    {
+      "id": 5,
+      "name": "Alianz arena",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXHw5Otp-MP-lTLiGCKhJbNNGRAPIM3bFYGA&s",
+      "rating": 2,
+      "place": "Almanya/Munih"
+    },
+    {
+      "id": 6,
+      "name": "Ada arena",
+      "image": "https://www.sporexpres.com/images/upload/WhatsApp-Image-2023-03-07-at-14.06.00.jpeg",
+      "rating": 5,
+      "place": "Sakarya/erenler"
+    },
+    {
+      "id": 7,
+      "name": "Şampiyonlar sahası",
+      "image": "https://img.fcbayern.com/image/upload/t_cms-2x1/f_auto/w_1600%2Cc_fill/q_auto/cms/public/images/fcbayern-com/homepage/saison-18-19/sonstiges/arena_bewerbung_cl-finale2021_get.jpg",
+      "rating": 3.5,
+      "place": "Sakarya/erenler"
+    }
+  ]
+}
