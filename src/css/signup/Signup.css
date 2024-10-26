@@ -1,0 +1,83 @@
+.signup {
+    background-image: url('/src/assets/images/login.jpg'); 
+    width: 100%;
+    height: 62.85rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+}
+
+.signup-container {
+    width: 44.06rem;
+    height: 62.85rem;
+    background-color: rgba(217, 217, 217, 0.84);
+    display: flex;
+    flex-direction: row;
+}
+
+.signup-container-section {
+    padding-top: 6.25rem;
+    padding-left: 8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container-section-title {
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: rgb(12, 20, 33);
+    font-family: 'Roboto', sans-serif;
+}
+
+.signup-container-section-description {
+    font-size: 1.25rem;
+    width: 29rem;
+    height: 4rem;
+    padding-top: 1.5rem;
+}
+
+.signup-container-section-email-title,
+.signup-container-section-password-title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgb(12, 20, 33);
+    font-family: 'Roboto', sans-serif;  
+    padding-top: 1.5rem;
+}
+
+.signup-container-section-email-textfield,
+.signup-container-section-password-textfield {
+    padding-top: 0.1rem;
+}
+
+
+.signup-container-section-button-signin {
+    padding-top: 2rem;
+    padding-left: 0rem;
+    width: 24rem;
+}
+.signup-container-section-name-title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgb(12, 20, 33);
+    font-family: 'Roboto', sans-serif;  
+    padding-top: 2rem;        
+}
+
+.signup-container-section-name-textfield {
+    padding-top: 0.6rem;
+}
+
+.signup-container-section-username-title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgb(12, 20, 33);
+    font-family: 'Roboto', sans-serif;  
+    padding-top: 2rem;        
+}
+
+.signup-container-section-username-textfield {
+    padding-top: rem;
+}
