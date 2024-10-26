@@ -74,3 +74,11 @@
     padding-left: 0rem;
     width: 24rem;
 }
+
+.login-container-section-error {
+    padding-top: 1.5rem;
+    padding-left: 0rem;
+    width: 24rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: red;
+}
