@@ -45,7 +45,7 @@ export interface LoginResponse {
         'auth/login',
         async (credentials) => {
             try {
-                const response = await axios.get(`http://localhost:3000/users?mail=${credentials.mail}`);
+                const response = await axios.get(`https://db.aymoose.devodev.online/users?mail=${credentials.mail}`);
                 const users = response.data;
     
                 if (users.length > 0) {

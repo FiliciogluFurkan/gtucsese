@@ -120,7 +120,7 @@ export default function FootballCourts() {
   useEffect(() => {
     const fetchFields = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/fields'); // db.json dosyasının URL'si
+        const response = await axios.get('https://db.aymoose.devodev.online/fields'); // db.json dosyasının URL'si
         setFields(response.data); // Verileri state'e ata
       } catch (err) {
       } finally {
