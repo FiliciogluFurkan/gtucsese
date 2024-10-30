@@ -14,104 +14,157 @@ body {
     flex-direction: column;
     position: relative;
     width: 100%;
+   
 }
-.image-homepage {
-    background-image: url('/src/assets/images/background.png');
+.welcome-container {
+    background-image: url('/src/assets/images/court-2.jpg');
     background-size: cover;
+    object-fit: cover;
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    padding: 1.25rem; 
-    height: 31.25rem; 
+    min-height: 80vh;
+    margin-top: 10.5vh;
 }
 
-.homepage-first-text {
-    padding-left: 6.25rem;
+
+.welcome-container-image-container {
+    width: 100%;
+    height: 100%;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.welcome-container-image {
+    width: 50%;
+    height: 100%;
+    margin-right: 3rem;
+}
+
+.homepage-welcome-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 50%;
+    height: 100%;
+    margin-left: 10vw;
+    
+}
+
+.homepage-welcome-title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 5vh;
+    font-family: "Poppins", sans-serif;
+}
+
+.homepage-welcome-header {
     font-size: 3.125rem; 
     font-weight: bold; 
     color: white;
     font-family: 'Open Sans', sans-serif; 
 }
 
-.homepage-second-text {
-    padding-left: 6.25rem;
-    padding-top: 0.625rem; 
+
+.homepage-welcome-inner {
     color: rgba(255, 255, 255, 0.8);
     font-family: 'Inter', sans-serif;
-    width: 18.75rem; 
-    font-weight: 300; 
+    width: 18rem; 
+    font-weight: 500; 
+    margin-top: 1.5rem;
 }
-.homepage-appointment-section {
-    width: 37.5rem; 
-    height: 5rem; 
-    margin-left: 6.25rem; 
-    background-color: rgba(240, 240, 240, 0.736);
+.homepage-welcome-appointment {
+    background-color: rgba(247, 247, 247, 0.295);
+    background-color: "transparent";
     border-radius: 0.5rem; 
     margin-top: 1.25rem; 
     display: flex;
     flex-direction: row;
-    padding-top: 0.3125rem; 
+    padding: 1rem;
+   /*  padding-left: 0; */
+
+}
+
+
+.homepage-welcome-appointment-form {
+    background-color: rgb(240, 240, 240);
+    margin-right: 0.5rem;
+    height: 8vh;
+    width: 10vw;
+}
+
+#homepage-welcome-appointment-button {
+    min-height: 100%;
+    word-break: keep-all;
+    font-weight: 600;
+    min-width: 14vw;
 }
 
 .homepage-our-services-title {
-    padding-top: 1.875rem; 
-    padding-left: 37.5rem; 
     font-size: 1.875rem; 
     font-weight: 400;
-    color: rgba(139, 136, 136);
-    font-family: 'Roboto', sans-serif;
+    color: rgb(72, 72, 72);
+    font-family: 'Poppins', sans-serif;
+    margin-top: 2rem;
+    text-align: center;
 }
 
 .homepage-our-services-section {
-    margin-top: 1.875rem; 
-    padding-top: 0.9375rem; 
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 5vh;
+}
+
+.homepage-our-services-section-card {
+    padding: 2rem;
+    
+    height: 34vh;
+    background-color: rgba(255, 255, 255, 0.736);
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    /* border: 0.1rem solid rgba(210, 210, 210, 0.752);  */
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.625rem rgba(103, 103, 103, 0.3);
+}
+
+.homepage-our-services-section-card-header {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.homepage-our-services-section-card-first {
-    width: 17.5rem;
-    height: 15.625rem; 
-    background-color: rgba(255, 255, 255, 0.736);
-    display: flex;
-    flex-direction: column;
-    border: 0.3125rem solid rgba(210, 210, 210, 0.752); 
-}
-
-.homepage-our-services-section-card-second {
-    width: 17.5rem; 
-    height: 15.625rem;
-    background-color: rgba(255, 255, 255, 0.736);
-    display: flex;
-    flex-direction: column;
-    border: 0.3125rem solid rgba(210, 210, 210, 0.752); 
+    justify-content: flex-start;
+    align-items: center;
 }
 
 
-.homepage-our-services-section-card-third {
-    width: 17.5rem;
-    height: 15.625rem;
-    background-color: rgba(255, 255, 255, 0.736);
-    display: flex;
-    flex-direction: column;
-    border: 0.3125rem solid rgba(210, 210, 210, 0.752); 
-}
-
-.homepage-our-services-section-card-fourth {
-    width: 17.5rem;
-    height: 15.625rem; 
-    background-color: rgba(255, 255, 255, 0.736);
-    display: flex;
-    flex-direction: column;
-    border: 0.3125rem solid rgba(210, 210, 210, 0.752); 
-}
-
-.homepage-our-services-section-card-first-image {
+.homepage-our-services-section-card-image {
     display: flex;
     flex-direction: row;
     width: 100%;
+}
+
+.homepage-our-services-section-title {
+    font-size: 1rem; 
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    font-family: 'Poppins', sans-serif;
+    margin-left: 0.5rem;
+}
+
+.homepage-our-services-section-card-text {
+    font-size: 0.9rem;
+    color: rgba(40, 40, 40, 0.8);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    margin-top: 1rem;
+
 }
 
 .homepage-statistics-section {
