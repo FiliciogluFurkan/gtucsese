@@ -35,14 +35,6 @@ function Homepage() {
   return (
     <div className="homepage">
       <div className="welcome-container">
-        <div className="welcome-container-image-container">
-          <img
-            className="welcome-container-image"
-            src={logo2}
-            style={{ width: "270px", height: "117px" }}
-            alt="logo"
-          />
-        </div>
         <div>
           <div className="homepage-welcome-content">
             <div className="homepage-welcome-title-container">
@@ -126,6 +118,14 @@ function Homepage() {
               </Button>
             </div>
           </div>
+        </div>
+        <div className="welcome-container-image-container">
+          <img
+            className="welcome-container-image"
+            src={logo2}
+            style={{ width: "270px", height: "117px" }}
+            alt="logo"
+          />
         </div>
       </div>
 
