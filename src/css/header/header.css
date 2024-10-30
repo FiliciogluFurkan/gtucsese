@@ -2,27 +2,36 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: aliceblue;
-    height: 4.6875rem;
+    background-color: rgb(250, 250, 250);
+    /* background-color: transparent; */
+    height: 10.5vh;
     position: fixed;
     z-index: 1;
-    position: relative;
+    position: fixed;
+    width: 100%;
+    box-shadow: 0 0.25rem 0.625rem rgba(103, 103, 103, 0.3);
 }
 
 body {
     overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
-.image {
+.header-image-container {
     /* padding-left: 9.375rem; */
-    width: 30%;
+    width: 50%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+.header-image {
+    width: 100%;
+    height: 100%;
+    margin-left: 5rem;
 }
 
 .header-tab-container {
-    width: 52%;
+    width: 40%;
     max-width: 52%;
     display: flex;
     align-items: center;
@@ -37,9 +46,17 @@ body {
     justify-content: center;
     text-align: center;
     position: relative;
-    font-size: 0.9375rem;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     height: 46%;
+    border: none;
+    padding: 1rem;
+    border-radius: 2rem;
+
+}
+
+.header-tab:hover {
+    cursor: pointer;
+    background-color: rgb(212, 212, 212);
 }
 
 
@@ -56,19 +73,23 @@ body {
 .header-tab.selected {
     font-weight: bold; /* Seçili sekmede kalın yazı */
     border: solid;
-    border-width: 3px;
+    border-width: 1px;
     border-color: rgb(28, 28, 28);
     border-left: 0;
     border-right: 0;
+    border-top: 0;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .header-tab-text {
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
-    font-size: 1rem !important;
     font-weight: 400;
+    font-size: 0.9rem;
     font-family:  "Poppins";
-    color: rgb(23, 23, 23) !important;
+    color: rgb(51, 51, 51) !important;
     text-decoration: none !important;
 }
 
@@ -97,18 +118,27 @@ body {
     justify-content: center;
 }
 
-.dropdown-menu {
+.header-dropdown {
     position: absolute;
     top: 100%;
-    left: 92%;
     background-color: #f8f9fa;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 0.625rem;
     margin-top: 0.3125rem;
-    width: 5.625rem;
+    width: 10w;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
+}
+
+.header-dropdown-tab {
+    text-align: left;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    height: 46%;
+    border: none;
+    padding: 1rem;
+    border-radius: 2rem;
 }
 
 
