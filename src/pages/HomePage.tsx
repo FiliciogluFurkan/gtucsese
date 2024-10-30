@@ -7,7 +7,6 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import logo2 from "/src/assets/images/logo2.png";
 import pana from "/src/assets/images/pana.png";
-import darklogo from "/src/assets/images/logo-dark.png";
 
 function Homepage() {
   const [cities, setCities] = React.useState<string[]>([]);
