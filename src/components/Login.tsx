@@ -12,7 +12,7 @@ import { Button } from '@mui/material';
 import { RootState } from '../redux/store';
 import { loginUser } from '../redux/AuthSlice';
 import { AppDispatch } from '../redux/store';
-import { LoginCredentials } from '../redux/AuthSlice';
+import { LoginUserInput } from '../redux/AuthSlice';
 //import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -48,7 +48,7 @@ function Login() {
     setLoginError(null);
     let result;
     try {
-      const credentials: LoginCredentials = { mail, password };
+      const credentials: LoginUserInput = { mail, password };
       if (mail === "" || password === "") {
         setLoginError("Lütfen giriş bilgilerinizi giriniz.");
         return;
