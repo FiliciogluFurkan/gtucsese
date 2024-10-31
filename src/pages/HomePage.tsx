@@ -7,6 +7,7 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import logo2 from "/src/assets/images/logo-white.png";
 import pana from "/src/assets/images/pana.png";
+import { Box } from "@mui/material";
 
 function Homepage() {
   const [cities, setCities] = React.useState<string[]>([]);
@@ -32,7 +33,7 @@ function Homepage() {
   };
 
   return (
-    <div className="homepage">
+    <Box className="homepage">
       <div className="welcome-container">
         <div>
           <div className="homepage-welcome-content">
@@ -443,7 +444,7 @@ function Homepage() {
       </div>
 
       <div></div>
-    </div>
+    </Box>
   );
 }
 export default Homepage;

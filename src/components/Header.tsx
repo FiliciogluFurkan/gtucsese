@@ -3,11 +3,18 @@ import { Link, useLocation } from "react-router-dom";
 import "./../css/header/header.css";
 //import logo from "/src/assets/images/logo.png";
 import darklogo from "/src/assets/images/logo-white-3.png";
-import { Divider } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
-function Header() {
+interface HeaderProps {
+  currentTheme: string;
+  toggleTheme: () => void;
+}
+
+function Header({ currentTheme, toggleTheme }: HeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation(); // Mevcut yolu almak için useLocation kullanılıyor
+  const theme = useTheme();
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -17,7 +24,13 @@ function Header() {
   const isSelected = (path: string) => location.pathname === path;
 
   return (
-    <div className="header">
+    <div
+      className="header"
+      /* style={{
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+      }} */
+    >
       <div className="header-image-container">
         {/* <img
           className="header-image"
@@ -101,6 +114,19 @@ function Header() {
               >
                 Kayıt Ol
               </Link>
+            </div>
+            <Divider />
+            <div className="header-dropdown-tab">
+              <Button
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  fontFamily: "Roboto",
+                }}
+                onClick={toggleTheme}
+              >
+                {currentTheme === "light" ? "Karanlık Mod" : "Aydınlık Mod"}
+              </Button>
             </div>
             <Divider />
             <div className="header-dropdown-tab">

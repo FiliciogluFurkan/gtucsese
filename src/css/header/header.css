@@ -3,9 +3,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
-    /* background: linear-gradient(90deg, rgba(40, 75, 49, 0.87) 0%, rgba(50, 121, 48, 0.7) 35%, rgba(3, 151, 23, 0.712) 100%); */
-    /* background-color: rgb(250, 250, 250); */
-    /* background-color: transparent; */
     background-color: rgba(0, 0, 0, 0.01);
     height: 5rem;
     
