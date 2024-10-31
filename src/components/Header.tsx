@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./../css/header/header.css";
 //import logo from "/src/assets/images/logo.png";
-import darklogo from "/src/assets/images/logo-dark.png";
+import darklogo from "/src/assets/images/logo-white-3.png";
 import { Divider } from "@mui/material";
 
 function Header() {
@@ -19,12 +19,13 @@ function Header() {
   return (
     <div className="header">
       <div className="header-image-container">
-        <img
+        {/* <img
           className="header-image"
+          style={{ width: "12px", height: "100px" }}
           src={darklogo}
           alt="logo"
-          style={{ width: "180px", height: "78px" }}
-        />
+        /> */}
+        <div className="header-image-container-title">SAHAN CEPTE</div>
       </div>
 
       <div className="header-tab-container">

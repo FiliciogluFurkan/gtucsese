@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import logo2 from "/src/assets/images/logo2.png";
+import logo2 from "/src/assets/images/logo-white.png";
 import pana from "/src/assets/images/pana.png";
 
 function Homepage() {
@@ -64,7 +64,10 @@ function Homepage() {
               </FormControl>
 
               <FormControl fullWidth>
-                <InputLabel style={{ color: "black" }} id="town-select-label">
+                <InputLabel
+                  className="homepage-welcome-appointment-label"
+                  id="town-select-label"
+                >
                   İlçe
                 </InputLabel>
                 <Select
@@ -122,7 +125,9 @@ function Homepage() {
           <img
             className="welcome-container-image"
             src={logo2}
-            style={{ width: "270px", height: "117px" }}
+            /* style={{ width: "532px", height: "469px" }} */
+            style={{ width: "354px", height: "312px" }}
+            /*  style={{ width: "425px", height: "390px" }} */
             alt="logo"
           />
         </div>
