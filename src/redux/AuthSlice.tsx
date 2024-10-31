@@ -5,31 +5,34 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export interface AuthState {
     isAuthenticated: boolean;
-    userId: string | null;
     message: string | null;
     accessToken: string | null;
+    token_type: string | null;
     refreshToken: string | null;
     loading: boolean;
     error: string | null;
+    expires_in: number | null;
 }
 
 const initialState: AuthState = {
     isAuthenticated: false,
-    userId: null,
     message: null,
     accessToken: null,
+    token_type: null,
     refreshToken: null,
     loading: false,
     error: null,
+    expires_in: null,
 };
 
-export interface LoginCredentials {
+export interface LoginUserInput {
     mail: string;
     password: string;
 }
 
 export interface LoginResponse {
-    userId: string;
+    token_type: string;
+    expires_in: number;
     message: string;
     accessToken: string;
     refreshToken: string;
@@ -41,7 +44,8 @@ export interface LoginResponse {
         const response = await axios.post('http://localhost:3000/users', credentials);
         return response.data;
     }); */
-    export const loginUser = createAsyncThunk<LoginResponse, LoginCredentials>(
+    
+    export const loginUser = createAsyncThunk<LoginResponse, LoginUserInput>(
         'auth/login',
         async (credentials) => {
             try {
@@ -52,7 +56,8 @@ export interface LoginResponse {
                     const user = users[0];
                     if (user.password === credentials.password) {
                         return {
-                            userId: user.id,
+                            token_type: 'Bearer',
+                            expires_in: 3600,
                             message: 'Giriş başarılı',
                             accessToken: 'sample_access_token',
                             refreshToken: 'sample_refresh_token', 
@@ -71,8 +76,6 @@ export interface LoginResponse {
     );
     
     
-    
-
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -86,14 +89,12 @@ const authSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.isAuthenticated = true;
-                state.userId = action.payload.userId;
+                state.token_type=action.payload.token_type;
                 state.accessToken = action.payload.accessToken;
                 state.refreshToken = action.payload.refreshToken;
+                state.expires_in = action.payload.expires_in;
                 state.message = action.payload.message;
-                console.log(state.userId)
-                console.log(state.accessToken)
-                console.log(state.refreshToken)
-                console.log(state.message)
+                state.error = null;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;

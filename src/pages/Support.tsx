@@ -31,7 +31,7 @@ const Support = () => {
             case "Güvenlik ve Gizlilik":
                 return <Security />;
             case "Sahalar":
-                return <FootballCourtsSupport/>
+                return <FootballCourtsSupport />
             default:
                 return <PopularQuestions />;
         }
@@ -39,6 +39,7 @@ const Support = () => {
 
     return (
         <div className="support-page">
+            <div style={{ paddingTop: '4rem' }}> </div>
             <hr />
             <br />
             <div className="support-page-sections">
