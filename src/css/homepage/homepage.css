@@ -26,7 +26,6 @@ body {
     background-repeat: no-repeat;
     width: 100%;
     min-height: 80.5vh;
-    /* margin-top: 5rem; */
 }
 
 
@@ -119,7 +118,6 @@ body {
 .homepage-our-services-title {
     font-size: 1.875rem; 
     font-weight: 400;
-    color: rgb(72, 72, 72);
     font-family: 'Poppins', sans-serif;
     margin-top: 2rem;
     text-align: center;

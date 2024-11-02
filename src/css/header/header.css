@@ -3,14 +3,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
-    background-color: rgba(0, 0, 0, 0.01);
-    height: 5rem;
-    
+    height: 5rem;    
     position: fixed;
     z-index: 1;
-    width: 100%;
-    /* box-shadow: 0 0.25rem 0.625rem rgba(103, 103, 103, 0.3); */
-  
+    width: 100%;  
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -52,7 +49,6 @@ body {
     height: 46%;
     border: none;
     padding: 1rem;
-   /*  padding-bottom: 0.9rem; */
     border-radius: 2rem;
     
 
@@ -61,11 +57,10 @@ body {
 .header-image-container-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: rgb(252, 252, 252);
     font-family: 'Poppins', sans-serif;
     margin-left: 6rem;
     padding-left: 1rem;
-    border-left: 0.2rem solid rgba(210, 210, 210, 0.752);
+    border-left: 0.2rem solid;
 }
 
 /* .header-tab:hover {
@@ -78,8 +73,6 @@ body {
 {
     width: 10%;
     padding-bottom: 1.2rem;
-    /* color: rgb(26, 26, 26); */
-    color: rgb(252, 252, 252);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,8 +84,6 @@ body {
     font-weight: bold; /* Seçili sekmede kalın yazı */
     border: solid;
     border-width: 3px;
-    /* border-color: rgb(28, 28, 28); */
-    border-color: rgb(252, 252, 252);
     border-left: 0;
     border-right: 0;
     border-top: 0;
@@ -102,8 +93,6 @@ body {
 }
 
 .header-tab-text {
-    /* color: rgb(36, 36, 36) !important; */
-    color: rgb(252, 252, 252) !important;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     font-weight: 500;
@@ -153,11 +142,21 @@ body {
 .header-dropdown-tab {
     text-align: left;
     position: relative;
-    font-family: 'Poppins', sans-serif;
     height: 46%;
     border: none;
     padding: 1rem;
     border-radius: 2rem;
+}
+
+.header-dropdown-tab-text {
+    text-align: left;
+    position: relative;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    font-family: 'Poppins' !important;
+    border: none;
+    text-decoration: none !important;
+    padding: 0 !important;
 }
 
 

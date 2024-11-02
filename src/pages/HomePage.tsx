@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import logo2 from "/src/assets/images/logo-white.png";
 import pana from "/src/assets/images/pana.png";
 import { Box } from "@mui/material";
+import { useCustomTheme } from "../themes/Theme";
 
 function Homepage() {
   const [cities, setCities] = React.useState<string[]>([]);
@@ -32,8 +33,10 @@ function Homepage() {
     setDays(["Gün", "Sonraki Gün", "Son Gün"]);
   };
 
+  const theme = useCustomTheme();
+
   return (
-    <Box className="homepage">
+    <Box className="homepage" bgcolor={theme.palette.background.w245}>
       <div className="welcome-container">
         <div>
           <div className="homepage-welcome-content">
@@ -134,7 +137,10 @@ function Homepage() {
         </div>
       </div>
 
-      <div className="homepage-our-services-title">
+      <div
+        style={{ color: theme.palette.tx.primary.w200 }}
+        className="homepage-our-services-title"
+      >
         <p>Hizmetlerimiz</p>
       </div>
 

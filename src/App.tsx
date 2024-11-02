@@ -13,7 +13,7 @@ import PasswordReset from "./components/PasswordReset";
 import Support from "./pages/Support";
 
 import { useState } from "react";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme, lightTheme } from "./themes/Theme";
 
 function App() {

@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./../css/header/header.css";
 //import logo from "/src/assets/images/logo.png";
 import darklogo from "/src/assets/images/logo-white-3.png";
-import { Box, Button, Divider } from "@mui/material";
+import { Box, Button, Divider, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useCustomTheme } from "../themes/Theme";
 
 interface HeaderProps {
   currentTheme: string;
@@ -14,7 +15,27 @@ interface HeaderProps {
 function Header({ currentTheme, toggleTheme }: HeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation(); // Mevcut yolu almak için useLocation kullanılıyor
-  const theme = useTheme();
+  const theme = useCustomTheme();
+
+  const [isAtTop, setIsAtTop] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY === 0) {
+      setIsAtTop(true);
+    } else {
+      setIsAtTop(false);
+    }
+  };
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setIsAtTop(true);
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -23,34 +44,70 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
   // Seçili sayfa kontrolü
   const isSelected = (path: string) => location.pathname === path;
 
+  console.log(theme.palette);
+
   return (
     <div
       className="header"
-      /* style={{
-        backgroundColor: theme.palette.background.paper,
-        color: theme.palette.text.primary,
-      }} */
+      style={
+        isAtTop
+          ? {
+              backgroundColor: theme.palette.common.transparent,
+              color: theme.palette.tx.secondary.w400,
+              zIndex: 1000,
+            }
+          : {
+              backgroundColor: theme.palette.background.w250,
+              color: theme.palette.tx.primary.w400,
+              zIndex: 1000,
+            }
+      }
     >
       <div className="header-image-container">
-        {/* <img
-          className="header-image"
-          style={{ width: "12px", height: "100px" }}
-          src={darklogo}
-          alt="logo"
-        /> */}
-        <div className="header-image-container-title">SAHAN CEPTE</div>
+        <div
+          style={
+            isAtTop
+              ? {
+                  color: theme.palette.tx.secondary.w400,
+                  borderLeftColor: theme.palette.tx.secondary.w400,
+                }
+              : {
+                  color: theme.palette.tx.primary.w400,
+                  borderLeftColor: theme.palette.tx.primary.w400,
+                }
+          }
+          className="header-image-container-title"
+        >
+          SAHAN CEPTE
+        </div>
       </div>
 
       <div className="header-tab-container">
         <div className={`header-tab ${isSelected("/") ? "selected" : ""}`}>
-          <Link className="header-tab-text" to="/">
+          <Link
+            color={
+              isAtTop
+                ? theme.palette.tx.secondary.w400
+                : theme.palette.tx.primary.w400
+            }
+            className="header-tab-text"
+            href="/"
+          >
             Ana Sayfa
           </Link>
         </div>
         <div
           className={`header-tab ${isSelected("/fields") ? "selected" : ""}`}
         >
-          <Link className="header-tab-text" to="/fields">
+          <Link
+            color={
+              isAtTop
+                ? theme.palette.tx.secondary.w400
+                : theme.palette.tx.primary.w400
+            }
+            className="header-tab-text"
+            href="/fields"
+          >
             Halı Sahalar
           </Link>
         </div>
@@ -59,19 +116,43 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             isSelected("/createteam") ? "selected" : ""
           }`}
         >
-          <Link className="header-tab-text" to="/createteam">
+          <Link
+            color={
+              isAtTop
+                ? theme.palette.tx.secondary.w400
+                : theme.palette.tx.primary.w400
+            }
+            className="header-tab-text"
+            href="/createteam"
+          >
             Kadro Kur
           </Link>
         </div>
         <div
           className={`header-tab  ${isSelected("/about") ? "selected" : ""}`}
         >
-          <Link className="header-tab-text" to="/about">
+          <Link
+            color={
+              isAtTop
+                ? theme.palette.tx.secondary.w400
+                : theme.palette.tx.primary.w400
+            }
+            className="header-tab-text"
+            href="/about"
+          >
             Hakkımızda
           </Link>
         </div>
         <div className={`header-tab ${isSelected("/help") ? "selected" : ""}`}>
-          <Link className="header-tab-text" to="/help">
+          <Link
+            color={
+              isAtTop
+                ? theme.palette.tx.secondary.w400
+                : theme.palette.tx.primary.w400
+            }
+            className="header-tab-text"
+            href="/help"
+          >
             Destek
           </Link>
         </div>
@@ -92,12 +173,9 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
           <div className="header-dropdown">
             <div className="header-dropdown-tab">
               <Link
-                to="/login"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  fontFamily: "Roboto",
-                }}
+                color={theme.palette.tx.primary.w400}
+                href="/login"
+                className="header-dropdown-tab-text"
               >
                 Giriş Yap
               </Link>
@@ -105,12 +183,9 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
 
             <div className="header-dropdown-tab">
               <Link
-                to="/signup"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  fontFamily: "Roboto",
-                }}
+                className="header-dropdown-tab-text"
+                color={theme.palette.tx.primary.w400}
+                href="/signup"
               >
                 Kayıt Ol
               </Link>
@@ -118,11 +193,9 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             <Divider />
             <div className="header-dropdown-tab">
               <Button
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  fontFamily: "Roboto",
-                }}
+                color="inherit"
+                className="header-dropdown-tab-text"
+                variant="text"
                 onClick={toggleTheme}
               >
                 {currentTheme === "light" ? "Karanlık Mod" : "Aydınlık Mod"}
@@ -131,13 +204,10 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             <Divider />
             <div className="header-dropdown-tab">
               <Link
-                to="/password-reset"
+                color={theme.palette.tx.primary.w400}
+                href="/password-reset"
+                className="header-dropdown-tab-text"
                 onClick={toggleMenu}
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  fontFamily: "Roboto",
-                }}
               >
                 Şifre Yenile
               </Link>
