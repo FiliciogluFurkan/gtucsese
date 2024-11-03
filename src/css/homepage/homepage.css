@@ -12,7 +12,7 @@ body {
 .homepage {
     display: flex;
     flex-direction: column;
-    position: relative;
+    /* position: relative; */
     width: 100%;
    
 }
@@ -169,17 +169,10 @@ body {
 /****************************************************/
 
 .homepage-statistics-box {
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 1rem;
-    padding-left: 4rem;
-    padding-right: 4rem;
     border-radius: 1rem;
-    width: 24%;
-    /* border-style: solid;
-    border-width: 1px; */
     box-shadow: 0rem 0.25rem 0.625rem rgba(228, 228, 228, 0.151);
 }
 
@@ -220,13 +213,8 @@ body {
 }
 
 .homepage-our-services-section-card {
-    padding: 2rem;
-    margin: 2rem;
-    /* height: 13rem; */
     display: flex;
     flex-direction: column;
-    width: 40%;
-    /* border: 0.1rem solid rgba(210, 210, 210, 0.752);  */
     border-radius: 0.5rem;
     box-shadow: 0 0.25rem 0.625rem rgba(27, 27, 27, 0.3);
     background-color: rgba(0, 0, 0, 0.363);
@@ -269,5 +257,3 @@ body {
     margin-top: 1rem;
 
 }
-
-

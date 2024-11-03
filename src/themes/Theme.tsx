@@ -81,7 +81,10 @@ interface IThemeOptions extends ThemeOptions {
       sm: number;
       md: number;
       lg: number;
+      xlg: number;
       xl: number;
+      xxl: number;
+      xxxl: number;
     };
   };
 }
@@ -163,7 +166,10 @@ const lightTheme = createTheme({
       sm: 540,
       md: 900,
       lg: 1200,
+      xlg: 1360,
       xl: 1536,
+      xxl: 1920,
+      xxxl: 2560,
     },
   },
 } as IThemeOptions);
@@ -175,6 +181,18 @@ const darkTheme = createTheme({
   typography: {
     button: {
       textTransform: "none",
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 360,
+      sm: 540,
+      md: 900,
+      lg: 1200,
+      xlg: 1360,
+      xl: 1536,
+      xxl: 1920,
+      xxxl: 2560,
     },
   },
 } as IThemeOptions);

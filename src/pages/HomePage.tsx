@@ -312,8 +312,19 @@ const Homepage: React.FC = () => {
           width="40%"
           className="homepage-our-services-section"
         >
-          <Stack width="90%" direction="row" flexWrap="wrap">
-            <div className="homepage-our-services-section-card">
+          <Stack
+            sx={{ width: { md: "96%", xxl: "90%" } }}
+            direction="row"
+            flexWrap="wrap"
+          >
+            <Stack
+              sx={{
+                padding: { sm: "1rem", md: "1rem", lg: "1.5rem", xxl: "2rem" },
+                margin: { sm: "0.5rem", md: "1rem", lg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", md: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -337,9 +348,16 @@ const Homepage: React.FC = () => {
                 {/* Tarih ve saat seçiminizi yaparak, en uygun
                 sahayı birkaç tıkla seçebilirsiniz. */}
               </div>
-            </div>
+            </Stack>
 
-            <div className="homepage-our-services-section-card">
+            <Stack
+              sx={{
+                padding: { sm: "1rem", md: "1rem", lg: "1.5rem", xxl: "2rem" },
+                margin: { sm: "0.5rem", md: "1rem", lg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", md: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -362,9 +380,16 @@ const Homepage: React.FC = () => {
                 ve dizilişlerini belirleyebilir. Maç öncesi stratejinizi kolayca
                 planlayın.
               </div>
-            </div>
+            </Stack>
 
-            <div className="homepage-our-services-section-card">
+            <Stack
+              sx={{
+                padding: { sm: "1rem", md: "1rem", lg: "1.5rem", xxl: "2rem" },
+                margin: { sm: "0.5rem", md: "1rem", lg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", md: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -389,9 +414,16 @@ const Homepage: React.FC = () => {
                 {/* Sahalar hakkında yapılan yorumları okuyarak en iyi
                 seçimleri yapabilirsiniz. */}
               </div>
-            </div>
+            </Stack>
 
-            <div className="homepage-our-services-section-card">
+            <Stack
+              sx={{
+                padding: { sm: "1rem", md: "1rem", lg: "1.5rem", xxl: "2rem" },
+                margin: { sm: "0.5rem", md: "1rem", lg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", md: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -413,7 +445,7 @@ const Homepage: React.FC = () => {
                 Kullanıcılarımıza düzenlediğimiz çekilişlerle harika hediyeler
                 kazanma şansı sunuyoruz. Katılın, şansınızı deneyin!
               </div>
-            </div>
+            </Stack>
           </Stack>
         </Box>
       </Stack>
@@ -445,6 +477,11 @@ const Homepage: React.FC = () => {
         >
           <Stack
             bgcolor={theme.palette.background.primary.w253}
+            sx={{
+              width: { md: "24%" },
+              paddingX: { md: "4rem" },
+              paddingY: { md: "1rem" },
+            }}
             className="homepage-statistics-box"
           >
             <Box
@@ -462,6 +499,11 @@ const Homepage: React.FC = () => {
             </Box>
           </Stack>
           <Stack
+            sx={{
+              width: { md: "24%" },
+              paddingX: { md: "4rem" },
+              paddingY: { md: "1rem" },
+            }}
             bgcolor={theme.palette.background.primary.w253}
             className="homepage-statistics-box"
           >
@@ -482,6 +524,11 @@ const Homepage: React.FC = () => {
             </Box>
           </Stack>
           <Stack
+            sx={{
+              width: { md: "24%" },
+              paddingX: { md: "4rem" },
+              paddingY: { md: "1rem" },
+            }}
             bgcolor={theme.palette.background.primary.w253}
             className="homepage-statistics-box"
           >
@@ -500,6 +547,11 @@ const Homepage: React.FC = () => {
             </Box>
           </Stack>
           <Stack
+            sx={{
+              width: { md: "24%" },
+              paddingX: { md: "4rem" },
+              paddingY: { md: "1rem" },
+            }}
             bgcolor={theme.palette.background.primary.w253}
             className="homepage-statistics-box"
           >
