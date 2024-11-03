@@ -12,8 +12,8 @@ body {
 .homepage {
     display: flex;
     flex-direction: column;
-    position: relative;
-    width: 100%;
+    /* position: relative; */
+    width: 100vw;
    
 }
 .welcome-container {
@@ -169,27 +169,20 @@ body {
 /****************************************************/
 
 .homepage-statistics-box {
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 1rem;
-    padding-left: 4rem;
-    padding-right: 4rem;
     border-radius: 1rem;
-    width: 24%;
-    /* border-style: solid;
-    border-width: 1px; */
-    box-shadow: 0rem 0.25rem 0.625rem rgba(228, 228, 228, 0.151);
+    box-shadow: 0rem 0.25rem 0.625rem rgba(228, 228, 228, 0.781);
 }
 
 .homepage-statistics-box-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.6rem;
-    font-family: "Rubik", sans-serif;
-    font-weight: 400;
+    font-size: 2rem;
+    font-family: "Outfit", sans-serif;
+    font-weight: 500;
     margin-top: 1rem;
 }
 
@@ -203,7 +196,7 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 4rem;
     font-weight: 600;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 /****************************************************/
@@ -220,13 +213,8 @@ body {
 }
 
 .homepage-our-services-section-card {
-    padding: 2rem;
-    margin: 2rem;
-    /* height: 13rem; */
     display: flex;
     flex-direction: column;
-    width: 40%;
-    /* border: 0.1rem solid rgba(210, 210, 210, 0.752);  */
     border-radius: 0.5rem;
     box-shadow: 0 0.25rem 0.625rem rgba(27, 27, 27, 0.3);
     background-color: rgba(0, 0, 0, 0.363);
@@ -271,3 +259,31 @@ body {
 }
 
 
+/****************************************************/
+/*********** Homepage Contact Us Section ************/
+/****************************************************/
+
+.homepage-contactus-fqa-box {
+    margin: 1rem;
+    margin-left: 0;
+    /* background-color: rgba(0, 0, 0, 0.185); */
+    border-radius: 0.5rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.homepage-contactus-fqa-question-title {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+}
+
+.homepage-contactus-fqa-question-desc {
+    font-family: 'Quicksand', sans-serif !important;
+    font-weight: 300 !important;
+    margin-top: 0.5rem !important;
+}
+
+
+/****************************************************/
+/*********** Homepage Contact Us Section ************/
+/****************************************************/

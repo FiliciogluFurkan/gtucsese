@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import logo2 from "/src/assets/images/logo-white.png";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { useCustomTheme } from "../themes/Theme";
 import { IoBookmarksOutline, IoLocateOutline, IoSearch } from "react-icons/io5";
 import { TbSoccerField } from "react-icons/tb";
@@ -14,7 +14,7 @@ import { BsPerson } from "react-icons/bs";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { GoComment } from "react-icons/go";
 import { PiCityLight } from "react-icons/pi";
-
+import BlackBg5 from "/src/assets/images/black-bg-5.svg";
 const Homepage: React.FC = () => {
   const [cities] = React.useState<string[]>([]);
   const [city, setCity] = React.useState<string>("");
@@ -239,18 +239,18 @@ const Homepage: React.FC = () => {
         <Box
           component="img"
           sx={{
-            backgroundImage: "url('/src/assets/images/black-bg-5.svg')",
+            backgroundImage: "url('" + BlackBg5 + "')",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             height: "40rem",
-            width: "100%",
+            width: "110%",
             position: "absolute",
             zIndex: "-10",
           }}
         />
         <Box
           bgcolor="rgba(40,40,40,0)"
-          width="40%"
+          width="44%"
           display="flex"
           alignItems="flex-start"
           justifyContent="center"
@@ -264,7 +264,10 @@ const Homepage: React.FC = () => {
           >
             <Typography
               textAlign="left"
-              sx={{ fontSize: { md: "4rem" }, marginTop: { md: "2rem" } }}
+              sx={{
+                fontSize: { sm: "3rem", xlg: "3.4rem", xxl: "4rem" },
+                marginTop: { md: "2rem" },
+              }}
               fontWeight={400}
               fontFamily="Barlow"
               style={{ color: theme.palette.tx.secondary.w200 }}
@@ -272,7 +275,10 @@ const Homepage: React.FC = () => {
               Hizmetlerimiz
             </Typography>
             <Typography
-              sx={{ fontSize: { md: "1.4rem" }, marginTop: { md: "2rem" } }}
+              sx={{
+                fontSize: { md: "1.3rem", xlg: "1.5rem" },
+                marginTop: { md: "2rem" },
+              }}
               fontWeight={200}
               fontFamily="Poppins"
               style={{ color: theme.palette.tx.secondary.w100 }}
@@ -309,11 +315,26 @@ const Homepage: React.FC = () => {
 
         <Box
           bgcolor="transparent"
-          width="40%"
+          width="44%"
           className="homepage-our-services-section"
         >
-          <Stack width="90%" direction="row" flexWrap="wrap">
-            <div className="homepage-our-services-section-card">
+          <Stack
+            sx={{ width: { md: "96%", xxl: "90%" } }}
+            direction="row"
+            flexWrap="wrap"
+          >
+            <Stack
+              sx={{
+                padding: {
+                  sm: "1rem",
+                  xlg: "1.4rem",
+                  xxl: "2rem",
+                },
+                margin: { sm: "0.5rem", xlg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", xlg: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -337,9 +358,20 @@ const Homepage: React.FC = () => {
                 {/* Tarih ve saat seçiminizi yaparak, en uygun
                 sahayı birkaç tıkla seçebilirsiniz. */}
               </div>
-            </div>
+            </Stack>
 
-            <div className="homepage-our-services-section-card">
+            <Stack
+              sx={{
+                padding: {
+                  sm: "1rem",
+                  xlg: "1.4rem",
+                  xxl: "2rem",
+                },
+                margin: { sm: "0.5rem", xlg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", xlg: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -359,12 +391,24 @@ const Homepage: React.FC = () => {
                 className="homepage-our-services-section-card-text"
               >
                 Kullanıcılar, sanal oyun tahtası üzerinde takımlarını kurabilir
-                ve dizilişlerini belirleyebilir. Maç öncesi stratejinizi kolayca
-                planlayın.
+                ve dizilişlerini belirleyebilir.
+                {/*  Maç öncesi stratejinizi kolayca
+                planlayın. */}
               </div>
-            </div>
+            </Stack>
 
-            <div className="homepage-our-services-section-card">
+            <Stack
+              sx={{
+                padding: {
+                  sm: "1rem",
+                  xlg: "1.4rem",
+                  xxl: "2rem",
+                },
+                margin: { sm: "0.5rem", xlg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", xlg: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -389,9 +433,20 @@ const Homepage: React.FC = () => {
                 {/* Sahalar hakkında yapılan yorumları okuyarak en iyi
                 seçimleri yapabilirsiniz. */}
               </div>
-            </div>
+            </Stack>
 
-            <div className="homepage-our-services-section-card">
+            <Stack
+              sx={{
+                padding: {
+                  sm: "1rem",
+                  xlg: "1.4rem",
+                  xxl: "2rem",
+                },
+                margin: { sm: "0.5rem", xlg: "1rem", xxl: "2rem" },
+                width: { sm: "100%", xlg: "44%", xxl: "40%" },
+              }}
+              className="homepage-our-services-section-card"
+            >
               <div className="homepage-our-services-section-card-header">
                 <div
                   style={{ color: "rgb(72 243 72)" }}
@@ -411,9 +466,9 @@ const Homepage: React.FC = () => {
                 className="homepage-our-services-section-card-text"
               >
                 Kullanıcılarımıza düzenlediğimiz çekilişlerle harika hediyeler
-                kazanma şansı sunuyoruz. Katılın, şansınızı deneyin!
+                kazanma şansı sunuyoruz.{/*  Katılın, şansınızı deneyin! */}
               </div>
-            </div>
+            </Stack>
           </Stack>
         </Box>
       </Stack>
@@ -422,13 +477,14 @@ const Homepage: React.FC = () => {
         direction="column"
         width="100%"
         alignItems="center"
+        /* bgcolor={theme.palette.background.primary.w253} */
         sx={{ marginTop: { md: "5rem" } }}
       >
         <Typography
-          width="40%"
+          sx={{ width: { sm: "70%", md: "60%", xxl: "40%" } }}
           textAlign="center"
-          fontFamily="Rubik"
-          fontSize="2em"
+          fontFamily="Barlow Condensed"
+          fontSize="2.4rem"
           color={theme.palette.tx.primary.w600}
           fontWeight={300}
         >
@@ -438,13 +494,17 @@ const Homepage: React.FC = () => {
         <Stack
           marginTop="5rem"
           gap={1}
-          width="60%"
+          sx={{ width: { sm: "90%", md: "80%", xxl: "60%" } }}
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
           <Stack
             bgcolor={theme.palette.background.primary.w253}
+            sx={{
+              paddingX: { sm: "2rem", md: "3rem", xxl: "4rem" },
+              paddingY: { sm: "0.6rem", xxl: "1rem" },
+            }}
             className="homepage-statistics-box"
           >
             <Box
@@ -462,6 +522,10 @@ const Homepage: React.FC = () => {
             </Box>
           </Stack>
           <Stack
+            sx={{
+              paddingX: { sm: "2rem", md: "3rem", xxl: "4rem" },
+              paddingY: { sm: "0.6rem", xxl: "1rem" },
+            }}
             bgcolor={theme.palette.background.primary.w253}
             className="homepage-statistics-box"
           >
@@ -482,6 +546,10 @@ const Homepage: React.FC = () => {
             </Box>
           </Stack>
           <Stack
+            sx={{
+              paddingX: { sm: "2rem", md: "3rem", xxl: "4rem" },
+              paddingY: { sm: "0.6rem", xxl: "1rem" },
+            }}
             bgcolor={theme.palette.background.primary.w253}
             className="homepage-statistics-box"
           >
@@ -500,6 +568,10 @@ const Homepage: React.FC = () => {
             </Box>
           </Stack>
           <Stack
+            sx={{
+              paddingX: { sm: "2rem", md: "3rem", xxl: "4rem" },
+              paddingY: { sm: "0.6rem", xxl: "1rem" },
+            }}
             bgcolor={theme.palette.background.primary.w253}
             className="homepage-statistics-box"
           >
@@ -522,47 +594,47 @@ const Homepage: React.FC = () => {
 
       <Stack
         zIndex="0"
-        sx={{ marginTop: { md: "5rem" } }}
+        sx={{ marginTop: { md: "10rem", marginBottom: "10rem" } }}
         direction="row"
         width="100%"
         alignItems="center"
         justifyContent="center"
-        height="30rem"
+        /* height="40rem" */
       >
-        <Box
+        {/* <Box
           component="img"
           sx={{
-            backgroundImage: "url('/src/assets/images/black-bg-12.svg')",
+            backgroundImage: "url('" + BlackBg14 + "')",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            height: "30rem",
-            width: "100%",
+            height: "40rem",
+            width: "110%",
             position: "absolute",
-            zIndex: "-10",
+            zIndex: "-1",
           }}
-        />
-        <Stack width="40%" height="100%" alignItems="center">
+        /> */}
+        <Stack width="30%" height="100%" alignItems="center">
           <Stack
-            width="70%"
+            width="100%"
             height="100%"
             zIndex={1}
             direction="column"
-            justifyContent="center"
+            justifyContent="flex-start"
           >
             <Typography
               fontFamily="Quicksand"
-              fontWeight={500}
-              color={theme.palette.primary.light}
-              sx={{ fontSize: "3.6rem" }}
+              fontWeight={400}
+              color={theme.palette.tx.primary.w500}
+              sx={{ fontSize: "3rem" }}
             >
               Bize Katılın
             </Typography>
 
             <Typography
               fontFamily="Quicksand"
-              fontWeight={300}
-              color={theme.palette.tx.secondary.w500}
-              sx={{ marginTop: "1rem" }}
+              fontWeight={500}
+              color={theme.palette.tx.primary.w500}
+              sx={{ marginTop: "1rem", fontSize: "1.2rem" }}
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
               perferendis quaerat amet est assumenda incidunt at, aliquid
@@ -587,29 +659,110 @@ const Homepage: React.FC = () => {
         <Stack
           width="40%"
           height="100%"
-          alignItems="center"
+          alignItems="flex-end"
+          flexDirection="column"
           justifyContent="flex-start"
         >
-          <Stack
-            width="70%"
-            height="100%"
-            zIndex={1}
+          {/* <Stack
+            width="50%"
+            height="30rem%"
+            zIndex={0}
             direction="column"
             justifyContent="center"
-          ></Stack>
+            position="absolute"
+            style={{ zIndex: "0" }}
+          >
+            {" "}
+            <Box
+              component="img"
+              sx={{
+                backgroundImage: "url('/src/assets/images/soccer-1-1.jpg')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "revert",
+                height: "30rem",
+                width: "100%",
+              }}
+            />
+          </Stack> */}
+          <Stack
+            width="80%"
+            justifyContent="flex-start"
+            flexDirection="column"
+            zIndex={1}
+          >
+            <Typography
+              fontFamily="Quicksand"
+              fontWeight={800}
+              /* borderBottom="1px solid" */
+              color={theme.palette.tx.primary.w500}
+              /* color={theme.palette.primary.light} */
+              sx={{ fontSize: "1.4rem" }}
+            >
+              SIK SORULAN SORULAR
+            </Typography>
+            <Divider
+              sx={{
+                borderColor: theme.palette.primary.main,
+                opacity: 0.5,
+                marginTop: "0.5rem",
+              }}
+            />
+            <Box className="homepage-contactus-fqa-box">
+              <Typography
+                color={theme.palette.tx.primary.w600}
+                sx={{ fontSize: "1rem" }}
+                className="homepage-contactus-fqa-question-title"
+              >
+                Birden fazla halı saha rezervasyonu yapabilir miyim?
+              </Typography>
+              <Typography
+                sx={{ fontSize: "0.9rem" }}
+                color={theme.palette.tx.primary.w100}
+                className="homepage-contactus-fqa-question-desc"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Quisquam quas, quae, voluptate, voluptas aperiam quia natus
+                dolorum asperiores quod voluptates.
+              </Typography>
+            </Box>
+            <Box className="homepage-contactus-fqa-box">
+              <Typography
+                color={theme.palette.tx.primary.w600}
+                sx={{ fontSize: "1rem" }}
+                className="homepage-contactus-fqa-question-title"
+              >
+                Rezervasyonu nasıl iptal edebilirim?
+              </Typography>
+              <Typography
+                sx={{ fontSize: "0.9rem" }}
+                color={theme.palette.tx.primary.w100}
+                className="homepage-contactus-fqa-question-desc"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Quisquam quas, quae, voluptate, voluptas aperiam quia natus
+                dolorum asperiores quod voluptates.
+              </Typography>
+            </Box>
+            <Box className="homepage-contactus-fqa-box">
+              <Typography
+                color={theme.palette.tx.primary.w600}
+                sx={{ fontSize: "1rem" }}
+                className="homepage-contactus-fqa-question-title"
+              >
+                Rezervasyon saatinden önce halı saha değiştirebilir miyim?
+              </Typography>
+              <Typography
+                sx={{ fontSize: "0.9rem" }}
+                color={theme.palette.tx.primary.w100}
+                className="homepage-contactus-fqa-question-desc"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Quisquam quas, quae, voluptate, voluptas aperiam quia natus
+                dolorum asperiores quod voluptates.
+              </Typography>
+            </Box>
+          </Stack>
         </Stack>
-        {/*   <Box
-            component="img"
-            sx={{
-              backgroundImage: "url('/src/assets/images/soccer-1-1.jpg')",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              height: "30rem",
-              width: "100%",
-              position: "absolute",
-              zIndex: "-10",
-            }}
-          /> */}
       </Stack>
     </Box>
   );
