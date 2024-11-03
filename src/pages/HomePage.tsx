@@ -15,7 +15,6 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { GoComment } from "react-icons/go";
 import { PiCityLight } from "react-icons/pi";
 import BlackBg5 from "/src/assets/images/black-bg-5.svg";
-import BlackBg14 from "/src/assets/images/black-bg-14.svg";
 const Homepage: React.FC = () => {
   const [cities] = React.useState<string[]>([]);
   const [city, setCity] = React.useState<string>("");
@@ -478,7 +477,7 @@ const Homepage: React.FC = () => {
         direction="column"
         width="100%"
         alignItems="center"
-        bgcolor={theme.palette.background.primary.w253}
+        /* bgcolor={theme.palette.background.primary.w253} */
         sx={{ marginTop: { md: "5rem" } }}
       >
         <Typography
@@ -595,17 +594,16 @@ const Homepage: React.FC = () => {
 
       <Stack
         zIndex="0"
-        sx={{ marginTop: { md: "5rem" } }}
+        sx={{ marginTop: { md: "10rem", marginBottom: "10rem" } }}
         direction="row"
         width="100%"
         alignItems="center"
         justifyContent="center"
-        height="40rem"
+        /* height="40rem" */
       >
-        <Box
+        {/* <Box
           component="img"
           sx={{
-            /*  backgroundImage: "url('/src/assets/images/black-bg-12.svg')", */
             backgroundImage: "url('" + BlackBg14 + "')",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
@@ -614,29 +612,29 @@ const Homepage: React.FC = () => {
             position: "absolute",
             zIndex: "-1",
           }}
-        />
-        <Stack width="50%" height="100%" alignItems="center">
+        /> */}
+        <Stack width="30%" height="100%" alignItems="center">
           <Stack
-            width="70%"
+            width="100%"
             height="100%"
             zIndex={1}
             direction="column"
-            justifyContent="center"
+            justifyContent="flex-start"
           >
             <Typography
               fontFamily="Quicksand"
-              fontWeight={500}
-              color={theme.palette.primary.light}
-              sx={{ fontSize: "3.6rem" }}
+              fontWeight={400}
+              color={theme.palette.tx.primary.w500}
+              sx={{ fontSize: "3rem" }}
             >
               Bize Katılın
             </Typography>
 
             <Typography
               fontFamily="Quicksand"
-              fontWeight={300}
-              color={theme.palette.tx.secondary.w500}
-              sx={{ marginTop: "1rem" }}
+              fontWeight={500}
+              color={theme.palette.tx.primary.w500}
+              sx={{ marginTop: "1rem", fontSize: "1.2rem" }}
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
               perferendis quaerat amet est assumenda incidunt at, aliquid
@@ -659,11 +657,11 @@ const Homepage: React.FC = () => {
           </Stack>
         </Stack>
         <Stack
-          width="50%"
+          width="40%"
           height="100%"
-          alignItems="center"
+          alignItems="flex-end"
           flexDirection="column"
-          justifyContent="center"
+          justifyContent="flex-start"
         >
           {/* <Stack
             width="50%"
@@ -686,12 +684,17 @@ const Homepage: React.FC = () => {
               }}
             />
           </Stack> */}
-          <Stack width="60%" zIndex={1}>
+          <Stack
+            width="80%"
+            justifyContent="flex-start"
+            flexDirection="column"
+            zIndex={1}
+          >
             <Typography
-              fontFamily="Outfit"
+              fontFamily="Quicksand"
               fontWeight={800}
               /* borderBottom="1px solid" */
-              color={theme.palette.tx.secondary.w500}
+              color={theme.palette.tx.primary.w500}
               /* color={theme.palette.primary.light} */
               sx={{ fontSize: "1.4rem" }}
             >
@@ -699,14 +702,14 @@ const Homepage: React.FC = () => {
             </Typography>
             <Divider
               sx={{
-                borderColor: theme.palette.primary.light,
+                borderColor: theme.palette.primary.main,
                 opacity: 0.5,
                 marginTop: "0.5rem",
               }}
             />
             <Box className="homepage-contactus-fqa-box">
               <Typography
-                color={theme.palette.tx.secondary.w100}
+                color={theme.palette.tx.primary.w600}
                 sx={{ fontSize: "1rem" }}
                 className="homepage-contactus-fqa-question-title"
               >
@@ -714,7 +717,7 @@ const Homepage: React.FC = () => {
               </Typography>
               <Typography
                 sx={{ fontSize: "0.9rem" }}
-                color={theme.palette.tx.secondary.w100}
+                color={theme.palette.tx.primary.w100}
                 className="homepage-contactus-fqa-question-desc"
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -724,7 +727,7 @@ const Homepage: React.FC = () => {
             </Box>
             <Box className="homepage-contactus-fqa-box">
               <Typography
-                color={theme.palette.tx.secondary.w500}
+                color={theme.palette.tx.primary.w600}
                 sx={{ fontSize: "1rem" }}
                 className="homepage-contactus-fqa-question-title"
               >
@@ -732,7 +735,7 @@ const Homepage: React.FC = () => {
               </Typography>
               <Typography
                 sx={{ fontSize: "0.9rem" }}
-                color={theme.palette.tx.secondary.w100}
+                color={theme.palette.tx.primary.w100}
                 className="homepage-contactus-fqa-question-desc"
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -742,7 +745,7 @@ const Homepage: React.FC = () => {
             </Box>
             <Box className="homepage-contactus-fqa-box">
               <Typography
-                color={theme.palette.tx.secondary.w500}
+                color={theme.palette.tx.primary.w600}
                 sx={{ fontSize: "1rem" }}
                 className="homepage-contactus-fqa-question-title"
               >
@@ -750,7 +753,7 @@ const Homepage: React.FC = () => {
               </Typography>
               <Typography
                 sx={{ fontSize: "0.9rem" }}
-                color={theme.palette.tx.secondary.w100}
+                color={theme.palette.tx.primary.w100}
                 className="homepage-contactus-fqa-question-desc"
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
