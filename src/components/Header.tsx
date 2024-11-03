@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./../css/header/header.css";
 //import logo from "/src/assets/images/logo.png";
-import darklogo from "/src/assets/images/logo-white-3.png";
-import { Box, Button, Divider, Link } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Button, Divider, Link } from "@mui/material";
 import { useCustomTheme } from "../themes/Theme";
 
 interface HeaderProps {
@@ -52,14 +50,17 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
       style={
         isAtTop
           ? {
-              backgroundColor: theme.palette.common.transparent,
+              backgroundColor: "rgba(0,0,0,0.1)",
               color: theme.palette.tx.secondary.w400,
               zIndex: 1000,
+
+              boxShadow: "0 0 0",
             }
           : {
-              backgroundColor: theme.palette.background.w250,
+              backgroundColor: theme.palette.background.primary.w250,
               color: theme.palette.tx.primary.w400,
               zIndex: 1000,
+              boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)",
             }
       }
     >
