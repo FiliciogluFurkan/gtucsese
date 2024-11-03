@@ -166,7 +166,7 @@ const lightTheme = createTheme({
       sm: 540,
       md: 900,
       lg: 1200,
-      xlg: 1360,
+      xlg: 1420,
       xl: 1536,
       xxl: 1920,
       xxxl: 2560,
