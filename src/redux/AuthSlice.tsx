@@ -45,7 +45,7 @@ export interface LoginResponse {
         return response.data;
     }); */
     
-    export const loginUser = createAsyncThunk<LoginResponse, LoginUserInput>(
+/*     export const loginUser = createAsyncThunk<LoginResponse, LoginUserInput>(
         'auth/login',
         async (credentials) => {
             try {
@@ -74,7 +74,33 @@ export interface LoginResponse {
             }
         }
     );
-    
+     */
+    export const loginUser = createAsyncThunk<LoginResponse, LoginUserInput>(
+        'auth/login',
+        async (credentials) => {          
+          const params = new URLSearchParams();
+          params.append('grant_type', 'password');
+          params.append('client_id', 'aymoose-web-ui');
+          params.append('username', credentials.mail);
+          params.append('password', credentials.password);
+      
+          const response = await axios.post('https://keycloak.aymoose.devodev.online/realms/aymoose/protocol/openid-connect/token', params, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          });
+          
+          console.log('response is waiting');
+          console.log(response);
+          return {
+            token_type: response.data.token_type,
+            expires_in: response.data.expires_in,
+            accessToken: response.data.access_token,
+            refreshToken: response.data.refresh_token,
+            message: 'Giriş başarılı',
+          };
+        }
+      );
     
 const authSlice = createSlice({
     name: 'auth',

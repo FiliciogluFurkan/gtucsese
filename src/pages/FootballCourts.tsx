@@ -1,89 +1,15 @@
 import * as React from 'react';
-import { Theme, useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
+//import { Theme, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import FootballCourtCarts from '../components/FootballCourtCarts';
-/* import aydinFootballCourt from '/src/assets/images/fields/aydinHalisaha.png'
-import kolezyumFootballCourt from '/src/assets/images/fields/kolezyum.png'
-import boraFootballCourt from '/src/assets/images/fields/boraHalisaha.png'
-import serdivanFootballCourt from '/src/assets/images/fields/serdivanHalisaha.png'
-import alianzFootballCourt from '/src/assets/images/fields/alianz.png'
-import adaFootballCourt from '/src/assets/images/fields/evin.jpg'
-import clFootballCourt from '/src/assets/images/fields/cl.png' */ 
-
+import "../css/footballcourts/FootballCourts.css";
+import Button from '@mui/material/Button';
+import SearchIcon from '@mui/icons-material/Search';
+import { Box, Popover, List, ListItem, ListItemText, MenuItem, SelectChangeEvent, Select } from '@mui/material'
 import { FootballCourt } from '../interface/FootballCourt';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 10;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 300,
-      borderRadius: '0.5rem',
-    },
-  },
-};
-
-
-
-/*  const fields: FootballCourt[] = [
-  {
-    id: 1,
-    name: 'Aydın Halısaha',
-    image: aydinFootballCourt,
-    rating: 4.5,
-    place: 'Sakarya/erenler'
-  },
-  {
-    id: 2,
-    name: 'Kolezyum Halısaha',
-    image: kolezyumFootballCourt,
-    rating: 3,
-    place: 'Sakarya/erenler'
-  },
-  {
-    id: 3,
-    name: 'Bora halısaha',
-    image: boraFootballCourt,
-    rating: 1.5,
-    place: 'Sakarya/erenler'
-  },
-  {
-    id: 4,
-    name: 'Serdivan Halısaha',
-    image: serdivanFootballCourt,
-    rating: 4.5,
-    place: 'Sakarya/erenler'
-  },
-  {
-    id: 5,
-    name: 'Alianz arena',
-    image: alianzFootballCourt,
-    rating: 2,
-    place: 'Almanya/Munih'
-  },
-  {
-    id: 6,
-    name: 'Ada arena',
-    image: adaFootballCourt,
-    rating: 5,
-    place: 'Sakarya/erenler'
-  },
-  {
-    id: 7,
-    name: 'Şampiyonlar sahası',
-    image: clFootballCourt,
-    rating: 3.5,
-    place: 'Sakarya/erenler'
-  },
-]; */
-
+import { useNavigate } from 'react-router-dom';
 
 
 const cities = [
@@ -103,145 +29,269 @@ const districts = [
 ];
 
 
-function getStyles(name: string, selected: readonly string[], theme: Theme) {
+/* function getStyles(name: string, selected: readonly string[], theme: Theme) {
   return {
     fontWeight: selected.includes(name)
-      ? theme.typography.fontWeightMedium
+     / ? theme.typography.fontWeightMedium
       : theme.typography.fontWeightRegular,
     backgroundColor: selected.includes(name) ? theme.palette.action.hover : 'transparent',
   };
 }
-
+ */
 export default function FootballCourts() {
 
-  const [fields, setFields] = useState<FootballCourt[]>([]); // Başlangıç değeri boş dizi
-
+  const [fields, setFields] = useState<FootballCourt[]>([]);
+  const [selectedLocation, setSelectedLocation] = useState<string>('Cumhuriyet, Gebze teknik üniversitesi tenis kulübü, 41400 Gebze/Kocaeli');
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [listType, setListType] = useState<'cities' | 'districts' | null>(null);
+  const [sortOption, setSortOption] = useState('recommended');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFields = async () => {
       try {
-        const response = await axios.get('https://db.aymoose.devodev.online/fields'); // db.json dosyasının URL'si
-        setFields(response.data); // Verileri state'e ata
+        const response = await axios.get('https://db.aymoose.devodev.online/fields');
+        setFields(response.data);
       } catch (err) {
-      } finally {
       }
     };
-    fetchFields(); // Verileri almak için fonksiyonu çağır
+    fetchFields();
     console.log(fields);
   }, []);
 
-  const theme = useTheme();
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>, type: 'cities' | 'districts') => {
+    setAnchorEl(event.currentTarget);
+    setListType(type);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setListType(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+ // const theme = useTheme();
   const [selectedCity, setSelectedCity] = React.useState<string>('');
   const [selectedDistrict, setSelectedDistrict] = React.useState<string>('');
 
-  const handleCityChange = (event: SelectChangeEvent<string>) => {
-    setSelectedCity(event.target.value);
-    setSelectedDistrict('');
+  const handleSelect = (item: string) => {
+    if (listType === 'cities') {
+      setSelectedCity(item);
+      setSelectedDistrict('')
+    } else if (listType === 'districts') {
+      setSelectedDistrict(item);
+    }
+    handleClose();
   };
 
-  const handleDistrictChange = (event: SelectChangeEvent<string>) => {
-    setSelectedDistrict(event.target.value);
+  const handleSortChange = (event: SelectChangeEvent<string>) => {
+    const selectedValue = event.target.value;
+    
+    setSortOption(selectedValue);  
+    fetchSortedData(selectedValue);  
   };
+
+ 
+  type SortOption = 'recommended' | 'priceAsc' | 'priceDesc' | 'ratingAsc' | 'ratingDesc';
+  const fetchSortedData = async (sortOption: string) => {
+    const validSortOptions: SortOption[] = ['recommended', 'priceAsc', 'priceDesc', 'ratingAsc', 'ratingDesc'];
+  
+    if (validSortOptions.includes(sortOption as SortOption)) {
+      try {
+       // const response = await axios.get(`/api/items?sortOption=${sortOption}`);
+      //  setFields(response.data);  
+      
+    } catch (error) {
+        console.error("Error fetching sorted data:", error);
+      }
+    } else {
+      console.error("Invalid sort option");
+    }
+  };
+  
 
   return (
     <div>
       <div style={{ paddingTop: '4rem' }}> </div>
-      <div className='fieldspage-search-section'>
-        <Typography
-          variant="h4"
-          gutterBottom
-          style={{
-            color: '#1D3C4E',
-            textAlign: 'center',
-            fontWeight: '800'
+      <Box sx={{display: 'flex', flexDirection: 'row'}}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            border: '1px solid #ccc',
+            borderRadius: 2,
+            overflow: 'hidden',
+            width: '40rem',
+            marginTop: '2.5rem',
+            marginLeft: '2.5rem',
+            height: '3.5rem',
           }}
         >
-          Seçim Yapın
-        </Typography>
+          <Button
+            onClick={(e) => handleClick(e, 'cities')}
+            sx={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '0.5rem 0.75rem',
+              borderRight: '1px solid #ccc',
+              borderRadius: 0,
+              color: '#333',
+              textTransform: 'none',
+              height: '100%',
+              minHeight: '3.5rem',
+              '&:hover': { backgroundColor: '#f0f0f0' },  
+            }}
+          >
+            <Typography variant="body1" sx={{ color: '#888' }}>
+              {selectedCity ? selectedCity : 'İl Seçiniz'} 
+            </Typography>
+            <SearchIcon sx={{ color: '#1976d2' }} />
+          </Button>
 
-        <div>
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} sm={6} md={4}>
-              <FormControl sx={{ width: '100%', mt: 3, backgroundColor: 'white', borderRadius: '0.5rem', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}>
-                <Select
-                  displayEmpty
-                  value={selectedCity}
-                  onChange={handleCityChange}
-                  input={<OutlinedInput style={{ borderColor: theme.palette.primary.main, borderWidth: 2 }} />}
-                  renderValue={(selected) => {
-                    if (selected === '') {
-                      return <em style={{ color: theme.palette.text.secondary }}>Şehir Seçiniz</em>;
-                    }
-                    return selected;
-                  }}
-                  MenuProps={MenuProps}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                >
-                  <MenuItem disabled value="">
-                    <em style={{ color: theme.palette.text.secondary }}>Şehir Seçiniz</em>
-                  </MenuItem>
-                  {cities.map((city) => (
-                    <MenuItem
-                      key={city}
-                      value={city}
-                      style={getStyles(city, [selectedCity], theme)}
-                    >
-                      {city}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <FormControl sx={{ width: '100%', mt: 3, backgroundColor: 'white', borderRadius: '0.5rem', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}>
-                <Select
-                  displayEmpty
-                  value={selectedDistrict}
-                  onChange={handleDistrictChange}
-                  input={<OutlinedInput style={{ borderColor: theme.palette.primary.main, borderWidth: 2 }} />}
-                  renderValue={(selected) => {
-                    if (selected === '') {
-                      return <em style={{ color: theme.palette.text.secondary }}>İlçe Seçiniz</em>;
-                    }
-                    return selected;
-                  }}
-                  MenuProps={MenuProps}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                >
-                  <MenuItem disabled value="">
-                    <em style={{ color: theme.palette.text.secondary }}>İlçe Seçiniz</em>
-                  </MenuItem>
-                  {districts.map((district) => (
-                    <MenuItem
-                      key={district}
-                      value={district}
-                      style={getStyles(district, [selectedDistrict], theme)}
-                    >
-                      {district}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </div>
+          <Button
+            onClick={(e) => handleClick(e, 'districts')}
+            sx={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '0.5rem 0.75rem',
+              borderRadius: 0,
+              color: '#333',
+              textTransform: 'none',
+              height: '100%',
+              minHeight: '3rem',
+              '&:hover': { backgroundColor: '#f0f0f0' },  
+            }}
+          >
+            <Typography variant="body1" sx={{ color: '#888' }}>
+              {selectedDistrict ? selectedDistrict : 'İlçe Seçiniz'} 
+            </Typography>
+            <SearchIcon sx={{ color: '#1976d2' }} />
+          </Button>
+
+        </Box>
+
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+        >
+          <List
+            sx={{
+              width: '20rem',
+              maxHeight: '15rem',
+              overflowY: 'auto',
+            }}
+          >
+            {(listType === 'cities' ? cities : districts).map((item, index) => (
+              <ListItem component="li" key={index} onClick={() => handleSelect(item)}>
+                <ListItemText primary={item} />
+              </ListItem>
+            ))}
+          </List>
+        </Popover>
+
+        <Box
+          sx={{
+            marginTop: '2.2rem',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '100%',
+          }}
+        >
+          <Box
+            sx={{
+              width: '18%',
+              marginRight: '10rem',
+              height: '3rem',
+            }}
+          >
+            <Select
+              value={sortOption}
+              onChange={handleSortChange}
+              sx={{
+                width: '100%',
+                border: '1px solid #ccc',
+                borderRadius: '0.25rem',
+                height: '100%',
+                '& .MuiSelect-icon': { color: '#1976d2' },
+              }}
+            >
+              <MenuItem value="recommended">Önerilen</MenuItem>
+              <MenuItem value="priceAsc">Fiyat: Azdan Çoka</MenuItem>
+              <MenuItem value="priceDesc">Fiyat: Çoktan Aza</MenuItem>
+              <MenuItem value="ratingAsc">Puan: Azdan Çoka</MenuItem>
+              <MenuItem value="ratingDesc">Puan: Çoktan Aza</MenuItem>
+            </Select>
+          </Box>
+        </Box>
+      </Box>
+
+      <div style={{ marginTop: '1rem' }}>
       </div>
-      <div style={{ marginTop: '1.875rem' }}>
+      <div style={{ marginTop: '2rem' }}>
         <hr />
       </div>
-      <div style={{ marginTop: '3.125rem' }}>
-      </div>
 
+      <Box sx={{display: 'flex', flexDirection: 'row'}}>
+        <Box sx={{width: '60%',overflowY: 'auto',height: '100vh',flex: 1}}>
+          
+          <div className='footballcourts-list-fields-section'>  
+            
+            {fields.map((field) => {
 
-      <div className='fieldspage-list-fields-section'>
-        {fields.map((field, index) => {
-          const number = String(index + 1).padStart(2, '0');
+              const handleMouseEnter = () => {
+                if (field.id == 2)
+                  setSelectedLocation("Cumhuriyet, Gebze teknik üniversitesi tenis kulübü, 41400 Gebze/Kocaeli");
+                else {
+                  setSelectedLocation("İçmeler, Piri Reis Cd. No:74, 34947 Tuzla/İstanbul, Türkiye");
+                }
+              };
 
-          return (
-            <FootballCourtCarts key={field.id} field={field} number={number} />
-          );
-        })}
-      </div>
+              const handleClick = () => {
+                navigate('/fields/field-details/' + field.id)
+              };
+              
+              return (
+                <div
+                  key={field.id}
+                  onMouseEnter={handleMouseEnter}
+                  onClick={handleClick}
+                >
+                  <FootballCourtCarts field={field} city={selectedCity} district={selectedDistrict} />
+                  <hr className='footballcourts-container-informations-hr-list-section' />
+                </div>
+              );
+            })}
+          </div>
+        </Box>
+
+        <Box sx={{width: '38rem', height: '100vh', flexShrink: 0}}>
+          <iframe className='football-courts-location-map-iframe'
+            style={{ border: "0" }}
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBjMQ2kwfcQ-vk2pue1mdt-rvKsEG8PwD8&q=${selectedLocation}`}
+          >
+          </iframe>
+        </Box>
+      </Box>
+
 
     </div>
   );

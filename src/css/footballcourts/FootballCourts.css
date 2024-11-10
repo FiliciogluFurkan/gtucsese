@@ -1,177 +1,49 @@
-.fieldspage-list-fields-section {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
+
+.footballcourts-list-fields-section {
   gap: 0px;
   padding: 0 10px;
 }
 
-.fieldspage-search-section {
-  padding-left: 6.25rem;
-  padding-top: 3.75rem;
-  height: 14.375rem;
-  background-color: #f5f5f5;
-}
-
-@media (min-width: 1200px) {
-  .fieldspage-list-fields-section {
-    grid-template-columns: repeat(2, 1fr); 
-  } 
-} 
-
-.fieldspage-list-fields-section-card {
-  width: 39.375rem;
-  height: 17.5rem;
-  margin-left: 3.125rem;
-  display: flex;
-  flex-direction: row;
-  margin-top: 1.25rem;
-  border: 2px solid transparent;
-  box-shadow: inset 0 0 0 2px #BFBFBF;
-  border-radius: 1.875rem;
-}
-
-.fieldspage-list-fields-section-card-images {
-  width: 18.125rem;
-  height: 15.25rem;
-  border-radius: 1.0625rem;
+.footballcourts-list-fields-section-card-images {
+  width: 19rem;
+  height: 17rem;
+  border-radius: 0.8rem;
+  object-fit: cover;
   padding-top: 1.25rem;
-  padding-left: 0.9375rem;
+  padding-left: 1rem;
 
 }
-
-.fieldspage-list-fields-section-card-informations {
-  display: flex;
-  flex-direction: column;
-}
-
-.fieldspage-list-fields-section-card-informations-number {
-  padding-left: 16rem;
-  padding-top: 0.625rem;
-  font-size: 4rem;
-  font-weight: 500;
-  font-family: 'roboto', sans-serif;
-}
-
-.fieldspage-list-fields-section-card-informations-name {
-  padding-left: 2rem;
-  padding-top: 0.625rem;
-  font-size: 1.5rem;
-  font-weight: 400;
-  font-family: 'Roboto', sans-serif;
-
-}
-
-.fieldspage-list-fields-section-card-informations-place {
-  display: flex;
-  flex-direction: row;
-  padding-left: 2rem;
-  padding-top: 0.625rem;
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
 }
 
 
-
-.fieldspage-list-fields-section-card-informations-rating {
-  padding-left: 2rem;
-  padding-top: 0.625rem;
+.footballcourts-container-informations-hr-list-section{
+  margin-left: 4rem;
+  margin-top: 1rem;
+  width: 87%;
 }
 
-.fieldspage-list-fields-section-card-informations-button {
-  padding-left: 6rem;
-  padding-top: 1.25rem;
+.list-football-courts {
+  overflow-y: auto; 
+  height: 100vh; 
+  flex: 1;
+  padding-right: 20px; 
 }
 
-.fieldspage-list-fields-section-card-informations-button-go {
-  width: 11.9375rem;
-  height: 2.875rem;
-  border-radius: 0.6875rem;
-  background-color: rgba(29, 60, 78, 0.78);
-  color: white;
-  font-size: 1.25rem;
-  font-weight: 800;
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+.footballcourts-list-fields-section > div {
+  transition: background-color 0.3s; 
 }
 
-@media (max-width: 370px) {
-  .fieldspage-list-fields-section-card {
-    width: 100%;
-    max-width: 21.25rem;
-    margin-left: 0.625rem;
-    height: 15rem;
-    margin: 0.625rem 0;
-    border: 2px solid transparent;
-    box-shadow: inset 0 0 0 2px #BFBFBF;
-    border-radius: 1.875rem;
-    display: flex;
-    flex-direction: row;
-    padding: 0.9375rem;
-    box-sizing: border-box;
-    align-items: center;
-    margin-left: 0;
-    margin-right: 0;
-  }
+.footballcourts-list-fields-section > div:hover {
+  background-color: rgba(211, 211, 211, 0.5); 
+}
 
-  .fieldspage-search-section {
-    padding-left: 0.625rem;
-    padding-top: 3.75rem;
-    background-color: #f5f5f5;
-
-  }
-
-  .fieldspage-list-fields-section-card-images {
-    width: 11.25rem;
-    height: 12.5rem;
-    padding-top: 0.625rem;
-    border-radius: 0.625rem;
-
-  }
-
-  .fieldspage-list-fields-section-card-informations {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 0.9375rem;
-  }
-
-  .fieldspage-list-fields-section-card-informations-number {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin: 0.3125rem 0;
-
-  }
-
-  .fieldspage-list-fields-section-card-informations-name {
-    font-size: 1rem;
-    font-weight: 400;
-    font-family: 'Roboto', sans-serif;
-    margin: 0.3125rem 0;
-
-
-  }
-
-  .fieldspage-list-fields-section-card-informations-button-go {
-    width: 100%;
-    height: 2.5rem;
-    border-radius: 0.6875rem;
-    background-color: rgba(29, 60, 78, 0.78);
-    color: white;
-    font-size: 1rem;
-    font-weight: 800;
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0.625rem;
-
-  }
-
-  .fieldspage-list-fields-section-card-informations-rating,
-  .fieldspage-list-fields-section-card-informations-place {
-    font-size: 0.875rem;
-    padding-top: 0.3125rem;
-    color: #777;
-  }
+.football-courts-location-map-iframe{
+width: 60vw;
+height:100vh;
 }

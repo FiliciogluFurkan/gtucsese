@@ -13,7 +13,7 @@ import { RootState } from '../redux/store';
 import { loginUser } from '../redux/AuthSlice';
 import { AppDispatch } from '../redux/store';
 import { LoginUserInput } from '../redux/AuthSlice';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function Login() {
@@ -25,7 +25,7 @@ function Login() {
   }, [authState]); 
 
   const dispatch = useDispatch<AppDispatch>();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
@@ -55,6 +55,8 @@ function Login() {
       } else {
          result = await dispatch(loginUser(credentials)).unwrap();
         console.log("Giriş başarılı:", result);
+        navigate('/');
+        
       }
     } catch (error) {
       console.error("Giriş başarısız:", error);

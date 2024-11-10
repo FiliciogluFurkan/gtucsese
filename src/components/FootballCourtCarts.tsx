@@ -1,92 +1,137 @@
 //import React from 'react';
 import './../css/footballcourts/FootballCourts.css';
-import { useNavigate } from 'react-router-dom';
 import { FootballCourtsCartProps } from '../interface/FootballCourt';
+import { useState } from 'react';
+import axios from 'axios';
+import { Box } from '@mui/material';
 
 
-function FootballCourtCarts({ field, number }: FootballCourtsCartProps) {
+function FootballCourtCarts({ field, city, district }: FootballCourtsCartProps) {
     const fieldId = field.id;
-    const rating = field.rating;
-    const renderStars = () => {
-        const stars = [];
-        const filledStars = Math.floor(rating);
-        const hasHalfStar = rating % 1 >= 0.5;
-        for (let i = 1; i <= 5; i++) {
-            if (i <= filledStars) {
-                stars.push(
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#E0D163" viewBox="0 0 24 24" stroke='#000000' strokeWidth='0.5'>
-                        <path d="M12 .587l3.668 7.568 8.332 1.209-6 5.82 1.416 8.28L12 18.897l-7.416 3.89L6 16.164l-6-5.82 8.332-1.209z" />
-                    </svg>
-                );
-            } else if (i === filledStars + 1 && hasHalfStar) {
-                stars.push(
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#E0D163" viewBox="0 0 24 24" stroke='#000000' strokeWidth='0.5'>
-                        <defs>
-                            <linearGradient id="halfStarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="50%" style={{ stopColor: '#E0D163' }} />
-                                <stop offset="50%" style={{ stopColor: '#C0C0C0' }} />
-                            </linearGradient>
-                        </defs>
-                        <path d="M12 .587l3.668 7.568 8.332 1.209-6 5.82 1.416 8.28L12 18.897l-7.416 3.89L6 16.164l-6-5.82 8.332-1.209z" fill="url(#halfStarGradient)" />
-                    </svg>
-                );
+    console.log(field);
+
+    const [isFavorited, setIsFavorited] = useState(false);
+
+
+    const handleFavoriteToggle = async () => {
+        const newFavoriteStatus = !isFavorited;
+
+        try {
+            const response = newFavoriteStatus
+                ? await axios.post(`/api/favorites/${fieldId}`)
+                : await axios.delete(`/api/favorites/${fieldId}`);
+
+            if (response.status === 200) {
+                setIsFavorited(newFavoriteStatus);
+                console.log(`Court ID ${fieldId} favorilere ${newFavoriteStatus ? 'eklendi' : 'silindi'}.`);
             } else {
-                stars.push(
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#C0C0C0" viewBox="0 0 24 24">
-                        <path d="M12 .587l3.668 7.568 8.332 1.209-6 5.82 1.416 8.28L12 18.897l-7.416 3.89L6 16.164l-6-5.82 8.332-1.209z" />
-                    </svg>
-                );
+                console.error('Favori işlemi başarısız oldu.');
             }
+        } catch (error) {
+            console.error('Bir hata oluştu:', error);
         }
-        return stars;
     };
-    const navigate = useNavigate(); 
+
+
     return (
 
-        <div className='fieldspage-list-fields-section-card'>
+        <Box sx={{ width: '39.5rem', height: '17.5rem', marginLeft: '3.2rem', display: 'flex', flexDirection: 'row', marginTop: '1.25rem' }}>
             <div>
-                <img className='fieldspage-list-fields-section-card-images' src={field.image} alt="No photo found" />
+                <img className='footballcourts-list-fields-section-card-images' src={field.image} alt="No photo found" />
             </div>
 
-            <div className='fieldspage-list-fields-section-card-informations'>
-                <div className='fieldspage-list-fields-section-card-informations-number'>
-                    <span>{number} </span>
-                </div>
-                <div className='fieldspage-list-fields-section-card-informations-name'>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
 
-                    {field.name.toUpperCase()}
+                <Box sx={{ paddingLeft: '2rem', paddingTop: '2rem', fontSize: '0.9rem', fontWeight: 400, fontFamily: 'Roboto', color: 'rgb(107, 114, 128)', font: 'inter' }}>
+                    <span>{city} / {district} </span>
+                </Box>
+                <Box sx={{ paddingLeft: '2rem', paddingTop: '0.625rem', fontSize: '1.5rem', fontWeight: 500, fontFamily: 'Roboto', color: 'rgb(55, 65, 81)', font: 'inter' }}>
+                    {field.name.toUpperCase()
+                    }
 
-                </div>
-                <div className='fieldspage-list-fields-section-card-informations-place'>
-                    <div >
-                        <span className="material-symbols-outlined" style={{ fontSize: '1.024rem', color: '#1D3C4E' }}>
-                            location_on
-                        </span>
-                    </div>
-                    <div style={{ fontSize: '13px', opacity: 0.47, paddingLeft: '1px' }}>
-                        {field.place}
-                    </div>
+                </Box>
+
+                <Box sx={{ paddingLeft: '2rem', paddingTop: '1.5rem', width: '5rem', color: 'rgb(229, 231, 235)' }}>
+                    <hr />
+                </Box>
 
 
-                </div>
-                <div className='fieldspage-list-fields-section-card-informations-rating'>
-                    {renderStars()}
-                </div>
-                <div className='fieldspage-list-fields-section-card-informations-button'>
-                    <button className='fieldspage-list-fields-section-card-informations-button-go' onClick={() => navigate('/fields/field-details/'+fieldId)}>
-                        <div style={{}}>
-                            Tesise git
-                        </div>
-                        <div style={{ paddingLeft: '30px', paddingTop: '5px' }}>
-                            <span className="material-symbols-outlined" style={{ fill: 'white', fontSize: '30px' }}>
-                                arrow_right
-                            </span>
-                        </div>
-                    </button>
-                </div>
+                <Box sx={{ paddingLeft: '2rem', paddingTop: '1.5rem', width: '22rem', fontFamily: 'inter', fontWeight: 400, color: 'rgb(107, 114, 128)', font: 'inter' }}>
+                    6+6 · 7+7 · 8+8 Sahalar · Cafe · Ayakkabı
+                    Wifi · Duş · Otopark · Yemek
+                </Box>
 
+
+                <Box sx={{
+                    paddingLeft: '2rem',
+                    paddingTop: '1.5rem',
+                    width: '5rem',
+                    color: 'rgb(229, 231, 235)'
+                }}>
+                    <hr />
+                </Box>
+
+
+                <Box sx={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'row' }}>
+
+                    <Box sx={{ paddingTop: '0.2rem', color: 'rgb(55, 65, 81)', fontFamily: 'inter', fontWeight: 400, paddingLeft: '2rem' }}>
+                        {field.rating}
+                    </Box>
+
+                    <Box sx={{ fontSize: '20px', color: '#f59e0b', stroke: 'rgb(252, 211, 77)', strokeWidth: '1px', paddingLeft: '0.4rem' }}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="#f59e0b"
+                            stroke="rgb(252, 211, 77)"
+                            stroke-width="1">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
+                        </svg>
+                    </Box>
+
+
+
+                    <Box sx={{ paddingTop: '0.2rem', color: 'rgb(55, 65, 81)', fontFamily: 'inter', fontWeight: 400, paddingLeft: '0.2rem' }}>
+                        (100 inceleme)
+                    </Box>
+
+                </Box>
+
+            </Box>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box sx={{
+                    paddingLeft: '4rem'
+                    , paddingTop: '1.5rem'
+                }} onClick={handleFavoriteToggle}>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="19"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill={isFavorited ? "#FDA4AF" : "none"}
+                        stroke="rgb(55, 65, 81)"
+                        strokeWidth="2">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </svg>
+                </Box>
+
+                <Box sx={{ paddingTop: '10rem', display: 'flex', flexDirection: 'row' }}>
+                    <Box sx={{ width: '5.5rem', fontFamily: 'inter', fontWeight: 500, color: 'rgb(55, 65, 81)', fill: 'rgb(55, 65, 81)', fontSize: '1.2rem' }}>
+                        {150 * 14} TL /
+                    </Box>
+    
+                    <Box sx={{fontFamily: 'inter', fontWeight: 400, fontSize: '1rem', color: 'rgb(55, 65, 81)'}}>
+                        Saat
+                    </Box>
+                </Box>
+            </Box>
+            <div>
+                <hr />
             </div>
-        </div>
+        </Box>
     );
 }
 
