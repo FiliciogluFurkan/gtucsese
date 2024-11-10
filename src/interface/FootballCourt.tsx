@@ -9,5 +9,6 @@ export interface FootballCourt {
 
 export interface FootballCourtsCartProps {
     field: FootballCourt;
-    number: string;
+    city: string;
+    district: string;
 }

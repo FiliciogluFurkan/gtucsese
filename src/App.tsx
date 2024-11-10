@@ -44,7 +44,7 @@ function App() {
         <Route path="/signup" Component={SignUp}></Route>
         <Route path="/password-reset" Component={PasswordReset}></Route>
       </Routes>
-      <Footer></Footer>
+      {location.pathname !== '/fields' && <Footer />}
     </ThemeProvider>
   );
 }
