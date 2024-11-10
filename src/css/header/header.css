@@ -2,14 +2,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: rgb(250, 250, 250);
-    /* background-color: transparent; */
-    height: 10.5vh;
+    align-items: flex-end;
+    height: 5rem;    
     position: fixed;
     z-index: 1;
-    position: fixed;
-    width: 100%;
-    box-shadow: 0 0.25rem 0.625rem rgba(103, 103, 103, 0.3);
+    width: 100%;  
 }
 
 body {
@@ -22,6 +19,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    height: 100%;
 }
 
 .header-image {
@@ -51,18 +49,29 @@ body {
     border: none;
     padding: 1rem;
     border-radius: 2rem;
+    
 
 }
 
-.header-tab:hover {
+.header-image-container-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 6rem;
+    padding-left: 1rem;
+    border-left: 0.2rem solid;
+}
+
+/* .header-tab:hover {
     cursor: pointer;
     background-color: rgb(212, 212, 212);
 }
-
+ */
 
 .menu-button
 {
     width: 10%;
+    padding-bottom: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,8 +82,7 @@ body {
 .header-tab.selected {
     font-weight: bold; /* Seçili sekmede kalın yazı */
     border: solid;
-    border-width: 1px;
-    border-color: rgb(28, 28, 28);
+    border-width: 3px;
     border-left: 0;
     border-right: 0;
     border-top: 0;
@@ -86,10 +94,9 @@ body {
 .header-tab-text {
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 0.9rem;
     font-family:  "Poppins";
-    color: rgb(51, 51, 51) !important;
     text-decoration: none !important;
 }
 
@@ -134,11 +141,21 @@ body {
 .header-dropdown-tab {
     text-align: left;
     position: relative;
-    font-family: 'Poppins', sans-serif;
     height: 46%;
     border: none;
     padding: 1rem;
     border-radius: 2rem;
+}
+
+.header-dropdown-tab-text {
+    text-align: left;
+    position: relative;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    font-family: 'Poppins' !important;
+    border: none;
+    text-decoration: none !important;
+    padding: 0 !important;
 }
 
 

@@ -1,33 +1,13 @@
-.footer-section {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: rgba(44, 44, 44, 0.9); 
-    height: 18.75rem; 
+.footer-header {
+    font-weight: 500 !important;
+    font-family: 'Poppins' !important;
+    margin-bottom: 1rem !important;
 }
 
-.footer-section-logo {
-    padding-left: 4.375rem; 
-    padding-top: 6.25rem; 
-}
-
-.footer-section-first {
-    display: flex;
-    flex-direction: column;
-    padding-left: 6.25rem; 
-    padding-top: 5rem; 
-}
-
-.footer-section-second {
-    display: flex;
-    flex-direction: column;
-    padding-left: 6.25rem;
-    padding-top: 5rem; 
-}
-
-.footer-section-third {
-    display: flex;
-    flex-direction: column;
-    padding-left: 6.25rem;
-    padding-top: 5rem; 
+.footer-link {
+    font-family: 'Poppins' !important;
+    font-weight: 400 !important;
+    text-decoration: none !important;
+    margin: 0.4rem !important;
+    margin-left: 0 !important;
 }
