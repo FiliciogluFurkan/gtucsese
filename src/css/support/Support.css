@@ -5,6 +5,7 @@
 .support-page-sections {
     display: flex;
     flex-direction: row;
+    width: 95vw;
 }
 
 .support-question-titles {

@@ -36,10 +36,7 @@ function App() {
         <Route path="/fields" Component={FootballCourts}></Route>
         <Route path="/createteam" Component={CreateTeam}></Route>
         <Route path="/help" Component={Support}></Route>
-        <Route
-          path="/fields/field-details/:id"
-          Component={FootballCourtDetails}
-        ></Route>
+        <Route path="/fields/field-details/:id" element={<FootballCourtDetails />} />
         <Route path="/login" Component={Login}></Route>
         <Route path="/signup" Component={SignUp}></Route>
         <Route path="/password-reset" Component={PasswordReset}></Route>

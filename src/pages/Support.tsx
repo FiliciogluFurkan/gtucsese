@@ -9,6 +9,7 @@ import AccountManagement from "../components/supportpagecomponents/AccountManage
 import Campaigns from "../components/supportpagecomponents/Campaigns";
 import Security from "../components/supportpagecomponents/Security";
 import FootballCourtsSupport from "../components/supportpagecomponents/FootballCourtsSupport";
+import { Box } from "@mui/material"
 
 const Support = () => {
 
@@ -38,7 +39,7 @@ const Support = () => {
     };
 
     return (
-        <div className="support-page">
+        <Box sx={{width: '100vw'}}>
             <div style={{ paddingTop: '4rem' }}> </div>
             <hr />
             <br />
@@ -67,7 +68,7 @@ const Support = () => {
             <br />
             <br />
             <br />
-        </div>
+        </Box>
     );
 };
 
