@@ -18,10 +18,11 @@
 }
 
 .login-container-section {
-    padding-top: 6.25rem;
+    padding-top: 10rem;
     padding-left: 8rem;
     display: flex;
     flex-direction: column;
+
 }
 
 .login-container-section-title {

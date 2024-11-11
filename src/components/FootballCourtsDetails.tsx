@@ -1,154 +1,146 @@
-//import React from 'react'
-//import { useEffect } from 'react';
-//import { useParams } from 'react-router-dom';
-//import { useEffect,useState } from 'react';
-//import axios from 'axios';
-import './../css/footballcourtsdetails/FootballCourtsDetails.css';
-
-/*const getfootballCourtById = async (id) => {
-  const response = await axios.get(`http://localhost:8080/fields/${id}`);
-  return response.data;
-}; 
-};  it will use when we get the data from the server
- */
-
-
+import { Box, Typography } from '@mui/material';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { FootballCourt } from '../interface/FootballCourt';
+import { useParams } from 'react-router-dom';
 
 function FootballCourtsDetails() {
-  // const {footballCourtId} = useParams();
-  /*   const [footballCourt, setfootballCourt] = useState(null);
-    
-   useEffect(() => {
-      const fetchField = async () => {
-        if (footballCourtId) {
-          const footballCourtData = await getfootballCourtById(footballCourtId);
-          setfootballCourt(footballCourtData); // veriyi state'e ayarlama
-        }
-      };
-  
-   */
 
-  //ı am thinkg like that i sent a get request and i got this
-  const footballCourt = {
-    id: 1,
-    name: 'Aydın Halısaha',
-    image: '/src/assets/images/fields/evin.jpg',
-    rating: 4.5,
-    place: 'Sakarya/erenler',
-    location: 'istanbul/Maltepe/cevizli mahallesi',
-    explanation: 'Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki "Konum" bölümünden ulaşabilirsiniz.  Rezervasyon yapmak için sayfanın en üst kısmındaki "Rezervasyon Yap" bölümünden istediğiniz tarih ve saati seçip rezervasyon oluşturabilirsiniz.',
-    phoneNumber: '0850 455 85 45',
-    availableFootballCourts: "6+6,7+7,8+8 sahalar"
-  }
+  const params = useParams();
 
-  
+
+  const [footballCourt, setFootballCourt] = useState<FootballCourt>();
+
+  useEffect(() => {
+    const fetchFields = async () => {
+      try {
+        const response = await axios.get('https://db.aymoose.devodev.online/fields');
+        response.data.forEach((item: FootballCourt) => {
+          if (item.id == Number(params.id)) {
+            setFootballCourt(item);
+            console.log("our field")
+            console.log(item);
+          }
+        });
+      } catch (err) {
+      }
+    };
+    fetchFields();
+  }, []);
+
+
   return (
-  <div>
+    <Box sx={{
+      width: '100vw',
+      display: 'flex',
+      flexDirection: 'row',
+      paddingTop: '8rem',
+      backgroundColor: 'rgb(245, 245, 245)',
+      height: 'auto',
+      paddingBottom: '3rem',
+      justifyContent: 'center',
+    }}>
 
-    <div className='footballcourtsdetails-informations-section'>
-      
-      
-        <div className='footballcourtsdetails-informations-section-image-container' style={{ backgroundImage: `url(${footballCourt.image})` }}>
-          Hello
-        </div>
-        
-      <div className='footballcourtsdetails-informations-section-informations'>
-        
-<div className='footballcourtsdetails-informations-section-informations-title'>
-          {footballCourt.name}
-        </div>
-        
-<div className='footballcourtsdetails-informations-section-informations-reservation'>
-          Rezervasyon Yap
-        </div>
-        
-<div className='footballcourtsdetails-informations-section-informations-availableFootballCourts'>
-          
-<div className='footballcourtsdetails-informations-section-informations-availableFootballCourts-icon'>
-            <span className="material-symbols-outlined">
-              schedule
-            </span>
-          </div>
-          
-<div className='footballcourtsdetails-informations-section-informations-availableFootballCourts-text'>
-            {footballCourt.availableFootballCourts}
-          </div>
-        
-</div>
-        
-<div className='footballcourtsdetails-informations-section-informations-communication'>
-          
-<div className='footballcourtsdetails-informations-section-informations-communication-icon '>
-            <span className="material-symbols-outlined">
-              call
-            </span>
-          </div>
-          
-<div className='footballcourtsdetails-informations-section-informations-communication-text'>
-            {footballCourt.phoneNumber}
-          </div>
-        
-</div>
-        
-<div className='footballcourtdetails-informations-section-footballcourt-explaining-title'>
+      {/* Image Section */}
+      <Box sx={{
+        marginLeft: '2rem',
+        width: '60%',
+        marginTop: '2rem',
+        height: '35rem',
+        backgroundImage: `url(${footballCourt?.image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        borderRadius: '16px',
+        boxShadow: '0 6px 25px rgba(0, 0, 0, 0.2)',
+        marginRight: '2rem',
+      }} />
+
+      {/* Information Section */}
+      <Box sx={{
+        width: '40%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingTop: '1rem',
+        paddingLeft: '1rem',
+      }}>
+
+        {/* Court Name */}
+        <Typography sx={{
+          fontSize: '2.4rem',
+          fontWeight: '700',
+          color: '#333',
+          marginBottom: '1rem',
+          fontFamily: 'Roboto, sans-serif',
+        }}>
+          {footballCourt?.name.toUpperCase()}
+        </Typography>
+
+        {/* Available Football Courts */}
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          marginTop: '1.5rem',
+          color: '#FF5C5C',
+        }}>
+          <Box sx={{
+            fontSize: '2rem',
+            marginRight: '0.8rem',
+          }}>
+            <span className="material-symbols-outlined">schedule</span>
+          </Box>
+          <Typography sx={{
+            fontSize: '1.5rem',
+            fontWeight: '600',
+            color: '#444',
+          }}>
+            {footballCourt?.services}
+          </Typography>
+        </Box>
+
+        {/* Contact Information */}
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          marginTop: '1.5rem',
+          color: '#FF5C5C',
+        }}>
+          <Box sx={{
+            fontSize: '2rem',
+            marginRight: '0.8rem',
+          }}>
+            <span className="material-symbols-outlined">call</span>
+          </Box>
+          <Typography sx={{
+            fontSize: '1.5rem',
+            fontWeight: '600',
+            color: '#444',
+          }}>
+            {footballCourt?.location}
+          </Typography>
+        </Box>
+
+        {/* Explanation Section */}
+        <Typography sx={{
+          fontSize: '1.8rem',
+          fontWeight: '700',
+          color: '#333',
+          marginTop: '2rem',
+        }}>
           Tesis Açıklaması
-        </div>
-        
-<div className='footballcourtdetails-informations-section-footballcourt-explanation'>
-                  {footballCourt.explanation}
-        </div>
-  
-    </div>
-  
-  </div>
-  
-  </div>
-   
-  )
+        </Typography>
+        <Typography sx={{
+          fontSize: '1.4rem',
+          color: '#666',
+          marginTop: '1rem',
+          lineHeight: '1.8',
+          maxWidth: '32rem',
+        }}>
+          Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki "Konum" bölümünden ulaşabilirsiniz.  Rezervasyon yapmak için sayfanın en üst kısmındaki "Rezervasyon Yap" bölümünden istediğiniz tarih ve saati seçip rezervasyon oluşturabilirsiniz.
+        </Typography>
+      </Box>
+    </Box>
+  );
 }
 
-export default FootballCourtsDetails
-{/* <div>
-
-<div className='footballcourtsdetails-informations-section'>
-  
-iv className='footballcourtsdetails-informations-section-image-container'>
-    <img className='footballcourtsdetails-informations-section-image' src={footballCourt.image} alt="No photo found" />
-</div>
-  
-<div className='footballcourtsdetails-informations-section-informations'>
-  <div className='footballcourtsdetails-informations-section-informations-title'>{footballCourt.name}</div>
-    <div className='footballcourtsdetails-informations-section-informations-Rezervation'>Rezervasyon Yap</div>
-     <div  className='footballcourtsdetails-informations-section-informations-availableFootballCourts'>
-     <div   className='footballcourtsdetails-informations-section-informations-availableFootballCourts-icon'>
-      <span className="material-symbols-outlined">
-        schedule
-      </span>
-      </div>
-    <div className='footballcourtsdetails-informations-section-informations-availableFootballCourts-text'>
-      {footballCourt.availableFootballCourts}
-    </div>
-    <div>
-       className='footballcourtsdetails-informations-section-informations-communication'>
-         className='footballcourtsdetails-informations-section-informations-communication-icon'>
-      <span className="material-symbols-outlined">
-        call
-      </span>
-      </div>
-    <div className='footballcourtsdetails-informations-section-informations-communication-text'>
-        {footballCourt.phoneNumber}
-    </div>
-  
-  </div>
-  <div className='footballcourtdetails-informations-section-explaining-footvallcourt'>
-    Tesis Açıklaması
-  </div>
-  <div></div>
-    <div></div>
-  <div></div>
-
-</div>
-
-</div>
-
-</div> */}
+export default FootballCourtsDetails;

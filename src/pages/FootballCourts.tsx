@@ -52,6 +52,7 @@ export default function FootballCourts() {
       try {
         const response = await axios.get('https://db.aymoose.devodev.online/fields');
         setFields(response.data);
+        console.log(response.data);
       } catch (err) {
       }
     };
@@ -72,7 +73,7 @@ export default function FootballCourts() {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
- // const theme = useTheme();
+  // const theme = useTheme();
   const [selectedCity, setSelectedCity] = React.useState<string>('');
   const [selectedDistrict, setSelectedDistrict] = React.useState<string>('');
 
@@ -88,34 +89,34 @@ export default function FootballCourts() {
 
   const handleSortChange = (event: SelectChangeEvent<string>) => {
     const selectedValue = event.target.value;
-    
-    setSortOption(selectedValue);  
-    fetchSortedData(selectedValue);  
+
+    setSortOption(selectedValue);
+    fetchSortedData(selectedValue);
   };
 
- 
+
   type SortOption = 'recommended' | 'priceAsc' | 'priceDesc' | 'ratingAsc' | 'ratingDesc';
   const fetchSortedData = async (sortOption: string) => {
     const validSortOptions: SortOption[] = ['recommended', 'priceAsc', 'priceDesc', 'ratingAsc', 'ratingDesc'];
-  
+
     if (validSortOptions.includes(sortOption as SortOption)) {
       try {
-       // const response = await axios.get(`/api/items?sortOption=${sortOption}`);
-      //  setFields(response.data);  
-      
-    } catch (error) {
+        // const response = await axios.get(`/api/items?sortOption=${sortOption}`);
+        //  setFields(response.data);  
+
+      } catch (error) {
         console.error("Error fetching sorted data:", error);
       }
     } else {
       console.error("Invalid sort option");
     }
   };
-  
+
 
   return (
     <div>
       <div style={{ paddingTop: '4rem' }}> </div>
-      <Box sx={{display: 'flex', flexDirection: 'row'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
         <Box
           sx={{
             display: 'flex',
@@ -143,11 +144,11 @@ export default function FootballCourts() {
               textTransform: 'none',
               height: '100%',
               minHeight: '3.5rem',
-              '&:hover': { backgroundColor: '#f0f0f0' },  
+              '&:hover': { backgroundColor: '#f0f0f0' },
             }}
           >
             <Typography variant="body1" sx={{ color: '#888' }}>
-              {selectedCity ? selectedCity : 'İl Seçiniz'} 
+              {selectedCity ? selectedCity : 'İl Seçiniz'}
             </Typography>
             <SearchIcon sx={{ color: '#1976d2' }} />
           </Button>
@@ -165,17 +166,16 @@ export default function FootballCourts() {
               textTransform: 'none',
               height: '100%',
               minHeight: '3rem',
-              '&:hover': { backgroundColor: '#f0f0f0' },  
+              '&:hover': { backgroundColor: '#f0f0f0' },
             }}
           >
             <Typography variant="body1" sx={{ color: '#888' }}>
-              {selectedDistrict ? selectedDistrict : 'İlçe Seçiniz'} 
+              {selectedDistrict ? selectedDistrict : 'İlçe Seçiniz'}
             </Typography>
             <SearchIcon sx={{ color: '#1976d2' }} />
           </Button>
 
         </Box>
-
         <Popover
           id={id}
           open={open}
@@ -189,21 +189,37 @@ export default function FootballCourts() {
             vertical: 'top',
             horizontal: 'left',
           }}
+          sx={{
+            '& .MuiPaper-root': {
+              backgroundColor: '#f5f5f5',
+            },
+          }}
         >
           <List
             sx={{
-              width: '20rem',
+              width: '14rem',
               maxHeight: '15rem',
               overflowY: 'auto',
             }}
           >
             {(listType === 'cities' ? cities : districts).map((item, index) => (
-              <ListItem component="li" key={index} onClick={() => handleSelect(item)}>
-                <ListItemText primary={item} />
+              <ListItem
+                component="li"
+                key={index}
+                onClick={() => handleSelect(item)}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: '#d3e3fd',
+                  },
+                  backgroundColor: 'rgba(0, 0, 0, 50, 0.5)',
+                }}
+              >
+                <ListItemText primary={item} sx={{ color: '#333' }} />
               </ListItem>
             ))}
           </List>
         </Popover>
+
 
         <Box
           sx={{
@@ -229,13 +245,25 @@ export default function FootballCourts() {
                 borderRadius: '0.25rem',
                 height: '100%',
                 '& .MuiSelect-icon': { color: '#1976d2' },
+
               }}
             >
-              <MenuItem value="recommended">Önerilen</MenuItem>
-              <MenuItem value="priceAsc">Fiyat: Azdan Çoka</MenuItem>
-              <MenuItem value="priceDesc">Fiyat: Çoktan Aza</MenuItem>
-              <MenuItem value="ratingAsc">Puan: Azdan Çoka</MenuItem>
-              <MenuItem value="ratingDesc">Puan: Çoktan Aza</MenuItem>
+
+              <MenuItem value="recommended" sx={{ backgroundColor: '#f1f1f1', '&:hover': { backgroundColor: '#e0e0e0' } }}>
+                Önerilen
+              </MenuItem>
+              <MenuItem value="priceAsc" sx={{ backgroundColor: '#f1f1f1', '&:hover': { backgroundColor: '#e0e0e0' } }}>
+                Fiyat: Azdan Çoka
+              </MenuItem>
+              <MenuItem value="priceDesc" sx={{ backgroundColor: '#f1f1f1', '&:hover': { backgroundColor: '#e0e0e0' } }}>
+                Fiyat: Çoktan Aza
+              </MenuItem>
+              <MenuItem value="ratingAsc" sx={{ backgroundColor: '#f1f1f1', '&:hover': { backgroundColor: '#e0e0e0' } }}>
+                Puan: Azdan Çoka
+              </MenuItem>
+              <MenuItem value="ratingDesc" sx={{ backgroundColor: '#f1f1f1', '&:hover': { backgroundColor: '#e0e0e0' } }}>
+                Puan: Çoktan Aza
+              </MenuItem>
             </Select>
           </Box>
         </Box>
@@ -247,32 +275,28 @@ export default function FootballCourts() {
         <hr />
       </div>
 
-      <Box sx={{display: 'flex', flexDirection: 'row'}}>
-        <Box sx={{width: '60%',overflowY: 'auto',height: '100vh',flex: 1}}>
-          
-          <div className='footballcourts-list-fields-section'>  
-            
+      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Box sx={{ width: '60%', overflowY: 'auto', height: '100vh', flex: 1 }}>
+
+          <div className='footballcourts-list-fields-section'>
+
             {fields.map((field) => {
 
               const handleMouseEnter = () => {
-                if (field.id == 2)
-                  setSelectedLocation("Cumhuriyet, Gebze teknik üniversitesi tenis kulübü, 41400 Gebze/Kocaeli");
-                else {
-                  setSelectedLocation("İçmeler, Piri Reis Cd. No:74, 34947 Tuzla/İstanbul, Türkiye");
-                }
+                setSelectedLocation(field.location);
               };
 
               const handleClick = () => {
-                navigate('/fields/field-details/' + field.id)
+                navigate(`/fields/field-details/${field.id}`);
               };
-              
+
               return (
                 <div
                   key={field.id}
                   onMouseEnter={handleMouseEnter}
                   onClick={handleClick}
                 >
-                  <FootballCourtCarts field={field} city={selectedCity} district={selectedDistrict} />
+                  <FootballCourtCarts field={field} />
                   <hr className='footballcourts-container-informations-hr-list-section' />
                 </div>
               );
@@ -280,7 +304,7 @@ export default function FootballCourts() {
           </div>
         </Box>
 
-        <Box sx={{width: '38rem', height: '100vh', flexShrink: 0}}>
+        <Box sx={{ width: '38rem', height: '100vh', flexShrink: 0 }}>
           <iframe className='football-courts-location-map-iframe'
             style={{ border: "0" }}
             loading="lazy"

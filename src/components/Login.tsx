@@ -15,6 +15,7 @@ import { AppDispatch } from '../redux/store';
 import { LoginUserInput } from '../redux/AuthSlice';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Box } from "@mui/material"
 
 function Login() {
   const authState = useSelector((store: RootState) => store.authentication);
@@ -66,7 +67,16 @@ function Login() {
   };
 
   return (
-    <div className='login'>
+    <Box  sx={{
+      backgroundImage: "url('/src/assets/images/login.jpg')",
+      width: "100vw",
+      height: "62.85rem",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      display: "flex",
+      flexDirection: "row",
+  }}> 
       <div className='login-container'>
         <div className='login-container-section'>
           <div className='login-container-section-title'>Tekrar hoşgeldiniz</div>
@@ -160,7 +170,7 @@ function Login() {
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   );
 }
 

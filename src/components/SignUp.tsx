@@ -5,7 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 function SignUp() {
   const [firstName, setFirstName] = useState('');
@@ -45,7 +45,16 @@ function SignUp() {
   };
 
   return (
-    <div className='signup' >
+    <Box   sx={{
+      backgroundImage: "url('/src/assets/images/login.jpg')",
+      width: '100vw',
+      height: "62.85rem",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      display: "flex",
+      flexDirection: "row",
+  }}>
       <div className='signup-container'>
         <div className='signup-container-section'>
           <div className='signup-container-section-title'>
@@ -189,7 +198,7 @@ function SignUp() {
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   )
 }
 

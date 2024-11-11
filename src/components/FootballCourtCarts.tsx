@@ -6,14 +6,14 @@ import axios from 'axios';
 import { Box } from '@mui/material';
 
 
-function FootballCourtCarts({ field, city, district }: FootballCourtsCartProps) {
-    const fieldId = field.id;
+function FootballCourtCarts({field}: FootballCourtsCartProps) {
+    const fieldId = field;
     console.log(field);
 
     const [isFavorited, setIsFavorited] = useState(false);
 
 
-    const handleFavoriteToggle = async () => {
+    const handleFavoriteToggle = async () => { 
         const newFavoriteStatus = !isFavorited;
 
         try {
@@ -43,7 +43,7 @@ function FootballCourtCarts({ field, city, district }: FootballCourtsCartProps) 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
 
                 <Box sx={{ paddingLeft: '2rem', paddingTop: '2rem', fontSize: '0.9rem', fontWeight: 400, fontFamily: 'Roboto', color: 'rgb(107, 114, 128)', font: 'inter' }}>
-                    <span>{city} / {district} </span>
+                    <span>{field.city} / {field.district} </span>
                 </Box>
                 <Box sx={{ paddingLeft: '2rem', paddingTop: '0.625rem', fontSize: '1.5rem', fontWeight: 500, fontFamily: 'Roboto', color: 'rgb(55, 65, 81)', font: 'inter' }}>
                     {field.name.toUpperCase()
@@ -57,8 +57,7 @@ function FootballCourtCarts({ field, city, district }: FootballCourtsCartProps) 
 
 
                 <Box sx={{ paddingLeft: '2rem', paddingTop: '1.5rem', width: '22rem', fontFamily: 'inter', fontWeight: 400, color: 'rgb(107, 114, 128)', font: 'inter' }}>
-                    6+6 · 7+7 · 8+8 Sahalar · Cafe · Ayakkabı
-                    Wifi · Duş · Otopark · Yemek
+                    {field.services}
                 </Box>
 
 

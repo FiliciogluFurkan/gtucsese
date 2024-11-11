@@ -1,64 +1,89 @@
 {
-  "users": [
-    {
-      "id": 1,
-      "mail": "test@example.com",
-      "password": "password123"
-    }
-  ],
   "fields": [
     {
       "id": 1,
       "name": "Aydın Halısaha",
       "image": "https://skupit.com.tr/uploads/2023/02/aydin-halisaha-akcaabat.jpg",
-      "rating": 5,
-      "reviews":371
+      "rating": 4,
+      "reviews": 20,
+      "services": "6+6, 7+7, 8+8 Sahalar · Ayakkabı . Su . Duş",
+      "price": 130,
+      "city": "Sakarya",
+      "district": "Serdivan",
+      "location": "Serdivan mahallesi arabacı alanı caddesi 576 sokak, no:2, 54100 Serdivan/Sakarya"
     },
     {
       "id": 2,
       "name": "Kolezyum Halısaha",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkOREMt9spAiPAXEimAysKFe580eAkTSTTA&s",
-      "rating": 3,
-      "reviews":22
+      "rating": 3.5,
+      "reviews": 152,
+      "services": "6+6, 7+7, 8+8 Sahalar . Duş . otopark . Yemek , Sıcak Su",
+      "price": 180,
+      "city": "Sakarya",
+      "district": "Yağcılar",
+      "location": "Yağcılar, 54100 Adapazarı/Sakarya"
     },
     {
       "id": 3,
-      "name": "Bora halısaha",
+      "name": "Aydın Halısaha",
       "image": "https://www.borapark.com.tr/dokuman/kurumsal/1694595542_EV8ECS_orta.jpg",
-      "rating": 1.5,
-      "reviews":200
+      "rating": 4.2,
+      "reviews": 11,
+      "services": "6+6, 7+7 Sahalar · Ayakkabı",
+      "price": 150,
+      "city": "İstanbul",
+      "district": "Kadıköy",
+      "location": "Göztepe, Tütüncü Mehmet Efendi Cd. 18/A, 34730 Kadıköy/İstanbul"
     },
     {
       "id": 4,
-      "name": "Serdivan Halısaha",
+      "name": "Aydın Halısaha",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT64cadm0BGvjPmA6gM-TzjJ1izoirnbnyFYA&s",
-      "rating": 4.5,
-      "reviews":100,
-      "services":"6+6 · 7+7 · 8+8 Sahalar · Cafe · Ayakkabı",
-      "price":150
-
+      "rating": 5,
+      "reviews": 340,
+      "services": "8+8 Sahalar . Duş . Yemek . Ayakkabı",
+      "price": 180,
+      "city": "Konya",
+      "district": "Karatay",
+      "location": "Selimsultan, Selim Sultan Cd. No: 157, 42020 Karatay/Konya"
     },
     {
       "id": 5,
-      "name": "Alianz arena",
+      "name": "Alianz Halısaha",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXHw5Otp-MP-lTLiGCKhJbNNGRAPIM3bFYGA&s",
-      "rating": 2,
-      "reviews":150
+      "rating": 5,
+      "reviews": 524,
+      "services": "6+6 · 7+7 · 8+8 Sahalar · Ayakkabı . Su . Duş",
+      "price": 220,
+      "city": "İzmir",
+      "district": "Karşıyaka",
+      "location": "1595 Sokak.no:189.karşıyaka Devlet Hastanesi Yanı, 06101 Karşıyaka"
     },
     {
       "id": 6,
-      "name": "Ada arena",
+      "name": "Ada Arena",
       "image": "https://www.sporexpres.com/images/upload/WhatsApp-Image-2023-03-07-at-14.06.00.jpeg",
-      "rating": 5,
-      "place": "Sakarya/erenler",
-      "reviews":87
+      "rating": 4.2,
+      "reviews": 54,
+      "services": "6+6, 7+7 Sahalar · Ayakkabı . Su . Duş",
+      "price": 220,
+      "city": "Sakarya",
+      "district": "Mithatpaşa",
+      "location": "Şirinevler, İbrahim Kangal Cd. No:10, 54100 Adapazarı/Sakarya"
     },
     {
       "id": 7,
-      "name": "Şampiyonlar sahası",
+      "name": "Şampiyonlar Sahası",
       "image": "https://img.fcbayern.com/image/upload/t_cms-2x1/f_auto/w_1600%2Cc_fill/q_auto/cms/public/images/fcbayern-com/homepage/saison-18-19/sonstiges/arena_bewerbung_cl-finale2021_get.jpg",
-      "rating": 3.5,
-      "reviews":288
+      "rating": 2.9,
+      "reviews": 279,
+      "services": "7+7 Sahalar · Ayakkabı . Su . Duş . Otopark",
+      "price": 280,
+      "city": "Tekirdağ",
+      "district": "Süleymanpaşa",
+      "location": "Atatürk, Necati Sezen Sokak No:5, 59020 Süleymanpaşa/Tekirdağ"
     }
   ]
+  
 }
