@@ -12,7 +12,7 @@ import axios from 'axios';
 function SignUp() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
+ // const [username, setUsername] = useState('');
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -25,9 +25,9 @@ function SignUp() {
     setLastName(event.target.value);
   };
 
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+ /*  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
-  };
+  }; */
 
   const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMail(event.target.value);
