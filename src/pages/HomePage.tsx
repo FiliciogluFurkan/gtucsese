@@ -284,10 +284,7 @@ const Homepage: React.FC = () => {
               style={{ color: theme.palette.tx.secondary.w100 }}
               textAlign="left"
             >
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque
-              perspiciatis omnis, cum commodi quos voluptatem dolorem odit.
-              Repudiandae odio maxime veritatis laborum inventore fugit dolorum
-              vero quam qui! Nemo, ullam.
+             Eşsiz ve kullanıcı dostu özelliklerimizle futbol deneyiminizi bir üst seviyeye taşıyoruz. İster hızlı bir rezervasyon yapmak, ister takımınızı oluşturmak, isterse de çekilişlerle harika ödüller kazanmak isteyin, ihtiyaçlarınıza hitap eden çözümler sunuyoruz!
             </Typography>
             <Box
               display="flex"
@@ -636,10 +633,7 @@ const Homepage: React.FC = () => {
               color={theme.palette.tx.primary.w500}
               sx={{ marginTop: "1rem", fontSize: "1.2rem" }}
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-              perferendis quaerat amet est assumenda incidunt at, aliquid
-              blanditiis accusantium expedita, id facilis, ex nulla dignissimos
-              illo beatae enim repellendus?
+             Sisteme katılarak halı sahanızı binlerce kullanıcıya tanıtma fırsatı yakalayın. Kullanıcılar, şehirlerindeki halı sahaları hızlıca bulabilir, rezervasyon yapabilir ve saha deneyimlerini paylaşabilir. Halı sahanızın bilinirliğini artırın, rezervasyonlarınızı kolaylaştırın!
             </Typography>
             <Button
               style={{

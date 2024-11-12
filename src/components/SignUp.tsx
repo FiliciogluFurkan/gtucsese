@@ -6,11 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Box, Button } from '@mui/material';
+import login from '/src/assets/images/login.jpg'
+import axios from 'axios';
 
 function SignUp() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
+ // const [username, setUsername] = useState('');
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -23,9 +25,9 @@ function SignUp() {
     setLastName(event.target.value);
   };
 
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+ /*  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
-  };
+  }; */
 
   const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMail(event.target.value);
@@ -39,14 +41,40 @@ function SignUp() {
     setShowPassword(!showPassword);
   };
 
-  const handleSignUpClick = () => {
-
-    console.log("Kayıt ol butonuna tıklandı.");
+  const handleSignUpClick = async () => {
+    const user = {
+      mailAddress: mail,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+    };
+  
+    console.log(user);
+  
+    try {
+      const response = await axios.post(
+        'https://server.aymoose.devodev.online/api/v1/accounts', 
+        user,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: false, 
+        }
+      );
+      
+      console.log('Response:', response);
+      // Handle the successful response (e.g., redirect, show success message, etc.)
+  
+    } catch (error) {
+      console.error('Error during sign-up:', error);
+      // Handle error (e.g., show error message to user)
+    }
   };
-
+  
   return (
     <Box   sx={{
-      backgroundImage: "url('/src/assets/images/login.jpg')",
+      backgroundImage: "url('" + login + "')",
       width: '100vw',
       height: "62.85rem",
       backgroundSize: "cover",
@@ -105,8 +133,8 @@ function SignUp() {
             />
           </div>
 
-          <div className='signup-container-section-username-title'>Kullanıcı Adı</div>
-          <div className='signup-container-section-username-textfield'>
+         {/* <div className='signup-container-section-username-title'>Kullanıcı Adı</div> */}
+        {/*   <div className='signup-container-section-username-textfield'>
             <TextField
               style={{
                 backgroundColor: 'rgba(247,251,255)',
@@ -125,7 +153,7 @@ function SignUp() {
                 },
               }}
             />
-          </div>
+          </div> */}
 
           <div className='signup-container-section-email-title'>Email</div>
           <div className='signup-container-section-email-textfield'>
