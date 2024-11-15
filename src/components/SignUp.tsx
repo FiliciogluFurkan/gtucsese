@@ -52,14 +52,14 @@ function SignUp() {
     console.log(user);
   
     try {
-      const response = await axios.post(
-        'https://server.aymoose.devodev.online/api/v1/accounts', 
-        user,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: false, 
+      const response = await axios({
+        url:'https://server.aymoose.devodev.online/api/v1/accounts',
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Access-Control-Allow-Origin':'*'
+        },
+        data:user,
         }
       );
       
