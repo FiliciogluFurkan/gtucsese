@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import icon1 from '/src/assets/images/about/Ship.png';
 import icon2 from '/src/assets/images/about/Hourglass.png';
 import icon3 from '/src/assets/images/about/Handshake.png';
@@ -142,11 +141,6 @@ const SahanCepte: React.FC = () => {
   );
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  <React.StrictMode>
-    <SahanCepte />
-  </React.StrictMode>
-);
+
 
 export default SahanCepte;
