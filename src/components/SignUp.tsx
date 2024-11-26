@@ -75,13 +75,14 @@ function SignUp() {
   return (
     <Box   sx={{
       backgroundImage: "url('" + login + "')",
-      width: '100vw',
-      height: "62.85rem",
+      width: "100vw",
+      height: "100vh", 
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       display: "flex",
-      flexDirection: "row",
+      justifyContent: "center", 
+      alignItems: "center", 
   }}>
       <div className='signup-container'>
         <div className='signup-container-section'>
