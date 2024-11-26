@@ -1,10 +1,10 @@
 import React from 'react'
 import { Box } from "@mui/material"
-import Group from "/src/assets/images/admindashboard/group117.png"
+import Group from "/src/assets/images/admindashboard/Group117.png"
 import icon from "/src/assets/images/admindashboard/Icon.png"
-import currentrezervation from "/src/assets/images/admindashboard/group118.png"
-import canceledrezervation from "/src/assets/images/admindashboard/group121.png"
-import totalprice from "/src/assets/images/admindashboard/group84.png"
+import currentrezervation from "/src/assets/images/admindashboard/Group118.png"
+import canceledrezervation from "/src/assets/images/admindashboard/Group121.png"
+import totalprice from "/src/assets/images/admindashboard/Group84.png"
 import icon2 from "/src/assets/images/admindashboard/Icon1.png"
 import { useState } from "react";
 import FootballCourtsCommentsCards from './FootballCourtsCommentsCards'
