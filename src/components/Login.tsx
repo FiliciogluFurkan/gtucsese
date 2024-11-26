@@ -69,14 +69,15 @@ function Login() {
 
   return (
     <Box  sx={{
-      backgroundImage: "url('" + login + "')",
+      backgroundImage: `url(${login})`,
       width: "100vw",
-      height: "62.85rem",
+      height: "100vh", 
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       display: "flex",
-      flexDirection: "row",
+      justifyContent: "center", 
+      alignItems: "center", 
   }}> 
       <div className='login-container'>
         <div className='login-container-section'>
@@ -87,61 +88,67 @@ function Login() {
 
           <div className='login-container-section-email-title'>Email</div>
           <div className='login-container-section-email-textfield'>
-            <TextField
-              style={{
-                backgroundColor: 'rgba(247,251,255)',
-                borderRadius: '1rem',
-                width: 400,
-                fontSize: 16,
-              }}
-              id="filled-helperText"
-              variant="filled"
-              value={mail}
-              onChange={handleMailChange}
-              InputProps={{
-                disableUnderline: true,
-                style: {
-                  backgroundColor: 'transparent',
-                  borderRadius: '1rem',
-                  fontSize: '1rem',
-                },
-              }}
-            />
+                            <TextField
+                    style={{
+                      backgroundColor: 'rgba(247,251,255)',
+                      borderRadius: '1rem',
+                      width: 400,
+                      fontSize: 16,
+                      
+                    }}
+                    id="filled-helperText"
+                    variant="filled"
+                    value={mail}
+                    onChange={handleMailChange}
+                    InputProps={{
+                      disableUnderline: true,
+                      style: {
+                        backgroundColor: 'transparent',
+                        borderRadius: '1rem',
+                        fontSize: '1rem',
+                        padding: 'px 14px', 
+                        boxSizing: 'border-box',
+                        lineHeight: '4.8', 
+                      },
+                    }}
+                  />
           </div>
 
           <div className='login-container-section-password-title'>Password</div>
           <div className='login-container-section-password-textfield'>
-            <TextField
-              className='login-container-section-password-textfield-input'
-              style={{
-                backgroundColor: 'rgba(247,251,255)',
-                borderRadius: '1rem',
-                width: 400,
-              }}
-              id="filled-password"
-              variant="filled"
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={handlePasswordChange}
-              InputProps={{
-                disableUnderline: true,
-                style: {
-                  backgroundColor: 'transparent',
-                  borderRadius: '1rem',
-                  fontSize: '1rem',
-                },
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={togglePasswordVisibility}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+                                      <TextField
+                                      
+                              style={{
+                                backgroundColor: 'rgba(247,251,255)',
+                                borderRadius: '1rem',
+                                width: 400,
+                                fontSize: 16,
+                              }}
+                              id="filled-password"
+                              variant="filled"
+                              type={showPassword ? 'text' : 'password'}
+                              value={password}
+                              onChange={handlePasswordChange}
+                              InputProps={{
+                                disableUnderline: true,
+                                style: {
+                                  backgroundColor: 'transparent',
+                                  borderRadius: '1rem',
+                                  fontSize: '1rem',
+                                  padding: '1px 14px',
+                                  boxSizing: 'border-box',
+                                  lineHeight: '1.5',
+                                },
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton onClick={togglePasswordVisibility} edge="end">
+                                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+
           </div>
 
           <div className='login-container-section-forgot-password'>
