@@ -1,80 +1,6 @@
-/* import { Box } from '@mui/material'
-import { useState } from 'react';
-import image1 from '../../assets/images/courtS2.jpg';
-import image2 from '../../assets/images/court-2.jpg';
-import image3 from '../../assets/images/court-3.jpg';
-
-
-function FootballCourtDetails() {
-
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [dummy, setDummy] = useState<DummyFootballCourt | null>(null);
-
-  interface DummyFootballCourt {
-    id: number;
-    name: string;
-    image: string[];
-    description: string;
-    rating: number;
-    number_of_reviews: number;
-    reviews: string[];
-    fields: String;
-    services: string[];
-    price: number;
-    city: string;
-    district: string;
-    phoneNumber: string;
-    location: string;
-  }
-
-  const dummyData: DummyFootballCourt = {
-    id: 1,
-    name: 'Aydın Halısaha',
-    image: [image1, image2, image3],
-    description:
-      'Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki "Konum" bölümünden ulaşabilirsiniz.',
-    rating: 2.5,
-    number_of_reviews: 10,
-    reviews: [
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkOREMt9spAiPAXEimAysKFe580eAkTSTTA&s',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkOREMt9spAiPAXEimAysKFe580eAkTSTTA&s',
-    ],
-    services: ['6+6 · 7+7 · 8+8 Sahalar · Ayakkabı . Su . Duş'],
-    phoneNumber: '0850 455 85 45',
-    fields: '6+6 · 7+7 · 8+8',
-    price: 150,
-    city: 'İstanbul',
-    district: 'Kadıköy',
-    location: 'Göztepe, Tütüncü Mehmet Efendi Cd. 18/A, 34730 Kadıköy/İstanbul',
-  };
-
-
-
-  return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100vw' }}>
-      <Box sx={{}}>
-        Tesisi Düzenle
-      </Box>
-
-      <Box sx={{ display: 'flex', flexDirection: 'row', }}>
-
-        <Box>
-
-        </Box>
-        <Box>
-
-        </Box>
-      </Box>
-
-    </Box>
-  )
-}
-
-export default FootballCourtDetails
- */
 import FootballCourtManagement from './FootballCourtManagement';
 import { useState } from 'react';
+import { FacilityFormData } from '../../interface/FacilityData';
 import {
   Box,
   Button,
@@ -93,7 +19,7 @@ import FootballCourtsServices from './FootballCourtsServices';
 
 import PhotographGallery from './PhotographGallery';
 
-const TesisYonetim = () => {
+const FacilityManagement = () => {
   const [activeTab, setActiveTab] = useState('genel');
 
   const tabs = [
@@ -103,22 +29,6 @@ const TesisYonetim = () => {
     { id: 'galeri', label: 'Fotoğraf Galerisi' },
   ];
 
-
-
-
-
-
-  interface FacilityFormData {
-    name: string;
-    address: string;
-    city: string;
-    district: string;
-    phone: string;
-    openTime: string;
-    closeTime: string;
-    description: string;
-    isActive: boolean;
-  }
 
   const cities = ["İstanbul", "Ankara", "İzmir", "Bursa"];
   const districts = {
@@ -381,5 +291,5 @@ const TesisYonetim = () => {
   );
 };
 
-export default TesisYonetim;
+export default FacilityManagement;
 

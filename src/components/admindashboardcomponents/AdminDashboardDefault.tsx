@@ -26,56 +26,75 @@ function AdminDashboardDefault() {
     console.log(totalPrice);
   }, []); 
 
-  const comments = [
-    {
-      username: "Ahmet Yılmaz",
-      comment: "Harika bir saha, zemini çok iyi.Yiyecek ve içecek olsa daha iyi olurdu.Maçtan sonra terli terli dışarda yemek yemeden burada yiyip evimize giderdik.",
-      daysAgo: 2,
-      rating: 5
-    },
-    {
-      username: "Mehmet Kaya",
-      comment: "Işıklandırma yetersizdi.Saat 8 oldu hala ışıklar açılmamıştı.",
-      daysAgo: 4,
-      rating: 3.5
-    },
-    {
-      username: "Elif Demir",
-      comment: "Çalışanlar çok ilgiliydi, sahada oynamak keyifliydi.",
-      daysAgo: 1,
-      rating: 4.5
-    },
-    {
-      username: "Hüseyin Çelik",
-      comment: "Saha biraz bakımsız ama yine de keyifliydi.",
-      daysAgo: 5,
-      rating: 3
-    },
-    {
-      username: "Ayşe Öztürk",
-      comment: "Oldukça ferah ve geniş bir saha. Tavsiye ederim.",
-      daysAgo: 7,
-      rating: 5
-    },
-    {
-      username: "Emre Şahin",
-      comment: "Otopark sorunluydu, biraz daha iyi olabilirdi.",
-      daysAgo: 10,
-      rating: 2.4
-    },
-    {
-      username: "Fatma Aydın",
-      comment: "Fiyat performans olarak gayet iyi.",
-      daysAgo: 3,
-      rating: 4
-    },
-    {
-      username: "Ali Yıldırım",
-      comment: "Saha güzel ama duşlar biraz kirliydi.",
-      daysAgo: 6,
-      rating: 3
-    }
-  ];
+
+
+const comments = [
+  {
+    id: 1,
+    userId: 101,
+    fullname: "Ahmet Yılmaz",
+    review: "Harika bir saha, zemini çok iyi. Yiyecek ve içecek olsa daha iyi olurdu. Maçtan sonra terli terli dışarıda yemek yemeden burada yiyip evimize giderdik.",
+    day: "2 days ago",
+    rating: 5
+  },
+  {
+    id: 2,
+    userId: 102,
+    fullname: "Mehmet Kaya",
+    review: "Işıklandırma yetersizdi. Saat 8 oldu hala ışıklar açılmamıştı.",
+    day: "4 days ago",
+    rating: 3.5
+  },
+  {
+    id: 3,
+    userId: 103,
+    fullname: "Elif Demir",
+    review: "Çalışanlar çok ilgiliydi, sahada oynamak keyifliydi.",
+    day: "1 day ago",
+    rating: 4.5
+  },
+  {
+    id: 4,
+    userId: 104,
+    fullname: "Hüseyin Çelik",
+    review: "Saha biraz bakımsız ama yine de keyifliydi.",
+    day: "5 days ago",
+    rating: 3
+  },
+  {
+    id: 5,
+    userId: 105,
+    fullname: "Ayşe Öztürk",
+    review: "Oldukça ferah ve geniş bir saha. Tavsiye ederim.",
+    day: "7 days ago",
+    rating: 5
+  },
+  {
+    id: 6,
+    userId: 106,
+    fullname: "Emre Şahin",
+    review: "Otopark sorunluydu, biraz daha iyi olabilirdi.",
+    day: "10 days ago",
+    rating: 2.4
+  },
+  {
+    id: 7,
+    userId: 107,
+    fullname: "Fatma Aydın",
+    review: "Fiyat performans olarak gayet iyi.",
+    day: "3 days ago",
+    rating: 4
+  },
+  {
+    id: 8,
+    userId: 108,
+    fullname: "Ali Yıldırım",
+    review: "Saha güzel ama duşlar biraz kirliydi.",
+    day: "6 days ago",
+    rating: 3
+  }
+];
+
 
 
   const [currentIndex, setCurrentIndex] = useState(0);

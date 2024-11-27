@@ -1,20 +1,14 @@
 import { Box } from '@mui/material';
 import profile from '/src/assets/images/admindashboard/placeholder.png';
-interface Comment {
-    username: string;
-    comment: string;
-    daysAgo: number;
-    rating: number;
-}
+import { FootballCourtsCommentsCardsProps } from '../../interface/Review';
 
-interface FootballCourtsCommentsCardsProps {
-    comment: Comment;
-}
+
+
 const renderStars = (rating: number | undefined) => {
     if (rating === undefined || rating === null) return [];
     const stars = [];
-    const filledStars = Math.floor(rating); 
-    const hasHalfStar = rating % 1 >= 0.5; 
+    const filledStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
 
     for (let i = 1; i <= 5; i++) {
         if (i <= filledStars) {
@@ -63,7 +57,7 @@ const FootballCourtsCommentsCards: React.FC<FootballCourtsCommentsCardsProps> = 
                 fontSize: '1rem',
                 color: '#464255',
                 textAlign: 'center',
-                height: 'auto', // Yükseklik otomatik ayarlanır
+                height: 'auto',
                 marginTop: '2rem',
             }}
         >
@@ -73,10 +67,10 @@ const FootballCourtsCommentsCards: React.FC<FootballCourtsCommentsCardsProps> = 
                         <img style={{ width: '2rem', height: '2rem', borderRadius: '50%' }} src={profile} alt="profile" />
                     </Box>
                     <Box sx={{ fontWeight: '600', fontFamily: 'Barlow', fontSize: '1.2rem', color: '#464255', paddingLeft: '2rem' }}>
-                        {comment.username}
+                        {comment.fullname}
                     </Box>
                     <Box sx={{ fontSize: '0.8rem', color: '#A3A3A3', fontFamily: 'Barlow', fontWeight: '400', paddingLeft: '6rem', paddingTop: '0.5rem' }}>
-                        {comment.daysAgo} gün önce
+                        {comment.day} gün önce
                     </Box>
                 </Box>
                 <Box
@@ -85,16 +79,16 @@ const FootballCourtsCommentsCards: React.FC<FootballCourtsCommentsCardsProps> = 
                         textAlign: 'left',
                         paddingLeft: '1rem',
                         paddingTop: '1.5rem',
-                        whiteSpace: 'normal', // Alt satıra geçmeyi sağlar
-                        wordBreak: 'break-word', // Uzun kelimelerin taşmasını engeller
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
                     }}
                 >
-                    {comment.comment}
+                    {comment.review}
                 </Box>
 
-                <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: '1rem',paddingLeft:'1rem' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: '1rem', paddingLeft: '1rem' }}>
                     <Box>{comment.rating}</Box>
-                    <Box sx={{paddingLeft: '1rem',paddingTop:'0.1rem'}}>{renderStars(comment.rating)}</Box>
+                    <Box sx={{ paddingLeft: '1rem', paddingTop: '0.1rem' }}>{renderStars(comment.rating)}</Box>
                 </Box>
 
             </Box>

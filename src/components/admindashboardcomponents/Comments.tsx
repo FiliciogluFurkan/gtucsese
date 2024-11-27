@@ -1,7 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import profile from '/src/assets/images/admindashboard/placeholder.png';
 
-// Yıldızları oluşturma fonksiyonu
 const renderStars = (rating: number) => {
   if (rating === undefined || rating === null) return [];
   const stars = [];
@@ -72,7 +71,7 @@ const renderStars = (rating: number) => {
   return stars;
 };
 
-// Yorumlar bileşeni
+
 function Comments() {
   const comments = [
     {
