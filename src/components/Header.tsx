@@ -57,8 +57,8 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
               boxShadow: "0 0 0",
             }
           : {
-              backgroundColor: theme.palette.background.primary.w250,
-              color: theme.palette.tx.primary.w400,
+              backgroundColor: theme.palette.background.secondary.w250,
+              color: theme.palette.tx.secondary.w400,
               zIndex: 1000,
               boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)",
             }
@@ -73,8 +73,8 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
                   borderLeftColor: theme.palette.tx.secondary.w400,
                 }
               : {
-                  color: theme.palette.tx.primary.w400,
-                  borderLeftColor: theme.palette.tx.primary.w400,
+                  color: theme.palette.tx.secondary.w400,
+                  borderLeftColor: theme.palette.tx.secondary.w400,
                 }
           }
           className="header-image-container-title"
@@ -89,12 +89,12 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             color={
               isAtTop
                 ? theme.palette.tx.secondary.w400
-                : theme.palette.tx.primary.w400
+                : theme.palette.tx.secondary.w400
             }
             className="header-tab-text"
             href="/"
           >
-            Ana Sayfa
+            ANA SAYFA
           </Link>
         </div>
         <div
@@ -104,12 +104,12 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             color={
               isAtTop
                 ? theme.palette.tx.secondary.w400
-                : theme.palette.tx.primary.w400
+                : theme.palette.tx.secondary.w400
             }
             className="header-tab-text"
             href="/fields"
           >
-            Halı Sahalar
+            HALI SAHALAR
           </Link>
         </div>
         <div
@@ -121,12 +121,12 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             color={
               isAtTop
                 ? theme.palette.tx.secondary.w400
-                : theme.palette.tx.primary.w400
+                : theme.palette.tx.secondary.w400
             }
             className="header-tab-text"
             href="/createteam"
           >
-            Kadro Kur
+            KADRO KUR
           </Link>
         </div>
         <div
@@ -136,12 +136,12 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             color={
               isAtTop
                 ? theme.palette.tx.secondary.w400
-                : theme.palette.tx.primary.w400
+                : theme.palette.tx.secondary.w400
             }
             className="header-tab-text"
             href="/about"
           >
-            Hakkımızda
+            HAKKIMIZDA
           </Link>
         </div>
         <div className={`header-tab ${isSelected("/help") ? "selected" : ""}`}>
@@ -149,12 +149,12 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
             color={
               isAtTop
                 ? theme.palette.tx.secondary.w400
-                : theme.palette.tx.primary.w400
+                : theme.palette.tx.secondary.w400
             }
             className="header-tab-text"
             href="/help"
           >
-            Destek
+            DESTEK
           </Link>
         </div>
       </div>
@@ -164,7 +164,9 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
           <span
             className="material-symbols-outlined"
             onClick={toggleMenu}
-            style={{ cursor: "pointer", marginRight: "10px" }}
+            style={{  cursor: "pointer",
+              marginRight: "10px",
+              color: "#ffffff"  }}
           >
             Menu
           </span>
