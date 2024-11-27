@@ -7,6 +7,7 @@ import debruyne from '/src/assets/images/about/debruyne.jpg';
 
 const SahanCepte: React.FC = () => {
 
+  
   return (
     <div style={{ paddingTop: '5rem', paddingLeft: '1rem' }}>
       <Box sx={{ width: '100vw', display: 'flex', flexDirection: 'row' }}>

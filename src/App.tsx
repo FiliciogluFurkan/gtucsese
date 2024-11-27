@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import PasswordReset from "./components/PasswordReset";
 import Support from "./pages/Support";
+import AdminDashboard from "./pages/AdminDashboard";
 
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
@@ -26,10 +27,10 @@ function App() {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Header
+     {location.pathname!=='/admin/dashboard' && <Header
         currentTheme={isDarkMode ? "dark" : "light"}
         toggleTheme={toggleTheme}
-      />
+      />}
       <Routes>
         <Route path="/" Component={HomePage}></Route>
         <Route path="/about" Component={About}></Route>
@@ -40,8 +41,9 @@ function App() {
         <Route path="/login" Component={Login}></Route>
         <Route path="/signup" Component={SignUp}></Route>
         <Route path="/password-reset" Component={PasswordReset}></Route>
+        <Route path="/admin/dashboard" Component={AdminDashboard}></Route>
       </Routes>
-      {location.pathname !== '/fields' && <Footer />}
+      {(location.pathname !== '/fields' && location.pathname !== '/admin/dashboard') && <Footer />}
     </ThemeProvider>
   );
 }

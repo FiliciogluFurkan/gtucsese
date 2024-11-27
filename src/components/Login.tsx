@@ -57,7 +57,7 @@ function Login() {
       } else {
          result = await dispatch(loginUser(credentials)).unwrap();
         console.log("Giriş başarılı:", result);
-        navigate('/');
+        navigate('/admin/dashboard');
         
       }
     } catch (error) {
