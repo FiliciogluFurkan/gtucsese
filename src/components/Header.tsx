@@ -50,7 +50,7 @@ function Header({ currentTheme, toggleTheme }: HeaderProps) {
       style={
         isAtTop
           ? {
-              backgroundColor: "rgba(0,0,0,0.1)",
+              backgroundColor: "rgba(0,0,0,0.45)",
               color: theme.palette.tx.secondary.w400,
               zIndex: 1000,
 
