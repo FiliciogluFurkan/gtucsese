@@ -8,9 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-
 const MyProfile = () => {
-  
   const genders = ["Erkek", "Kadın"];
 
   const cities = ["İstanbul", "Ankara", "Sakarya", "Burdur", "Ordu", "Sivas"];
@@ -135,9 +133,7 @@ const MyProfile = () => {
               color: "#000000",
             }}
           >
-            <Box sx={{ paddingBottom: "0.3rem" }}>
-              İsim Soyisim
-            </Box>
+            <Box sx={{ paddingBottom: "0.3rem" }}>İsim Soyisim</Box>
             <Box sx={{ paddingLeft: "35rem", paddingBottom: "1rem" }}>
               Kullanıcı Adı
             </Box>

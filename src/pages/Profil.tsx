@@ -1,12 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react"; 
+import { useState } from "react";
 import MyProfile from "../components/UserAccount/MyProfile";
 import MyReservations from "../components/UserAccount/MyReservations";
 import MyFavorites from "../components/UserAccount/MyFavorites";
 import MyComments from "../components/UserAccount/MyComments";
 
 const Profil = () => {
-  
   const [activeTab, setActiveTab] = useState("profil");
 
   // Tıklama handler'ı
@@ -15,14 +14,17 @@ const Profil = () => {
   };
 
   const renderComponent = () => {
-    switch(activeTab){
-      case "profil": return <MyProfile/>
-      case "rezervasyonlar": return <MyReservations/>
-      case "degerlendirmeler": return <MyComments/>
-      case "favoriler": return <MyFavorites/>
-      
+    switch (activeTab) {
+      case "profil":
+        return <MyProfile />;
+      case "rezervasyonlar":
+        return <MyReservations />;
+      case "degerlendirmeler":
+        return <MyComments />;
+      case "favoriler":
+        return <MyFavorites />;
     }
-  }
+  };
 
   return (
     <div
@@ -118,11 +120,7 @@ const Profil = () => {
 
         {/* Buradan sonraki kodlar aynı kalacak */}
 
-        {
-          renderComponent()
-        }
-
-
+        {renderComponent()}
       </Box>
     </div>
   );
