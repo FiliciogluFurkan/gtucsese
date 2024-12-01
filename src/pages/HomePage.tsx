@@ -148,7 +148,7 @@ const Homepage: React.FC = () => {
             sx={{ width: { md: "42%" }, fontSize: { md: "2.8rem" } }}
             className="homepage-howto-header-text"
           >
-            Sahancepte'ye Hoş Geldin - Saha Kiralamak Şimdi Çok Kolay
+            Sahancepte'ye Hoş Geldin <br /> Saha Kiralamak Şimdi Çok Kolay
           </Typography>
         </Box>
         <Box
