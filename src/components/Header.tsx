@@ -1,22 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./../css/header/header.css";
-//import logo from "/src/assets/images/logo.png";
 import { Link } from "@mui/material";
-import { useCustomTheme } from "../themes/Theme";
 
-function Header() {
+export function Header() {
   const location = useLocation();
-  const theme = useCustomTheme();
   const [isAtTop, setIsAtTop] = useState(false);
 
-
   const handleScroll = () => {
-    if (window.scrollY === 0) {
-      setIsAtTop(true);
-    } else {
-      setIsAtTop(false);
-    }
+    setIsAtTop(window.scrollY === 0);
   };
 
   useEffect(() => {
@@ -27,45 +19,26 @@ function Header() {
         window.removeEventListener("scroll", handleScroll);
       };
     }
-  }, []);
+  }, [location.pathname]);
 
-  // Seçili sayfa kontrolü
   const isSelected = (path: string) => location.pathname === path;
-
-  console.log(theme.palette);
 
   return (
     <div
       className="header"
-      style={
-        isAtTop
-          ? {
-              backgroundColor: "rgba(0,0,0,0.8)",
-              color: theme.palette.tx.secondary.w400,
-              zIndex: 1000,
-              boxShadow: "0 0 0",
-            }
-          : {
-              backgroundColor: "#000000",
-              color: theme.palette.tx.secondary.w400,
-              zIndex: 1000,
-              boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)",
-            }
-      }
+      style={{
+        backgroundColor: isAtTop ? "rgba(0,0,0,0.8)" : "#000000",
+        color: "#fff",
+        zIndex: 1000,
+        boxShadow: isAtTop ? "0 0 0" : "0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)",
+      }}
     >
       <div className="header-image-container">
         <div
-          style={
-            isAtTop
-              ? {
-                  color: theme.palette.tx.secondary.w400,
-                  borderLeftColor: theme.palette.tx.secondary.w400,
-                }
-              : {
-                  color: theme.palette.tx.secondary.w400,
-                  borderLeftColor: theme.palette.tx.secondary.w400,
-                }
-          }
+          style={{
+            color: "#fff",
+            borderLeftColor: "#fff",
+          }}
           className="header-image-container-title"
         >
           SAHAN CEPTE
@@ -76,11 +49,7 @@ function Header() {
         <div className="header-tab-left">
           <div className={`header-tab ${isSelected("/") ? "selected" : ""}`}>
             <Link
-              color={
-                isAtTop
-                  ? theme.palette.tx.secondary.w400
-                  : theme.palette.tx.secondary.w400
-              }
+              color="inherit"
               className="header-tab-text"
               href="/"
             >
@@ -91,11 +60,7 @@ function Header() {
             className={`header-tab ${isSelected("/fields") ? "selected" : ""}`}
           >
             <Link
-              color={
-                isAtTop
-                  ? theme.palette.tx.secondary.w400
-                  : theme.palette.tx.secondary.w400
-              }
+              color="inherit"
               className="header-tab-text"
               href="/fields"
             >
@@ -108,11 +73,7 @@ function Header() {
             }`}
           >
             <Link
-              color={
-                isAtTop
-                  ? theme.palette.tx.secondary.w400
-                  : theme.palette.tx.secondary.w400
-              }
+              color="inherit"
               className="header-tab-text"
               href="/createteam"
             >
@@ -120,14 +81,10 @@ function Header() {
             </Link>
           </div>
           <div
-            className={`header-tab  ${isSelected("/about") ? "selected" : ""}`}
+            className={`header-tab ${isSelected("/about") ? "selected" : ""}`}
           >
             <Link
-              color={
-                isAtTop
-                  ? theme.palette.tx.secondary.w400
-                  : theme.palette.tx.secondary.w400
-              }
+              color="inherit"
               className="header-tab-text"
               href="/about"
             >
@@ -136,11 +93,7 @@ function Header() {
           </div>
           <div className={`header-tab ${isSelected("/help") ? "selected" : ""}`}>
             <Link
-              color={
-                isAtTop
-                  ? theme.palette.tx.secondary.w400
-                  : theme.palette.tx.secondary.w400
-              }
+              color="inherit"
               className="header-tab-text"
               href="/help"
             >
@@ -152,7 +105,7 @@ function Header() {
         <div className="header-tab-right">
           <div className={`header-tab ${isSelected("/signup") ? "selected" : ""}`}>
             <Link
-              color={isAtTop ? theme.palette.tx.secondary.w400 : theme.palette.tx.secondary.w400}
+              color="inherit"
               className="header-tab-text signup-button"
               href="/signup"
             >
@@ -161,7 +114,7 @@ function Header() {
           </div>
           <div className={`header-tab ${isSelected("/login") ? "selected" : ""}`}>
             <Link
-              color={isAtTop ? theme.palette.tx.secondary.w400 : theme.palette.tx.secondary.w400}
+              color="inherit"
               className="header-tab-text login-button"
               href="/login"
             >
@@ -173,5 +126,5 @@ function Header() {
     </div>
   );
 }
-
 export default Header;
+

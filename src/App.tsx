@@ -14,24 +14,10 @@ import Support from "./pages/Support";
 import Profil from "./pages/Profil";
 import Reservations from "./pages/Reservations";
 
-import { useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { darkTheme, lightTheme } from "./themes/Theme";
-
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleTheme = () => {
-    console.log(isDarkMode);
-    setIsDarkMode((prev) => !prev);
-  };
-
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Header
-        currentTheme={isDarkMode ? "dark" : "light"}
-        toggleTheme={toggleTheme}
-      />
+    <>
+      <Header />
       <Routes>
         <Route path="/" Component={HomePage}></Route>
         <Route path="/about" Component={About}></Route>
@@ -46,7 +32,7 @@ function App() {
         <Route path="/Reservations" Component={Reservations}></Route>
       </Routes>
       {location.pathname !== '/fields' && <Footer />}
-    </ThemeProvider>
+    </>
   );
 }
 
