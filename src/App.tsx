@@ -1,6 +1,9 @@
 import "./App.css";
 import Header from "./components/Header";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import { darkTheme, lightTheme } from "./themes/Theme";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import FootballCourts from "./pages/FootballCourts";
@@ -14,24 +17,17 @@ import Support from "./pages/Support";
 import Profil from "./pages/Profil";
 import Reservations from "./pages/Reservations";
 
-import { useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { darkTheme, lightTheme } from "./themes/Theme";
-
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const location = useLocation();
 
   const toggleTheme = () => {
-    console.log(isDarkMode);
-    setIsDarkMode((prev) => !prev);
+    setIsDarkMode(!isDarkMode);
   };
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Header
-        currentTheme={isDarkMode ? "dark" : "light"}
-        toggleTheme={toggleTheme}
-      />
+      <Header currentTheme={isDarkMode ? "dark" : "light"} toggleTheme={toggleTheme} />
       <Routes>
         <Route path="/" Component={HomePage}></Route>
         <Route path="/about" Component={About}></Route>

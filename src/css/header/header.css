@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     height: 5rem;    
     position: fixed;
     z-index: 1;
@@ -14,8 +14,8 @@ body {
 }
 
 .header-image-container {
-    /* padding-left: 9.375rem; */
-    width: 50%;
+    width: auto;
+    min-width: fit-content;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -29,26 +29,36 @@ body {
 }
 
 .header-tab-container {
-    width: 40%;
-    max-width: 52%;
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 90%;
+    margin-left: 2rem;
+    padding-right: 2rem;
 }
 
+.header-tab-left {
+    display: flex;
+    gap: 20px;
+    margin-left: 0;
+}
+
+.header-tab-right {
+    display: flex;
+    margin-left: auto;
+}
 
 .header-tab {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
     position: relative;
     font-family: 'Poppins', sans-serif;
-    height: 46%;
+    height: 100%;
     border: none;
-    padding: 1rem;
+    padding: 0 0.5rem;
     border-radius: 2rem;
+    margin: 0 15px;
     
 
 }
@@ -68,19 +78,17 @@ body {
 }
  */
 
-.menu-button
-{
-    width: 10%;
-    padding-bottom: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.menu-button,
+.menu-button-material-symbols-outlined,
+.header-dropdown,
+.header-dropdown-tab,
+.header-dropdown-tab-text {
+    display: none;
 }
 
 
-/* Seçili sekmenin görünümü */
 .header-tab.selected {
-    font-weight: bold; /* Seçili sekmede kalın yazı */
+    font-weight: bold; 
     border: solid;
     border-width: 3px;
     border-left: 0;
@@ -91,13 +99,24 @@ body {
     padding-right: 0;
 }
 
+/* Giriş ve Bize Katıl butonları için selected stilini devre dışı bırak */
+.header-tab-right .header-tab.selected {
+    border: none;
+    font-weight: 500;
+    padding: 0 0.5rem;
+}
+
 .header-tab-text {
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     font-weight: 500;
     font-size: 0.9rem;
-    font-family:  "Poppins";
+    font-family: "Poppins";
     text-decoration: none !important;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 /* .header-tab.selected::after,
@@ -285,6 +304,20 @@ body {
         display: flex;
         align-items: flex-start;
     }
+
+    .header-tab-container {
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .header-tab {
+        padding: 0.5rem;
+    }
+
+    .header-tab-text {
+        font-size: 0.8rem;
+    }
 }
 
 
@@ -357,3 +390,35 @@ body {
         transition: all 0.3s ease-in-out;
     }
 }
+
+.login-button {
+    background-color: #2a952e;
+    border-radius: 20px;
+    padding: 8px 16px;
+}
+
+.header-tab-left .header-tab-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-weight: 500;
+    font-size: 0.8rem !important;
+    font-family: "Poppins";
+    text-decoration: none !important;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.theme-toggle-button {
+  margin: 0 2px !important;
+  padding: 0 !important;
+  scale: 0.8;
+}
+
+.theme-button {
+  font-size: 0.6rem !important;
+  padding: 2px 6px !important;
+  min-width: auto !important;
+}
+
