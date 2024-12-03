@@ -3,7 +3,12 @@ import { useLocation } from "react-router-dom";
 import "./../css/header/header.css";
 import { Link } from "@mui/material";
 
-export function Header() {
+interface HeaderProps {
+  currentTheme: "light" | "dark";
+  toggleTheme: () => void;
+}
+
+export function Header({ currentTheme, toggleTheme }: HeaderProps) {
   const location = useLocation();
   const [isAtTop, setIsAtTop] = useState(false);
 
@@ -103,6 +108,25 @@ export function Header() {
         </div>
 
         <div className="header-tab-right">
+          <div className="header-tab theme-toggle-button">
+            <Link
+              color="inherit"
+              className="header-tab-text theme-button"
+              onClick={toggleTheme}
+              component="button"
+              sx={{
+                fontSize: '0.6rem',         // Daha da küçük font
+                padding: '2px 6px',         // Minimal padding
+                minWidth: 'auto',
+                opacity: 0.8,               // Biraz saydam
+                '&:hover': {
+                  opacity: 1                // Hover'da tam opaklık
+                }
+              }}
+            >
+              {currentTheme === "dark" ? "☀️" : "🌙"}  {/* Emoji ile minimal görünüm */}
+            </Link>
+          </div>
           <div className={`header-tab ${isSelected("/signup") ? "selected" : ""}`}>
             <Link
               color="inherit"
