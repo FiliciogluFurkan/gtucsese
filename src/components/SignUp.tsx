@@ -17,6 +17,8 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -26,10 +28,6 @@ function SignUp() {
   const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLastName(event.target.value);
   };
-
-  /*  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-  }; */
 
   const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMail(event.target.value);
@@ -51,11 +49,9 @@ function SignUp() {
       lastName: lastName,
     };
 
-    console.log(user);
-
     try {
       const response = await axios({
-        url: "https://server.sahancepte.com/api/v1/accounts",
+        url: apiUrl + "/api/v1/accounts",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
