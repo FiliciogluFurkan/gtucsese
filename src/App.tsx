@@ -1,21 +1,22 @@
 import "./App.css";
-import Header from "./components/Header";
+import Header from "src/components/header/Header";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import { darkTheme, lightTheme } from "./themes/Theme";
-import HomePage from "./pages/HomePage";
-import About from "./pages/About";
-import FootballCourts from "./pages/FootballCourts";
-import CreateTeam from "./pages/CreateTeam";
-import Footer from "./components/Footer";
-import FootballCourtDetails from "./components/FootballCourtsDetails";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-import PasswordReset from "./components/PasswordReset";
-import Support from "./pages/Support";
-import Profil from "./pages/Profil";
-import Reservations from "./pages/Reservations";
+import { darkTheme, lightTheme } from "src/themes/Theme";
+import HomePage from "src/pages/homepage/HomePage";
+import About from "src/pages/about/About";
+import FootballCourts from "src/pages/facilities/Facilities";
+import CreateTeam from "src/pages/create-team/CreateTeam";
+import Footer from "src/components/footer/Footer";
+import CourtDetails from "src/pages/court-details/CourtDetails";
+import Login from "src/pages/login/Login";
+import SignUp from "src/pages/register/Register";
+import PasswordReset from "src/pages/password-reset/PasswordReset";
+import Support from "src/pages/support/Support";
+import Profil from "src/secured-user/pages/Profile";
+import Reservations from "src/pages/reservations/Reservations";
+import DashboardTemplate from "./admin/pages/DashboardTemplate";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -27,21 +28,26 @@ function App() {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Header currentTheme={isDarkMode ? "dark" : "light"} toggleTheme={toggleTheme} />
+      <Header
+        currentTheme={isDarkMode ? "dark" : "light"}
+        toggleTheme={toggleTheme}
+      />
       <Routes>
         <Route path="/" Component={HomePage}></Route>
         <Route path="/about" Component={About}></Route>
         <Route path="/fields" Component={FootballCourts}></Route>
         <Route path="/createteam" Component={CreateTeam}></Route>
         <Route path="/help" Component={Support}></Route>
-        <Route path="/fields/field-details/:id" element={<FootballCourtDetails />} />
+        <Route path="/fields/field-details/:id" element={<CourtDetails />} />
         <Route path="/login" Component={Login}></Route>
         <Route path="/signup" Component={SignUp}></Route>
         <Route path="/password-reset" Component={PasswordReset}></Route>
-        <Route path="/Profil" Component={Profil}></Route>
-        <Route path="/Reservations" Component={Reservations}></Route>
+        <Route path="/profil" Component={Profil}></Route>
+        <Route path="/reservations" Component={Reservations}></Route>
+
+        <Route path="/admin/dashboard" Component={DashboardTemplate}></Route>
       </Routes>
-      {location.pathname !== '/fields' && <Footer />}
+      {location.pathname !== "/fields" && <Footer />}
     </ThemeProvider>
   );
 }

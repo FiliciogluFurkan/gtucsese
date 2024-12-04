@@ -6,7 +6,7 @@ import React, {
   useState,
   ReactNode,
 } from "react";
-import { lightTheme, darkTheme } from "./Theme"; // Adjust the import according to your theme file structure
+import { lightTheme, darkTheme } from "src/themes/Theme"; // Adjust the import according to your theme file structure
 import { ThemeProvider } from "@mui/material/styles";
 
 // Define the context type

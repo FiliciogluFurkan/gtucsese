@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
+    "start:dev": "vite --mode dev",
     "build": "tsc -b && vite build",
+    "build:dev": "tsc -b && vite build --mode dev",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -24,13 +26,16 @@
     "dayjs": "^1.11.13",
     "keycloak-js": "^26.0.5",
     "lucide-react": "^0.460.0",
+    "oidc-client-ts": "^3.1.0",
     "react": "^18.3.1",
     "react-calendar": "^5.1.0",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
+    "react-oidc-context": "^3.2.0",
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.26.2",
-    "vite-plugin-svgr": "^4.3.0"
+    "vite-plugin-svgr": "^4.3.0",
+    "vite-tsconfig-paths": "^5.1.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
