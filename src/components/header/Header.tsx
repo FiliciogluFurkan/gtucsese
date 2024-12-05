@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { redirect, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "src/components/header/Header.css";
 import { Box, Button, Link } from "@mui/material";
-import { useAuth } from "react-oidc-context";
-import { useCustomTheme } from "@/themes/Theme";
 import { useAuthWithRoles } from "@/hooks/Auth";
 
 interface HeaderProps {
@@ -14,7 +12,6 @@ interface HeaderProps {
 const Header = ({ currentTheme, toggleTheme }: HeaderProps): JSX.Element => {
   const auth = useAuthWithRoles();
   const location = useLocation();
-  const theme = useCustomTheme();
   const [isAtTop, setIsAtTop] = useState(false);
 
   const handleScroll = () => {
