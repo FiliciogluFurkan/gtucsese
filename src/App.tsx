@@ -1,7 +1,7 @@
 import "./App.css";
 import Header from "src/components/header/Header";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme, lightTheme } from "src/themes/Theme";
 import HomePage from "src/pages/homepage/HomePage";
@@ -17,10 +17,21 @@ import Support from "src/pages/support/Support";
 import Profil from "src/secured-user/pages/Profile";
 import Reservations from "src/pages/reservations/Reservations";
 import DashboardTemplate from "./admin/pages/DashboardTemplate";
+import { useAuth } from "react-oidc-context";
+import SecuredRoute from "./components/secured-route/SecuredRoute";
 
-function App() {
+const App = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation();
+
+  const auth = useAuth();
+
+  React.useEffect(() => {
+    // the `return` is important - addAccessTokenExpiring() returns a cleanup function
+    return auth.events.addAccessTokenExpiring(() => {
+      auth.signinSilent();
+    });
+  }, [auth.events, auth.signinSilent]);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -42,14 +53,17 @@ function App() {
         <Route path="/login" Component={Login}></Route>
         <Route path="/signup" Component={SignUp}></Route>
         <Route path="/password-reset" Component={PasswordReset}></Route>
-        <Route path="/profil" Component={Profil}></Route>
+
         <Route path="/reservations" Component={Reservations}></Route>
 
-        <Route path="/admin/dashboard" Component={DashboardTemplate}></Route>
+        <Route element={<SecuredRoute />}>
+          <Route path="/profile" element={<Profil />} />
+          <Route path="/admin/dashboard" element={<DashboardTemplate />} />
+        </Route>
       </Routes>
       {location.pathname !== "/fields" && <Footer />}
     </ThemeProvider>
   );
-}
+};
 
 export default App;
