@@ -9,9 +9,11 @@ import AdminAccount from "src/admin/components/account/Account";
 import Calendar from "src/admin/components/calendar/Calendar";
 import Logo from "src/assets/images/logo-dark.png";
 import CourtDetails from "@/pages/court-details/CourtDetails";
+import { useAuthWithRoles } from "@/hooks/Auth";
 
 const DashboardTemplate = (): JSX.Element => {
   const [selectedTitle, setSelectedTitle] = useState("Admin Paneli");
+  const auth = useAuthWithRoles();
 
   const renderComponent = () => {
     switch (selectedTitle) {
@@ -310,6 +312,42 @@ const DashboardTemplate = (): JSX.Element => {
               }}
             >
               Takvim
+            </Box>
+          </Box>
+
+          <Box
+            onClick={() => {
+              auth.signoutRedirect({
+                post_logout_redirect_uri: import.meta.env.VITE_BASE_URL,
+              });
+            }}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              padding: "0.5rem 1rem",
+              color: "#464255",
+              marginTop: "0.8rem",
+              borderRadius: "4px",
+              "&:hover": {
+                backgroundColor: "#DFFFD6",
+                color: "#00B074",
+                cursor: "pointer",
+              },
+            }}
+          >
+            <Box>
+              <span className="material-symbols-outlined">logout</span>
+            </Box>
+            <Box
+              sx={{
+                fontFamily: "barlow",
+                fontWeight: 700,
+                fontsize: "1.5rem",
+                paddingLeft: "1rem",
+                marginTop: "0.2rem",
+              }}
+            >
+              Çıkış Yap
             </Box>
           </Box>
         </Box>
