@@ -1,9 +1,9 @@
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    height: 5rem;    
+    height: 5.5rem;    
     position: fixed;
     z-index: 1;
     width: 100%;  
@@ -14,7 +14,7 @@ body {
 }
 
 .header-image-container {
-    width: auto;
+    width: 20%;
     min-width: fit-content;
     display: flex;
     align-items: center;
@@ -31,7 +31,7 @@ body {
 .header-tab-container {
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 70%;
     margin-left: 2rem;
     padding-right: 2rem;
 }
@@ -44,7 +44,8 @@ body {
 
 .header-tab-right {
     display: flex;
-    margin-left: auto;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .header-tab {
@@ -54,17 +55,17 @@ body {
     text-align: center;
     position: relative;
     font-family: 'Poppins', sans-serif;
-    height: 100%;
     border: none;
     padding: 0 0.5rem;
     border-radius: 2rem;
     margin: 0 15px;
+    width: 20%;
     
 
 }
 
 .header-image-container-title {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     margin-left: 6rem;
@@ -87,17 +88,7 @@ body {
 }
 
 
-.header-tab.selected {
-    font-weight: bold; 
-    border: solid;
-    border-width: 3px;
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-    border-radius: 0;
-    padding-left: 0;
-    padding-right: 0;
-}
+
 
 /* Giriş ve Bize Katıl butonları için selected stilini devre dışı bırak */
 .header-tab-right .header-tab.selected {
@@ -110,7 +101,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
     font-weight: 500;
     font-size: 0.9rem;
     font-family: "Poppins";
@@ -171,12 +161,47 @@ body {
     position: relative;
     font-size: 1rem !important;
     font-weight: 400 !important;
-    font-family: 'Poppins' !important;
+    font-family: 'Outfit' !important;
     border: none;
     text-decoration: none !important;
     padding: 0 !important;
 }
 
+.header-tab-left .header-tab-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-weight: 500;
+    font-size: 1.1rem !important;
+    font-family: "Rubik";
+    text-decoration: none !important;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    margin-top: 0.7rem;
+}
+
+.header-tab.selected {
+    font-weight: 900; 
+    color: white;
+    transition: 0.3s;
+    /* border: solid;
+    border-width: 5px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    border-radius: 0; */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.header-tab.selected::after,
+.header-tab.selected::before {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background: rgb(41, 41, 41);
+}
 
 @media (max-width: 768px) {
     .header {
@@ -391,24 +416,7 @@ body {
     }
 }
 
-.login-button {
-    background-color: #2a952e;
-    border-radius: 20px;
-    padding: 8px 16px;
-}
 
-.header-tab-left .header-tab-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-weight: 500;
-    font-size: 0.8rem !important;
-    font-family: "Poppins";
-    text-decoration: none !important;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-}
 
 .theme-toggle-button {
   margin: 0 2px !important;

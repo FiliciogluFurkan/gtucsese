@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { redirect, useLocation } from "react-router-dom";
 import "src/components/header/Header.css";
-import { Link } from "@mui/material";
+import { Box, Button, Link } from "@mui/material";
+import { useAuth } from "react-oidc-context";
+import { useCustomTheme } from "@/themes/Theme";
+import { useAuthWithRoles } from "@/hooks/Auth";
 
 interface HeaderProps {
   currentTheme: "light" | "dark";
   toggleTheme: () => void;
 }
 
-export function Header({ currentTheme, toggleTheme }: HeaderProps) {
+const Header = ({ currentTheme, toggleTheme }: HeaderProps): JSX.Element => {
+  const auth = useAuthWithRoles();
   const location = useLocation();
+  const theme = useCustomTheme();
   const [isAtTop, setIsAtTop] = useState(false);
 
   const handleScroll = () => {
@@ -32,7 +37,7 @@ export function Header({ currentTheme, toggleTheme }: HeaderProps) {
     <div
       className="header"
       style={{
-        backgroundColor: isAtTop ? "rgba(0,0,0,0.8)" : "#000000",
+        backgroundColor: isAtTop ? "rgb(12 12 12)" : "rgb(12 12 12)",
         color: "#fff",
         zIndex: 1000,
         boxShadow: isAtTop ? "0 0 0" : "0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)",
@@ -50,7 +55,14 @@ export function Header({ currentTheme, toggleTheme }: HeaderProps) {
         </div>
       </div>
 
-      <div className="header-tab-container">
+      <Box
+        sx={{
+          color: "rgb(200,200,200)",
+          height: "100%",
+          marginLeft: { sm: "5rem", md: "5rem" },
+        }}
+        className="header-tab-container"
+      >
         <div className="header-tab-left">
           <div className={`header-tab ${isSelected("/") ? "selected" : ""}`}>
             <Link color="inherit" className="header-tab-text" href="/">
@@ -117,28 +129,86 @@ export function Header({ currentTheme, toggleTheme }: HeaderProps) {
           <div
             className={`header-tab ${isSelected("/signup") ? "selected" : ""}`}
           >
-            <Link
+            <Button
               color="inherit"
+              sx={{
+                marginRight: { xs: "1rem", sm: "0rem" },
+                marginTop: { xs: "0.5rem", sm: "0.7rem" },
+                textTransform: "none",
+                borderStyle: "solid",
+                fontFamily: "Poppins",
+                fontSize: { xs: "0.8rem", sm: "0.9rem" },
+                borderColor: "rgba(200, 200, 200, 0.2)",
+                borderWidth: 1,
+                padding: { xs: "0.5rem 1rem", sm: "0.6rem 1.2rem" },
+                borderRadius: { xs: 0, sm: 16 },
+              }}
               className="header-tab-text signup-button"
-              href="/signup"
+              onClick={() => {
+                auth.user
+                  ? auth.signoutRedirect({
+                      post_logout_redirect_uri: import.meta.env.VITE_BASE_URL,
+                    })
+                  : auth.signinRedirect({
+                      redirect_uri: window.location.href,
+                    });
+              }}
             >
-              Bize Katıl
-            </Link>
+              {auth.user ? "Çıkış Yap" : "Bize Katıl"}
+            </Button>
           </div>
-          <div
-            className={`header-tab ${isSelected("/login") ? "selected" : ""}`}
+
+          <Button
+            color="inherit"
+            sx={{
+              marginLeft: { xs: "1rem", sm: "2rem" },
+              fontWeight: 800,
+              textTransform: "none",
+              /*  borderStyle: "solid", */
+              fontFamily: "Poppins",
+              fontSize: { xs: "0.8rem", sm: "1rem" },
+              bgcolor: "rgb(0, 163, 57, 0.9)",
+              /*  borderWidth: 3, */
+              padding: { xs: "0.5rem 1rem", sm: "0.6rem 1.2rem" },
+              /* paddingTop: { xs: "0.5rem", sm: "0.5rem" }, */
+              borderRadius: { xs: 0, sm: 16 },
+            }}
+            className="header-tab-text"
+            onClick={() => {
+              auth.user
+                ? (window.location.href = "/profile")
+                : auth.signinRedirect({ redirect_uri: window.location.href });
+            }}
           >
-            <Link
+            {auth.user ? "Profilim" : "Giriş Yap"}
+          </Button>
+          {auth.user && (
+            <Button
               color="inherit"
-              className="header-tab-text login-button"
-              href="/login"
+              sx={{
+                marginLeft: { xs: "1rem", sm: "2rem" },
+                fontWeight: 800,
+                textTransform: "none",
+                /*  borderStyle: "solid", */
+                fontFamily: "Poppins",
+                fontSize: { xs: "0.8rem", sm: "1rem" },
+                bgcolor: "rgb(0, 163, 57, 0.9)",
+                /*  borderWidth: 3, */
+                padding: { xs: "0.5rem 1rem", sm: "0.6rem 1.2rem" },
+                /* paddingTop: { xs: "0.5rem", sm: "0.5rem" }, */
+                borderRadius: { xs: 0, sm: 16 },
+              }}
+              className="header-tab-text"
+              onClick={() => {
+                window.location.href = "/admin/dashboard";
+              }}
             >
-              Giriş
-            </Link>
-          </div>
+              Admin
+            </Button>
+          )}
         </div>
-      </div>
+      </Box>
     </div>
   );
-}
+};
 export default Header;
