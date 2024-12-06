@@ -11,16 +11,15 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
   return (
     <Box
       sx={{
-        width: "30%",
+        backgroundColor: "white",
+        borderRadius: "8px",
         padding: "1rem",
-        borderRadius: "0.5rem",
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-        fontFamily: "Barlow",
-        fontSize: "1rem",
-        color: "#464255",
-        textAlign: "center",
-        height: "auto",
-        marginTop: "2rem",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        width: "100%",
+        height: "250px",
+        minHeight: "250px",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Box
@@ -29,6 +28,7 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
           flexDirection: "column",
           paddingTop: "1rem",
           width: "100%",
+          flex: 1,
         }}
       >
         <Box
@@ -47,7 +47,11 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
               fontFamily: "Barlow",
               fontSize: "1.2rem",
               color: "#464255",
-              paddingLeft: "2rem",
+              paddingLeft: "1rem",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              maxWidth: "150px",
             }}
           >
             {review.fullName}
@@ -58,8 +62,9 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
               color: "#A3A3A3",
               fontFamily: "Barlow",
               fontWeight: "400",
-              paddingLeft: "6rem",
+              paddingLeft: "2rem",
               paddingTop: "0.5rem",
+              marginLeft: "auto",
             }}
           >
             {review.day} gün önce
@@ -77,19 +82,22 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
         >
           {review.review}
         </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            paddingTop: "1rem",
-            paddingLeft: "1rem",
-          }}
-        >
-          <Box>{review.rating}</Box>
-          <Box sx={{ paddingLeft: "1rem", paddingTop: "0.1rem" }}>
-            {renderStars(review.rating)}
-          </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          paddingLeft: "1rem",
+          marginTop: "auto",
+          borderTop: "1px solid #eee",
+          paddingTop: "1rem",
+        }}
+      >
+        <Box>
+          {review.rating.toFixed(1)}
+        </Box>
+        <Box sx={{ paddingLeft: "0.5rem" }}>
+          {renderStars(review.rating)}
         </Box>
       </Box>
     </Box>

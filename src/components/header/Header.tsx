@@ -30,7 +30,7 @@ const Header = ({ currentTheme, toggleTheme }: HeaderProps): JSX.Element => {
 
   const isSelected = (path: string) => location.pathname === path;
 
-  return (
+  return location.pathname === '/admin/dashboard' ? <></> : (
     <div
       className="header"
       style={{

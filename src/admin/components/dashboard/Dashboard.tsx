@@ -114,7 +114,8 @@ const Dashboard = (): JSX.Element => {
         backgroundColor: "#F3F2F7",
         display: "flex",
         flexDirection: "column",
-        paddingLeft: "3rem",
+        padding: { xs: "1rem", md: "3rem" },
+        width: "100%",
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", marginTop: "4rem" }}>
@@ -143,44 +144,56 @@ const Dashboard = (): JSX.Element => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          marginTop: "4rem",
+          flexDirection: { xs: "column", md: "row" },
+          marginTop: "2rem",
           gap: "1rem",
+          width: "100%",
         }}
       >
         <Box
           sx={{
-            width: "18rem",
-            height: "11rem",
+            width: { xs: "100%", md: "25%" },
+            minWidth: { md: "250px" },
+            height: { xs: "auto", md: "11rem" },
             backgroundColor: "white",
             borderRadius: "8px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            padding: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
-              paddingLeft: "3rem",
-              paddingTop: "2rem",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "1rem",
+              padding: { xs: "1rem", md: "2rem" },
             }}
           >
             <Box
               sx={{
-                width: "5rem",
-                height: "5rem",
+                width: { xs: "4rem", md: "5rem" },
+                height: { xs: "4rem", md: "5rem" },
                 borderRadius: "50%",
                 backgroundColor: "rgb(0,176,116,0.35)",
-                alpha: 0.15,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                flexShrink: 0,
               }}
             >
               <img
                 src={currentrezervation}
                 alt="your image"
-                style={{ width: "auto", height: "auto", objectFit: "cover" }}
+                style={{ 
+                  width: "60%",
+                  height: "60%",
+                  objectFit: "contain"
+                }}
               />
             </Box>
 
@@ -188,12 +201,14 @@ const Dashboard = (): JSX.Element => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                paddingLeft: "1rem",
+                gap: "0.5rem",
+                alignItems: "flex-start",
+                textAlign: "left",
               }}
             >
               <Box
                 sx={{
-                  fontSize: "3rem",
+                  fontSize: { xs: "2rem", md: "3rem" },
                   fontFamily: "Barlow",
                   fontWeight: 700,
                   color: "#464255",
@@ -203,7 +218,7 @@ const Dashboard = (): JSX.Element => {
               </Box>
               <Box
                 sx={{
-                  fontSize: "1rem",
+                  fontSize: { xs: "0.9rem", md: "1rem" },
                   fontFamily: "Barlow",
                   fontWeight: 400,
                   color: "#464255",
@@ -215,64 +230,65 @@ const Dashboard = (): JSX.Element => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  marginTop: "0.8rem",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  gap: "0.5rem",
                 }}
               >
-                <Box>
-                  <img
-                    style={{ width: "1.5rem", height: "1.5rem" }}
-                    src={icon}
-                    alt="icon"
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    fontSize: "1rem",
-                    fontFamily: "Barlow",
-                    fontWeight: 400,
-                    color: "#A3A3A3",
-                    paddingTop: "0.2rem",
-                  }}
-                >
-                  %4 (30 days)
-                </Box>
+                <img
+                  style={{ width: "1.5rem", height: "1.5rem" }}
+                  src={icon}
+                  alt="icon"
+                />
+                <Box sx={{ color: "#A3A3A3" }}>%4 (30 days)</Box>
               </Box>
             </Box>
           </Box>
         </Box>
         <Box
           sx={{
-            width: "18rem",
-            height: "11rem",
+            width: { xs: "100%", md: "25%" },
+            minWidth: { md: "250px" },
+            height: { xs: "auto", md: "11rem" },
             backgroundColor: "white",
             borderRadius: "8px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            padding: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
-              paddingLeft: "3rem",
-              paddingTop: "2rem",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "1rem",
+              padding: { xs: "1rem", md: "2rem" },
             }}
           >
             <Box
               sx={{
-                width: "5rem",
-                height: "5rem",
+                width: { xs: "4rem", md: "5rem" },
+                height: { xs: "4rem", md: "5rem" },
                 borderRadius: "50%",
                 backgroundColor: "rgb(0,176,116,0.35)",
-                alpha: 0.15,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                flexShrink: 0,
               }}
             >
               <img
                 src={Group}
                 alt="your image"
-                style={{ width: "auto", height: "auto", objectFit: "cover" }}
+                style={{ 
+                  width: "60%",
+                  height: "60%",
+                  objectFit: "contain"
+                }}
               />
             </Box>
 
@@ -280,12 +296,14 @@ const Dashboard = (): JSX.Element => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                paddingLeft: "1rem",
+                gap: "0.5rem",
+                alignItems: "flex-start",
+                textAlign: "left",
               }}
             >
               <Box
                 sx={{
-                  fontSize: "3rem",
+                  fontSize: { xs: "2rem", md: "3rem" },
                   fontFamily: "Barlow",
                   fontWeight: 700,
                   color: "#464255",
@@ -295,7 +313,7 @@ const Dashboard = (): JSX.Element => {
               </Box>
               <Box
                 sx={{
-                  fontSize: "1rem",
+                  fontSize: { xs: "0.9rem", md: "1rem" },
                   fontFamily: "Barlow",
                   fontWeight: 400,
                   color: "#464255",
@@ -307,64 +325,65 @@ const Dashboard = (): JSX.Element => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  marginTop: "0.8rem",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  gap: "0.5rem",
                 }}
               >
-                <Box>
-                  <img
-                    style={{ width: "1.5rem", height: "1.5rem" }}
-                    src={icon}
-                    alt="icon"
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    fontSize: "1rem",
-                    fontFamily: "Barlow",
-                    fontWeight: 400,
-                    color: "#A3A3A3",
-                    paddingTop: "0.2rem",
-                  }}
-                >
-                  %15 (30 days)
-                </Box>
+                <img
+                  style={{ width: "1.5rem", height: "1.5rem" }}
+                  src={icon}
+                  alt="icon"
+                />
+                <Box sx={{ color: "#A3A3A3" }}>%15 (30 days)</Box>
               </Box>
             </Box>
           </Box>
         </Box>
         <Box
           sx={{
-            width: "18rem",
-            height: "11rem",
+            width: { xs: "100%", md: "25%" },
+            minWidth: { md: "250px" },
+            height: { xs: "auto", md: "11rem" },
             backgroundColor: "white",
             borderRadius: "8px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            padding: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
-              paddingLeft: "4rem",
-              paddingTop: "2rem",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "1rem",
+              padding: { xs: "1rem", md: "2rem" },
             }}
           >
             <Box
               sx={{
-                width: "5rem",
-                height: "5rem",
+                width: { xs: "4rem", md: "5rem" },
+                height: { xs: "4rem", md: "5rem" },
                 borderRadius: "50%",
                 backgroundColor: "rgb(0,176,116,0.35)",
-                alpha: 0.15,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                flexShrink: 0,
               }}
             >
               <img
                 src={canceledrezervation}
                 alt="your image"
-                style={{ width: "auto", height: "auto", objectFit: "cover" }}
+                style={{ 
+                  width: "60%",
+                  height: "60%",
+                  objectFit: "contain"
+                }}
               />
             </Box>
 
@@ -372,12 +391,14 @@ const Dashboard = (): JSX.Element => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                paddingLeft: "1rem",
+                gap: "0.5rem",
+                alignItems: "flex-start",
+                textAlign: "left",
               }}
             >
               <Box
                 sx={{
-                  fontSize: "3rem",
+                  fontSize: { xs: "2rem", md: "3rem" },
                   fontFamily: "Barlow",
                   fontWeight: 700,
                   color: "#464255",
@@ -387,7 +408,7 @@ const Dashboard = (): JSX.Element => {
               </Box>
               <Box
                 sx={{
-                  fontSize: "1rem",
+                  fontSize: { xs: "0.9rem", md: "1rem" },
                   fontFamily: "Barlow",
                   fontWeight: 400,
                   color: "#464255",
@@ -399,64 +420,65 @@ const Dashboard = (): JSX.Element => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  marginTop: "0.8rem",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  gap: "0.5rem",
                 }}
               >
-                <Box>
-                  <img
-                    style={{ width: "1.5rem", height: "1.5rem" }}
-                    src={icon2}
-                    alt="icon"
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    fontSize: "1rem",
-                    fontFamily: "Barlow",
-                    fontWeight: 400,
-                    color: "#A3A3A3",
-                    paddingTop: "0.2rem",
-                  }}
-                >
-                  %4 (30 days)
-                </Box>
+                <img
+                  style={{ width: "1.5rem", height: "1.5rem" }}
+                  src={icon2}
+                  alt="icon"
+                />
+                <Box sx={{ color: "#A3A3A3" }}>%4 (30 days)</Box>
               </Box>
             </Box>
           </Box>
         </Box>
         <Box
           sx={{
-            width: "18rem",
-            height: "11rem",
+            width: { xs: "100%", md: "25%" },
+            minWidth: { md: "250px" },
+            height: { xs: "auto", md: "11rem" },
             backgroundColor: "white",
             borderRadius: "8px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            padding: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
-              paddingLeft: "4rem",
-              paddingTop: "2rem",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "1rem",
+              padding: { xs: "1rem", md: "2rem" },
             }}
           >
             <Box
               sx={{
-                width: "5rem",
-                height: "5rem",
+                width: { xs: "4rem", md: "5rem" },
+                height: { xs: "4rem", md: "5rem" },
                 borderRadius: "50%",
                 backgroundColor: "rgb(0,176,116,0.35)",
-                alpha: 0.15,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                flexShrink: 0,
               }}
             >
               <img
                 src={totalprice}
                 alt="your image"
-                style={{ width: "auto", height: "auto", objectFit: "cover" }}
+                style={{ 
+                  width: "60%",
+                  height: "60%",
+                  objectFit: "contain"
+                }}
               />
             </Box>
 
@@ -464,22 +486,24 @@ const Dashboard = (): JSX.Element => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                paddingLeft: "1rem",
+                gap: "0.5rem",
+                alignItems: "flex-start",
+                textAlign: "left",
               }}
             >
               <Box
                 sx={{
-                  fontSize: "3rem",
+                  fontSize: { xs: "2rem", md: "3rem" },
                   fontFamily: "Barlow",
                   fontWeight: 700,
                   color: "#464255",
                 }}
               >
-                {currentRezervations}
+                {totalPrice}
               </Box>
               <Box
                 sx={{
-                  fontSize: "1rem",
+                  fontSize: { xs: "0.9rem", md: "1rem" },
                   fontFamily: "Barlow",
                   fontWeight: 400,
                   color: "#464255",
@@ -491,34 +515,24 @@ const Dashboard = (): JSX.Element => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  marginTop: "0.8rem",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  gap: "0.5rem",
                 }}
               >
-                <Box>
-                  <img
-                    style={{ width: "1.5rem", height: "1.5rem" }}
-                    src={icon2}
-                    alt="icon"
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    fontSize: "1rem",
-                    fontFamily: "Barlow",
-                    fontWeight: 400,
-                    color: "#A3A3A3",
-                    paddingTop: "0.2rem",
-                  }}
-                >
-                  %12 (30 days)
-                </Box>
+                <img
+                  style={{ width: "1.5rem", height: "1.5rem" }}
+                  src={icon2}
+                  alt="icon"
+                />
+                <Box sx={{ color: "#A3A3A3" }}>%12 (30 days)</Box>
               </Box>
             </Box>
           </Box>
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "row", marginTop: "4rem" }}>
+      <Box sx={{ display: "flex", flexDirection: "row", marginTop: "3rem", marginBottom: "2rem" }}>
         <Box
           sx={{
             fontFamily: "Barlow",
@@ -543,14 +557,18 @@ const Dashboard = (): JSX.Element => {
             sx={{
               width: "3rem",
               height: "3rem",
-              border: "2px solid #00B074",
+              border: "2px solid white",
               borderRadius: "1rem",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               color: "#00B074",
               cursor: "pointer",
-              "&:hover": { backgroundColor: "rgba(0, 176, 116, 0.1)" },
+              backgroundColor: "white",
+              "&:hover": { 
+                backgroundColor: "white",
+                opacity: 0.9 
+              },
             }}
           >
             &lt;
@@ -561,14 +579,18 @@ const Dashboard = (): JSX.Element => {
             sx={{
               width: "3rem",
               height: "3rem",
-              border: "2px solid #00B074",
+              border: "2px solid white",
               borderRadius: "1rem",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               color: "#00B074",
               cursor: "pointer",
-              "&:hover": { backgroundColor: "rgba(0, 176, 116, 0.1)" },
+              backgroundColor: "white",
+              "&:hover": { 
+                backgroundColor: "white",
+                opacity: 0.9 
+              },
             }}
           >
             &gt;
@@ -580,17 +602,25 @@ const Dashboard = (): JSX.Element => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          marginLeft: "-3rem",
           gap: "1rem",
           overflow: "hidden",
-          justifyContent: "center",
+          justifyContent: "flex-start",
+          paddingRight: "4rem",
+          width: "100%",
         }}
       >
         {comments.slice(currentIndex, currentIndex + 3).map((review, index) => (
-          <CourtsCommentsCards key={index} review={review} />
+          <Box 
+            key={index} 
+            sx={{ 
+              width: "38%",
+              minWidth: "300px",
+            }}
+          >
+            <CourtsCommentsCards review={review} />
+          </Box>
         ))}
       </Box>
-      <Box sx={{ marginTop: "5rem" }}>hello</Box>
     </Box>
   );
 };
