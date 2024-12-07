@@ -8,8 +8,8 @@ import Comments from "src/admin/components/comments/Comments";
 import AdminAccount from "src/admin/components/account/Account";
 import Calendar from "src/admin/components/calendar/Calendar";
 import Logo from "src/assets/images/logo-dark.png";
-import CourtDetails from "@/pages/court-details/CourtDetails";
 import { useAuthWithRoles } from "@/hooks/Auth";
+import ManageFacility from "../components/manage-facility/ManageFacility";
 
 const DashboardTemplate = (): JSX.Element => {
   const [selectedTitle, setSelectedTitle] = useState("Admin Paneli");
@@ -20,8 +20,8 @@ const DashboardTemplate = (): JSX.Element => {
       case "Admin Paneli":
         return <Dashboard />;
       case "Tesis Detayları":
-        return <CourtDetails />;
-      case "Halısahalarım":
+        return < ManageFacility/>;
+      case "Rezervasyon Durumu":
         return <MyCourts />;
       case "Rezervasyonlarım":
         return <Reservations />;
@@ -120,12 +120,12 @@ const DashboardTemplate = (): JSX.Element => {
           </Box>
 
           <Box
-            onClick={() => setSelectedTitle("Halısahalarım")}
+            onClick={() => setSelectedTitle("Rezervasyon Durumu")}
             sx={{
               display: "flex",
               flexDirection: "row",
               padding: "0.5rem 1rem",
-              color: selectedTitle === "Halısahalarım" ? "#00B074" : "#464255",
+              color: selectedTitle === "Rezervasyon Durumu" ? "#00B074" : "#464255",
               borderRadius: "4px",
               marginTop: "0.8rem",
               "&:hover": {
@@ -147,7 +147,7 @@ const DashboardTemplate = (): JSX.Element => {
                 marginTop: "0.2rem",
               }}
             >
-              Halısahalarım
+              Rezervasyonlar
             </Box>
           </Box>
 

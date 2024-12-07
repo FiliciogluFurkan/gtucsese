@@ -8,7 +8,7 @@ import image3 from "src/assets/images/court-3.jpg";
 import CommentOfCourts from "src/components/court-comments/CourtComments";
 import ReservationSystem from "src/components/reservation-system/ReservationSystem";
 import { renderStars } from "@/services/CommentService";
-import { Court } from "@/interfaces/Court";
+import { Facility } from "@/interfaces/Facility";
 import {
   Bath,
   Utensils,
@@ -21,54 +21,57 @@ import { Review } from "@/interfaces/Review";
 const CourtDetails = (): JSX.Element => {
   const params = useParams();
 
-  const [footballCourt, setFootballCourt] = useState<Court | null>(null);
+  const [facility, setFacility] = useState<Facility | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [dummy, setDummy] = useState<Court | null>(null);
+  const [dummy, setDummy] = useState<Facility| null>(null);
 
   useEffect(() => {
-    const fetchFields = async () => {
+    const fetchFacility = async () => {
       try {
         const response = await axios.get(
           "https://db.aymoose.devodev.online/fields"
         );
-        response.data.forEach((item: Court) => {
-          if (item.id === Number(params.id)) {
-            setFootballCourt(item);
+        response.data.forEach((item:Facility) => {
+          if (item.id === params.id) {
+            setFacility(item);
             console.log("Selected Field:", item);
+            console.log(facility)
           }
         });
       } catch (err) {
         console.error("Error fetching fields:", err);
       }
     };
-    fetchFields();
+    fetchFacility();
   }, [params.id]);
 
+ 
   useEffect(() => {
-    const dummyData: Court = {
-      id: 1,
+    const dummyData: Facility = {
+      id: "1",
       name: "Aydın Halısaha",
-      images: [image1, image2, image3],
-      description:
-        'Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki "Konum" bölümünden ulaşabilirsiniz.',
-      rating: 2.5,
-      numberOfReviews: 10,
-      reviews: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkOREMt9spAiPAXEimAysKFe580eAkTSTTA&s",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkkOREMt9spAiPAXEimAysKFe580eAkTSTTA&s",
-      ],
-      amenities: ["6+6 · 7+7 · 8+8 Sahalar · Ayakkabı . Su . Duş"],
-      phoneNumber: "0850 455 85 45",
-      capacity: "6+6 · 7+7 · 8+8",
-      price: 150,
+      address: "Mustafa Kemal Paşa metrobüs durağı",
       city: "İstanbul",
       district: "Kadıköy",
+      phone: "0850 455 85 45",
+      courts: [], // Eğer sahalar (courts) bilgisi varsa burada doldurun.
+      amenities: ["6+6 · 7+7 · 8+8 Sahalar", "Ayakkabı", "Su", "Duş"],
       location:
         "Göztepe, Tütüncü Mehmet Efendi Cd. 18/A, 34730 Kadıköy/İstanbul",
+      openTime: "09:00",
+      closeTime: "22:00",
+      rating: (Math.random() * 4 + 1).toFixed(1), // 1.0 ile 5.0 arasında rastgele değer
+      description:
+        'Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki "Konum" bölümünden ulaşabilirsiniz.',
+      isActive: true,
+      images: [
+        image1,
+        image2,
+        image3,
+      ],
+      
     };
-    if (footballCourt !== null) {
-      footballCourt.rating = Math.floor(Math.random() * 5) + 1;
-    }
+
     setDummy(dummyData);
   }, []);
 
@@ -255,7 +258,7 @@ const CourtDetails = (): JSX.Element => {
           >
             <Typography sx={{}}>{dummy?.rating}</Typography>
             <Box sx={{ paddingTop: "0.2rem", paddingLeft: "0.5rem" }}>
-              {renderStars(dummy?.rating)}
+              {renderStars(Number(dummy?.rating))}
             </Box>
             <Typography sx={{ paddingLeft: "1rem", color: "#666" }}>
               {reviews.length} Değerlendirme
@@ -272,7 +275,7 @@ const CourtDetails = (): JSX.Element => {
               schedule
             </span>
             <Typography sx={{ paddingLeft: "0.5rem", color: "#666" }}>
-              {dummy?.capacity} Sahalar
+              {dummy?.amenities}
             </Typography>
           </Box>
 
@@ -286,7 +289,7 @@ const CourtDetails = (): JSX.Element => {
               call
             </span>
             <Typography sx={{ paddingLeft: "0.5rem", color: "#666" }}>
-              {dummy?.phoneNumber}
+              {dummy?.phone}
             </Typography>
           </Box>
 

@@ -33,7 +33,7 @@ const Dashboard = (): JSX.Element => {
       fullName: "Ahmet Yılmaz",
       review:
         "Harika bir saha, zemini çok iyi. Yiyecek ve içecek olsa daha iyi olurdu. Maçtan sonra terli terli dışarıda yemek yemeden burada yiyip evimize giderdik.",
-      day: "2 days ago",
+      day: "2",
       rating: 5,
     },
     {
@@ -41,7 +41,7 @@ const Dashboard = (): JSX.Element => {
       userId: 102,
       fullName: "Mehmet Kaya",
       review: "Işıklandırma yetersizdi. Saat 8 oldu hala ışıklar açılmamıştı.",
-      day: "4 days ago",
+      day: "4",
       rating: 3.5,
     },
     {
@@ -49,7 +49,7 @@ const Dashboard = (): JSX.Element => {
       userId: 103,
       fullName: "Elif Demir",
       review: "Çalışanlar çok ilgiliydi, sahada oynamak keyifliydi.",
-      day: "1 day ago",
+      day: "1",
       rating: 4.5,
     },
     {
@@ -57,7 +57,7 @@ const Dashboard = (): JSX.Element => {
       userId: 104,
       fullName: "Hüseyin Çelik",
       review: "Saha biraz bakımsız ama yine de keyifliydi.",
-      day: "5 days ago",
+      day: "5",
       rating: 3,
     },
     {
@@ -65,7 +65,7 @@ const Dashboard = (): JSX.Element => {
       userId: 105,
       fullName: "Ayşe Öztürk",
       review: "Oldukça ferah ve geniş bir saha. Tavsiye ederim.",
-      day: "7 days ago",
+      day: "7",
       rating: 5,
     },
     {
@@ -73,7 +73,7 @@ const Dashboard = (): JSX.Element => {
       userId: 106,
       fullName: "Emre Şahin",
       review: "Otopark sorunluydu, biraz daha iyi olabilirdi.",
-      day: "10 days ago",
+      day: "10",
       rating: 2.4,
     },
     {
@@ -81,7 +81,7 @@ const Dashboard = (): JSX.Element => {
       userId: 107,
       fullName: "Fatma Aydın",
       review: "Fiyat performans olarak gayet iyi.",
-      day: "3 days ago",
+      day: "3",
       rating: 4,
     },
     {
@@ -89,7 +89,7 @@ const Dashboard = (): JSX.Element => {
       userId: 108,
       fullName: "Ali Yıldırım",
       review: "Saha güzel ama duşlar biraz kirliydi.",
-      day: "6 days ago",
+      day: "6",
       rating: 3,
     },
   ];
@@ -116,6 +116,10 @@ const Dashboard = (): JSX.Element => {
         flexDirection: "column",
         padding: { xs: "1rem", md: "3rem" },
         width: "100%",
+        height: "100%",
+        flex: 1,
+        paddingBottom: "4rem",
+        marginBottom: "-1px",
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", marginTop: "4rem" }}>
