@@ -116,6 +116,10 @@ const Dashboard = (): JSX.Element => {
         flexDirection: "column",
         padding: { xs: "1rem", md: "3rem" },
         width: "100%",
+        height: "100%",
+        flex: 1,
+        paddingBottom: "4rem",
+        marginBottom: "-1px",
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", marginTop: "4rem" }}>
