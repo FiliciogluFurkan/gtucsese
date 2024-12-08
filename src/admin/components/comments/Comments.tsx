@@ -1,79 +1,10 @@
 import { Box, Grid } from '@mui/material';
 import profile from '/src/assets/images/admindashboard/placeholder.png';
-
-const renderStars = (rating: number) => {
-  if (rating === undefined || rating === null) return [];
-  const stars = [];
-  const filledStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 >= 0.5;
-
-  for (let i = 1; i <= 5; i++) {
-    if (i <= filledStars) {
-      stars.push(
-        <svg
-          key={i}
-          xmlns="http://www.w3.org/2000/svg"
-          width="15"
-          height="15"
-          fill="#FFA500"
-          viewBox="0 0 24 24"
-          stroke="#000000"
-          strokeWidth="0.5"
-          style={{ marginRight: '5px', transition: 'transform 0.2s' }}
-          className="star"
-        >
-          <path d="M12 .587l3.668 7.568 8.332 1.209-6 5.82 1.416 8.28L12 18.897l-7.416 3.89L6 16.164l-6-5.82 8.332-1.209z" />
-        </svg>
-      );
-    } else if (i === filledStars + 1 && hasHalfStar) {
-      stars.push(
-        <svg
-          key={i}
-          xmlns="http://www.w3.org/2000/svg"
-          width="15"
-          height="15"
-          fill="#FFA500"
-          viewBox="0 0 24 24"
-          stroke="#000000"
-          strokeWidth="0.5"
-          style={{ marginRight: '5px', transition: 'transform 0.2s' }}
-          className="star"
-        >
-          <defs>
-            <linearGradient id="halfStarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="50%" style={{ stopColor: '#FFA500' }} />
-              <stop offset="50%" style={{ stopColor: '#FFFFFF' }} />
-            </linearGradient>
-          </defs>
-          <path d="M12 .587l3.668 7.568 8.332 1.209-6 5.82 1.416 8.28L12 18.897l-7.416 3.89L6 16.164l-6-5.82 8.332-1.209z" fill="url(#halfStarGradient)" />
-        </svg>
-      );
-    } else {
-      stars.push(
-        <svg
-          key={i}
-          xmlns="http://www.w3.org/2000/svg"
-          width="15"
-          height="15"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="#000000"
-          strokeWidth="0.5"
-          style={{ marginRight: '5px', transition: 'transform 0.2s' }}
-          className="star"
-        >
-          <path d="M12 .587l3.668 7.568 8.332 1.209-6 5.82 1.416 8.28L12 18.897l-7.416 3.89L6 16.164l-6-5.82 8.332-1.209z" />
-        </svg>
-      );
-    }
-  }
-
-  return stars;
-};
+import { renderStars } from '@/services/CommentService';
 
 
-function Comments() {
-  const comments = [
+const Comments=():JSX.Element => {
+  const reviews = [
     {
       username: "Ahmet Yılmaz",
       comment: "Harika bir saha, zemini çok iyi.Yiyecek ve içecek olsa daha iyi olurdu.Maçtan sonra terli terli dışarda yemek yemeden burada yiyip evimize giderdik.",
@@ -127,7 +58,7 @@ function Comments() {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
       <Grid container spacing={3} maxWidth="lg">
-        {comments.map((comment, index) => (
+        {reviews.map((review, index) => (
           <Grid item xs={12} sm={6} key={index}>
             <Box
               sx={{
@@ -157,17 +88,17 @@ function Comments() {
                 />
                 <Box sx={{ marginLeft: '1rem', textAlign: 'left' }}>
                   <Box sx={{ fontWeight: '600', fontSize: '1.2rem', color: '#00796b' }}>
-                    {comment.username}
+                    {review.username}
                   </Box>
-                  <Box sx={{ fontSize: '0.8rem', color: '#A3A3A3' }}>{comment.daysAgo} gün önce</Box>
+                  <Box sx={{ fontSize: '0.8rem', color: '#A3A3A3' }}>{review.daysAgo} gün önce</Box>
                 </Box>
               </Box>
               <Box sx={{ textAlign: 'left', marginBottom: '1rem', color: '#004d40' }}>
-                {comment.comment}
+                {review.comment}
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ fontWeight: 'bold', color: '#00796b' }}>{comment.rating}</Box>
-                <Box sx={{ marginLeft: '0.5rem' }}>{renderStars(comment.rating)}</Box>
+                <Box sx={{ fontWeight: 'bold', color: '#00796b' }}>{review.rating}</Box>
+                <Box sx={{ marginLeft: '0.5rem' }}>{renderStars(review.rating)}</Box>
               </Box>
             </Box>
           </Grid>

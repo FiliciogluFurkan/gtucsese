@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, Button, Box, Badge } from '@mui/material';
 import { Clock, Calendar, MapPin, CheckCircle } from 'lucide-react';
+import { Randevu } from '@/interfaces/Randevu';
 
-// Randevu Tipi
-interface Randevu {
-  id: number;
-  tarih: string;
-  saat: string;
-  kullaniciAdi: string;
-  telefon: string;
-  halaSaha: string;
-  durum: 'bekleyen' | 'onaylandi';
-}
 
 const dummyRandevular: Randevu[] = [
   {

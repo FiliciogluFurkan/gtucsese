@@ -9,7 +9,7 @@ import AdminAccount from "src/admin/components/account/Account";
 import Calendar from "src/admin/components/calendar/Calendar";
 import Logo from "src/assets/images/logo-dark.png";
 import { useAuthWithRoles } from "@/hooks/Auth";
-import ManageFacility from "../components/manage-facility/ManageFacility";
+import ManageFacility from "src/admin/components/manage-facility/ManageFacility";
 
 const DashboardTemplate = (): JSX.Element => {
   const [selectedTitle, setSelectedTitle] = useState("Admin Paneli");
