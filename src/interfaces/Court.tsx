@@ -13,4 +13,7 @@ export interface Court {
   city: string;
   district: string;
   location: string;
+  width: number;
+  height: number;
+  isActive: boolean;
 }

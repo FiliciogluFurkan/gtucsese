@@ -1,3 +1,5 @@
+import { Court } from "./Court";
+
 export interface Facility {
   id: string;
   name: string;
@@ -5,6 +7,7 @@ export interface Facility {
   city: string;
   district: string;
   phone: string;
+  courts: Court[];
   amenities: string[];
   location: string;
   openTime: string;
