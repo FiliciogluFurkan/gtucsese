@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Box, TextField, Button, Select, MenuItem, InputLabel, Typography, Container } from "@mui/material";
 import html2canvas from "html2canvas";
-import sahaImage from '../../assets/images/saha.png';
+import sahaImage from '@/assets/images/saha.png';
+import { useTheme } from '@mui/material/styles';
 
 const formations = [
   "2-2-1", // 6 kişilik (5+1 kaleci)
@@ -15,6 +16,7 @@ const formations = [
 ];
 
 const CreateTeam = (): JSX.Element => {
+  const theme = useTheme();
   const [teamName, setTeamName] = useState("");
   const [primaryColor, setPrimaryColor] = useState("#FF0000");
   const [secondaryColor, setSecondaryColor] = useState("#000000");
@@ -116,8 +118,8 @@ const CreateTeam = (): JSX.Element => {
   return (
     <Box sx={{ 
       position: 'relative', 
-      top: '80px', 
-      mb: '200px',
+      top: theme.spacing(10),
+      mb: theme.spacing(25),
       width: '100vw'
     }}>
       <Container 
@@ -137,7 +139,9 @@ const CreateTeam = (): JSX.Element => {
           justifyContent: 'center'
         }}>
           {/* Sol taraf - Takım Renkleri */}
-          <Box sx={{ width: 250 }}>
+          <Box sx={{ 
+            width: theme.spacing(31.25)
+          }}>
             <Box sx={{ p: 2, border: '1px solid #ccc', borderRadius: 1 }}>
               <Typography variant="h6" sx={{ mb: 2 }}>Takım Renkleri</Typography>
               
@@ -165,16 +169,16 @@ const CreateTeam = (): JSX.Element => {
 
           {/* Orta - Saha */}
           <Box sx={{ 
-            width: '600px',
+            width: theme.spacing(75),
             flex: 'none'
           }}>
             <Box id="team-preview">
               <Box 
                 sx={{ 
-                  height: 700,
+                  height: theme.spacing(87.5),
                   position: 'relative',
                   border: '2px solid white',
-                  borderRadius: '16px',
+                  borderRadius: 2,
                   overflow: 'hidden',
                   backgroundImage: `url(${sahaImage})`,
                   backgroundSize: '100% 100%',
@@ -194,14 +198,14 @@ const CreateTeam = (): JSX.Element => {
                       flexDirection: 'column',
                       alignItems: 'center',
                       gap: 1,
-                      width: '80px',
+                      width: theme.spacing(10),
                       zIndex: 2
                     }}
                   >
                     <Box
                       sx={{
-                        width: '30px',
-                        height: '30px',
+                        width: theme.spacing(3.75),
+                        height: theme.spacing(3.75),
                         borderRadius: '50%',
                         bgcolor: primaryColor,
                         border: `2px solid ${secondaryColor}`,
@@ -209,7 +213,7 @@ const CreateTeam = (): JSX.Element => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         color: 'white',
-                        fontSize: '12px',
+                        fontSize: theme.typography.pxToRem(12),
                         mb: 1
                       }}
                     >
@@ -269,7 +273,7 @@ const CreateTeam = (): JSX.Element => {
           </Box>
 
           {/* Sağ taraf - Takım Bilgileri */}
-          <Box sx={{ width: 250 }}>
+          <Box sx={{ width: theme.spacing(31.25) }}>
             <Box sx={{ p: 2, border: '1px solid #ccc', borderRadius: 1 }}>
               <Typography variant="h6" sx={{ mb: 2 }}>Takım Bilgileri</Typography>
               
