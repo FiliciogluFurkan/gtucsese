@@ -4,7 +4,7 @@ import courtImage from '/src/assets/images/court-3.jpg'
 import { useState } from "react";
 import { renderStars } from '../../../services/CommentService';
 
-function Comments() {
+function Review() {
   const courtNames = [
     {
       name: "Kolezyum"
@@ -14,7 +14,7 @@ function Comments() {
     }
   ]
 
-  const comments = [
+  const Review = [
     {
       username: "Ahmet Yılmaz",
       comment: "Harika bir saha, zemini çok iyi.Yiyecek ve içecek olsa daha iyi olurdu.Maçtan sonra terli terli dışarda yemek yemeden burada yiyip evimize giderdik.",
@@ -67,20 +67,20 @@ function Comments() {
 
 
   const [startIndex, setStartIndex] = useState(0);
-  const commentsPerPage = 3;
+  const ReviewPerPage = 3;
   
   const handleNext = () => {
-    if (startIndex + commentsPerPage < comments.length) {
-      setStartIndex(startIndex + commentsPerPage);
+    if (startIndex + ReviewPerPage < Review.length) {
+      setStartIndex(startIndex + ReviewPerPage);
     }
   };
-  
+
   const handlePrev = () => {
-    if (startIndex - commentsPerPage >= 0) {
-      setStartIndex(startIndex - commentsPerPage);
+    if (startIndex - ReviewPerPage >= 0) {
+      setStartIndex(startIndex - ReviewPerPage);
     }
   };
-  const currentComments = comments.slice(startIndex, startIndex + commentsPerPage);
+  const currentReview = Review.slice(startIndex, startIndex + ReviewPerPage);
 
   return (
     <Box sx={{ width: '100%', padding: '2rem', overflowX: 'hidden' ,   height: '100%'}}>
@@ -99,8 +99,8 @@ function Comments() {
                 {court.name}
                 </Box>
                 <Box sx={{display: 'flex', justifyContent: 'flex-start', width: '100%', position: 'relative' /* left: '-33rem' */}} >
-                  {currentComments.map((comment, index) => {
-                  let isLastElement = (index === comments.length -1 );
+                  {currentReview.map((comment, index) => {
+                  let isLastElement = (index === Review.length -1 );
                 return (          
                     <Box>
                         <Box 
@@ -213,4 +213,4 @@ function Comments() {
 }
 
 
-export default Comments;
+export default Review;
