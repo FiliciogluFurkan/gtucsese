@@ -88,7 +88,6 @@ function Comments() {
     {
       username: "Ahmet Yılmaz",
       comment: "Harika bir saha, zemini çok iyi.Yiyecek ve içecek olsa daha iyi olurdu.Maçtan sonra terli terli dışarda yemek yemeden burada yiyip evimize giderdik.",
-      comment: "Harika bir saha, zemini çok iyi.Yiyecek ve içecek olsa daha iyi olurdu.Maçtan sonra terli terli dışarda yemek yemeden burada yiyip evimize giderdik.",
       daysAgo: 2,
       rating: 5,
     },
@@ -286,6 +285,6 @@ function Comments() {
     </Box>
   );
 }
-}
+
 
 export default Comments;

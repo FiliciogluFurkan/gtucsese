@@ -21,6 +21,7 @@
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^2.3.0",
     "@types/keycloak-js": "^2.5.4",
+    "@types/react-datepicker": "^6.2.0",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
