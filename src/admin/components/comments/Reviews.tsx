@@ -53,7 +53,7 @@ function Review() {
     },
     {
       username: "Fatma Aydın",
-      comment: "Fiyat performans olarak gayet iyi.",
+      comment: "Fiyat performans olarak gayet güzel.",
       daysAgo: 3,
       rating: 4,
     },
