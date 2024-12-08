@@ -4,7 +4,7 @@ import Dashboard from "src/admin/components/dashboard/Dashboard";
 import MyCourts from "src/admin/components/my-courts/MyCourts";
 import Reservations from "src/admin/components/reservations/Reservations";
 import Analyzes from "src/admin/components/analyzes/Analyzes";
-import Comments from "src/admin/components/comments/Comments";
+import Comments from "@/admin/components/comments/Reviews";
 import AdminAccount from "src/admin/components/account/Account";
 import Calendar from "src/admin/components/calendar/Calendar";
 import Logo from "src/assets/images/logo-dark.png";
