@@ -13,7 +13,11 @@ const Footer: React.FC = () => {
       alignItems="center"
       display="flex"
       justifyContent="center"
-      sx={{ padding: { sm: "3rem", md: "3rem", xxl: "3rem" } }}
+      sx={{ 
+        padding: { sm: "0.5rem", md: "0.5rem", xxl: "0.5rem" },
+        minHeight: "8rem",
+        marginTop: "2rem"
+      }}
       bgcolor={theme.palette.background.secondary.w253}
       className="footer"
     >
@@ -21,29 +25,34 @@ const Footer: React.FC = () => {
         flexDirection="row"
         alignItems="flex-start"
         justifyContent="space-between"
-        sx={{ width: { sm: "90%", md: "80%", xxl: "90%" } }}
+        sx={{ 
+          width: { sm: "90%", md: "80%", xxl: "90%" },
+          py: 0.5
+        }}
       >
         <Stack flexDirection="column" alignItems="center">
           <img
             src={logo2}
             alt="logo"
-            style={{ width: "340px", height: "auto" }}
+            style={{ 
+              width: "200px",
+              height: "auto" 
+            }}
           />
           <Stack
-            sx={{ marginTop: { sm: "1rem", xxl: "3rem" } }}
-            gap={2}
+            sx={{ 
+              marginTop: { sm: "0.5rem", xxl: "1rem" },
+            }}
+            gap={1}
             flexDirection="row"
           >
             <Icon
               sx={{
-                height: { sm: "2rem", md: "2.4rem", xxl: "2.6rem" },
-                width: { sm: "2rem", md: "2.4rem", xxl: "2.6rem" },
+                height: { sm: "1.8rem", md: "2rem", xxl: "2.2rem" },
+                width: { sm: "1.8rem", md: "2rem", xxl: "2.2rem" },
               }}
             >
-              <FaInstagram
-                size="100%"
-                color={theme.palette.tx.secondary.w600}
-              />
+              <FaInstagram size="100%" color={theme.palette.tx.secondary.w600} />
             </Icon>
             <Icon
               sx={{

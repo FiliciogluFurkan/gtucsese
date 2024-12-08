@@ -74,26 +74,29 @@ const SahanCepte: React.FC = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              paddingTop: "5rem",
+              paddingTop: "4rem",
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "row", width: "40vw" }}>
               <Box
                 sx={{
-                  width: "5rem",
-                  height: "3.3rem",
+                  width: "3rem",
+                  height: "3rem",
                   borderRadius: "50%",
                   backgroundColor: "rgb(0,176,116,1)",
                   alpha: 0.15,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  flexShrink: 0,
+                  minWidth: "3rem",
+                  minHeight: "3rem",
                 }}
               >
                 <img
                   src={icon1}
                   alt="your image"
-                  style={{ width: "auto", height: "auto", objectFit: "cover" }}
+                  style={{ width: "60%", height: "60%", objectFit: "contain" }}
                 />
               </Box>
 
@@ -104,6 +107,9 @@ const SahanCepte: React.FC = () => {
                   color: "#67748E",
                   paddingTop: "0.4rem",
                   paddingLeft: "1rem",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  marginTop: "-0.2rem",
                 }}
               >
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -121,20 +127,23 @@ const SahanCepte: React.FC = () => {
             >
               <Box
                 sx={{
-                  width: "5rem",
-                  height: "3.3rem",
+                  width: "3rem",
+                  height: "3rem",
                   borderRadius: "50%",
                   backgroundColor: "rgb(0,176,116,1)",
                   alpha: 0.15,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  flexShrink: 0,
+                  minWidth: "3rem",
+                  minHeight: "3rem",
                 }}
               >
                 <img
                   src={icon3}
                   alt="your image"
-                  style={{ width: "auto", height: "auto", objectFit: "cover" }}
+                  style={{ width: "60%", height: "60%", objectFit: "contain" }}
                 />
               </Box>
 
@@ -145,6 +154,9 @@ const SahanCepte: React.FC = () => {
                   color: "#67748E",
                   paddingTop: "0.4rem",
                   paddingLeft: "1rem",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  marginTop: "-0.2rem",
                 }}
               >
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -162,20 +174,23 @@ const SahanCepte: React.FC = () => {
             >
               <Box
                 sx={{
-                  width: "5rem",
-                  height: "3.3rem",
+                  width: "3rem",
+                  height: "3rem",
                   borderRadius: "50%",
                   backgroundColor: "rgb(0,176,116,1)",
                   alpha: 0.15,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  flexShrink: 0,
+                  minWidth: "3rem",
+                  minHeight: "3rem",
                 }}
               >
                 <img
                   src={icon2}
                   alt="your image"
-                  style={{ width: "auto", height: "auto", objectFit: "cover" }}
+                  style={{ width: "60%", height: "60%", objectFit: "contain" }}
                 />
               </Box>
 
@@ -186,6 +201,9 @@ const SahanCepte: React.FC = () => {
                   color: "#67748E",
                   paddingTop: "0.4rem",
                   paddingLeft: "1rem",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  marginTop: "-0.2rem",
                 }}
               >
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -307,14 +325,22 @@ const SahanCepte: React.FC = () => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ width: "40vw" }}>
+        <Box sx={{ 
+          width: "40vw",
+          position: "sticky",
+          top: "4.5rem",
+          height: "calc(100vh - 4.5rem)",
+          marginTop: "-2rem",
+          alignSelf: "flex-start"
+        }}>
           <img
             src={debruyne}
             alt="Sahan Cepte"
             style={{
               width: "100%",
-              height: "100%",
+              height: "calc(100vh - 2.5rem)",
               objectFit: "cover",
+              position: "relative"
             }}
           />
         </Box>
