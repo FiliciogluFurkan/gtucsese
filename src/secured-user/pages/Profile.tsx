@@ -30,22 +30,28 @@ const Profile = () => {
     <div
       style={{
         paddingTop: "8rem",
-        paddingLeft: "8.5rem",
-        paddingRight: "8.5rem",
+        display: "flex",
+        justifyContent: "center",
+        width: "100vw"
       }}
     >
-      <Box sx={{ width: "100vw", paddingBottom: "8rem" }}>
+      <Box sx={{ 
+        width: "100%",
+        maxWidth: "1400px",
+        paddingX: "2rem",
+        paddingBottom: "8rem" 
+      }}>
         <Box
           sx={{
-            width: "82%",
+            width: "100%",
             backgroundColor: "#D9F3EABA",
             padding: "1rem",
             borderRadius: "8px",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",
-            gap: "10.5rem",
+            justifyContent: "space-evenly",
+            gap: "1rem",
           }}
         >
           <Typography
@@ -117,8 +123,6 @@ const Profile = () => {
             Favorilerim
           </Typography>
         </Box>
-
-        {/* Buradan sonraki kodlar aynı kalacak */}
 
         {renderComponent()}
       </Box>

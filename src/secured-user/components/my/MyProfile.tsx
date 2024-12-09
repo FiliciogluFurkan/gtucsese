@@ -58,8 +58,13 @@ const MyProfile = () => {
   };
 
   return (
-    <div>
-      <Box sx={{ display: "flex", paddingTop: "4rem", flexDirection: "row" }}>
+    <div style={{ width: "100%" }}>
+      <Box sx={{ 
+        display: "flex", 
+        paddingTop: "6rem", 
+        flexDirection: "row",
+        width: "100%" 
+      }}>
         <Box>
           <img
             src={frieren}
@@ -109,7 +114,7 @@ const MyProfile = () => {
             fontFamily: "Poppins",
             cursor: "pointer",
             transition: "background-color 0.3s ease",
-            marginLeft: "48rem",
+            marginLeft: "auto",
             marginTop: "1rem",
             marginBottom: "2rem",
             "&:hover": {
@@ -121,35 +126,27 @@ const MyProfile = () => {
         </Box>
       </Box>
 
-      <Box sx={{ flexDirection: "column", paddingTop: "3rem" }}>
+      <Box sx={{ 
+        flexDirection: "column", 
+        paddingTop: "5rem",
+        width: "100%"
+      }}>
         <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              fontWeight: 400,
-              fontFamily: "Poppins",
-              fontSize: "0.9rem",
-              color: "#000000",
-            }}
-          >
-            <Box sx={{ paddingBottom: "0.3rem" }}>İsim Soyisim</Box>
-            <Box sx={{ paddingLeft: "35rem", paddingBottom: "1rem" }}>
-              Kullanıcı Adı
-            </Box>
-          </Box>
-
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Box
-              component="input"
-              placeholder="İsim Soyisim"
-              sx={{
+          <Box sx={{ 
+            display: "flex", 
+            flexDirection: "row",
+            width: "100%",
+            gap: "2rem"
+          }}>
+            <Box component="input" 
+              placeholder="İsim Soyisim" 
+              sx={{ 
+                width: "100%",
                 backgroundColor: "#F8F8F8",
                 borderRadius: "4px",
                 padding: "1rem 1rem",
                 fontSize: "1rem",
                 color: "#333",
-                width: "40%",
                 border: "none",
                 outline: "none",
                 fontFamily: "Arial, sans-serif",
@@ -165,17 +162,16 @@ const MyProfile = () => {
                 },
               }}
             />
-            <Box
-              component="input"
-              placeholder="Kullanıcı Adı"
-              sx={{
+            <Box component="input" 
+              placeholder="Kullanıcı Adı" 
+              sx={{ 
+                width: "100%",
                 backgroundColor: "#F8F8F8",
                 borderRadius: "4px",
                 padding: "1rem 1rem",
-                marginLeft: "3.7rem",
+                marginLeft: "0",
                 fontSize: "1rem",
                 color: "#333",
-                width: "40%",
                 border: "none",
                 outline: "none",
                 fontFamily: "Arial, sans-serif",
@@ -194,235 +190,209 @@ const MyProfile = () => {
           </Box>
         </Box>
 
-        <Box sx={{ paddingTop: "1.5rem" }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              fontWeight: 400,
-              fontFamily: "Poppins",
-              fontSize: "0.9rem",
-              color: "#000000",
-            }}
-          >
-            <Box sx={{ paddingBottom: "0.3rem" }}>Cinsiyet</Box>
-            <Box sx={{ paddingLeft: "36.8rem", paddingBottom: "1rem" }}>
-              Şehir
-            </Box>
-          </Box>
-
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <FormControl sx={{ width: "40%", backgroundColor: "#F8F8F8" }}>
-              <InputLabel
-                sx={{
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                  fontSize: "0.9rem",
-                  color: "#9CA3AF",
-                }}
-                id="gender-select-label"
-              >
-                Cinsiyet
-              </InputLabel>
-              <Select
-                labelId="gender-select-label"
-                id="gender-select"
-                value={gender}
-                onChange={handleGenderChange}
-                input={<OutlinedInput label="Cinsiyet" />}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      backgroundColor: "#FFFFFF",
-                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                      borderRadius: "8px",
-                    },
-                  },
-                }}
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: "1rem",
-                  fontWeight: "400",
-                  color: "#3D3838",
-                }}
-              >
-                {genders.map((genderOption) => (
-                  <MenuItem
-                    key={genderOption}
-                    value={genderOption}
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontSize: "1rem",
-                      fontWeight: "400",
-                      color: "#3D3838",
-                    }}
-                  >
-                    {genderOption}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl
+        <Box sx={{ 
+          display: "flex", 
+          flexDirection: "row",
+          width: "100%",
+          gap: "2rem",
+          marginTop: "3rem"
+        }}>
+          <FormControl sx={{ 
+            width: "100%",
+            backgroundColor: "#F8F8F8"
+          }}>
+            <InputLabel
               sx={{
-                width: "40%",
-                backgroundColor: "#F8F8F8",
-                marginLeft: "3.8rem",
+                fontWeight: "400",
+                fontFamily: "Poppins",
+                fontSize: "0.9rem",
+                color: "#9CA3AF",
+              }}
+              id="gender-select-label"
+            >
+              Cinsiyet
+            </InputLabel>
+            <Select
+              labelId="gender-select-label"
+              id="gender-select"
+              value={gender}
+              onChange={handleGenderChange}
+              input={<OutlinedInput label="Cinsiyet" />}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    borderRadius: "8px",
+                  },
+                },
+              }}
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "1rem",
+                fontWeight: "400",
+                color: "#3D3838",
               }}
             >
-              <InputLabel
-                sx={{
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                  fontSize: "0.9rem",
-                  color: "#9CA3AF",
-                }}
-                id="city-select-label"
-              >
-                Şehir Seçiniz
-              </InputLabel>
-              <Select
-                labelId="city-select-label"
-                id="city-select"
-                value={city}
-                onChange={handleCityChange}
-                input={<OutlinedInput label="Şehir Seçiniz" />}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      backgroundColor: "#FFFFFF",
-                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                      borderRadius: "8px",
-                    },
+              {genders.map((genderOption) => (
+                <MenuItem
+                  key={genderOption}
+                  value={genderOption}
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: "1rem",
+                    fontWeight: "400",
+                    color: "#3D3838",
+                  }}
+                >
+                  {genderOption}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ 
+            width: "100%",
+            backgroundColor: "#F8F8F8",
+            marginLeft: "0",
+          }}>
+            <InputLabel
+              sx={{
+                fontWeight: "400",
+                fontFamily: "Poppins",
+                fontSize: "0.9rem",
+                color: "#9CA3AF",
+              }}
+              id="city-select-label"
+            >
+              Şehir Seçiniz
+            </InputLabel>
+            <Select
+              labelId="city-select-label"
+              id="city-select"
+              value={city}
+              onChange={handleCityChange}
+              input={<OutlinedInput label="Şehir Seçiniz" />}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    borderRadius: "8px",
                   },
-                }}
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: "1rem",
-                  fontWeight: "400",
-                  color: "#3D3838",
-                }}
-              >
-                {cities.map((cityOption) => (
-                  <MenuItem
-                    key={cityOption}
-                    value={cityOption}
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontSize: "1rem",
-                      fontWeight: "400",
-                      color: "#3D3838",
-                    }}
-                  >
-                    {cityOption}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+                },
+              }}
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "1rem",
+                fontWeight: "400",
+                color: "#3D3838",
+              }}
+            >
+              {cities.map((cityOption) => (
+                <MenuItem
+                  key={cityOption}
+                  value={cityOption}
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: "1rem",
+                    fontWeight: "400",
+                    color: "#3D3838",
+                  }}
+                >
+                  {cityOption}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
 
-        <Box sx={{ paddingTop: "1.5rem" }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              fontWeight: 400,
-              fontFamily: "Poppins",
-              fontSize: "0.9rem",
-              color: "#000000",
-            }}
-          >
-            <Box sx={{ paddingBottom: "0.3rem" }}>Yaş</Box>
-            <Box sx={{ paddingLeft: "39.4rem", paddingBottom: "1rem" }}>
-              Email
-            </Box>
-          </Box>
-
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <FormControl
+        <Box sx={{ 
+          display: "flex", 
+          flexDirection: "row",
+          width: "100%",
+          gap: "2rem",
+          marginTop: "3rem"
+        }}>
+          <FormControl sx={{ 
+            width: "100%",
+            backgroundColor: "#F8F8F8"
+          }}>
+            <InputLabel
               sx={{
-                width: "40%",
-                backgroundColor: "#F8F8F8",
+                fontWeight: "400",
+                fontFamily: "Poppins",
+                fontSize: "0.9rem",
+                color: "#9CA3AF",
+              }}
+              id="age-select-label"
+            >
+              Yaşınızı Seçiniz
+            </InputLabel>
+            <Select
+              labelId="age-select-label"
+              id="age-select"
+              value={age}
+              onChange={handleAgeChange}
+              input={<OutlinedInput label="Yaşınızı Seçiniz" />}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    borderRadius: "8px",
+                  },
+                },
+              }}
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "1rem",
+                fontWeight: "400",
+                color: "#3D3838",
               }}
             >
-              <InputLabel
-                sx={{
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                  fontSize: "0.9rem",
-                  color: "#9CA3AF",
-                }}
-                id="age-select-label"
-              >
-                Yaşınızı Seçiniz
-              </InputLabel>
-              <Select
-                labelId="age-select-label"
-                id="age-select"
-                value={age}
-                onChange={handleAgeChange}
-                input={<OutlinedInput label="Yaşınızı Seçiniz" />}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      backgroundColor: "#FFFFFF",
-                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                      borderRadius: "8px",
-                    },
-                  },
-                }}
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: "1rem",
-                  fontWeight: "400",
-                  color: "#3D3838",
-                }}
-              >
-                {ages.map((ageOption) => (
-                  <MenuItem
-                    key={ageOption}
-                    value={ageOption}
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontSize: "1rem",
-                      fontWeight: "400",
-                      color: "#3D3838",
-                    }}
-                  >
-                    {ageOption}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              {ages.map((ageOption) => (
+                <MenuItem
+                  key={ageOption}
+                  value={ageOption}
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: "1rem",
+                    fontWeight: "400",
+                    color: "#3D3838",
+                  }}
+                >
+                  {ageOption}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-            <Box
-              component="input"
-              placeholder="ornekemail@gmail.com"
-              sx={{
-                backgroundColor: "#F8F8F8",
-                borderRadius: "4px",
-                padding: "1rem 1rem",
-                marginLeft: "3.7rem",
-                fontSize: "1rem",
-                color: "#333",
-                width: "40%",
-                border: "none",
-                outline: "none",
-                fontFamily: "Arial, sans-serif",
-                "&::placeholder": {
-                  color: "#9CA3AF",
-                },
-                "&:hover": {
-                  backgroundColor: "#F3F4F6",
-                },
-                "&:focus": {
-                  backgroundColor: "#FFFFFF",
-                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
-                },
-              }}
-            />
-          </Box>
+          <Box component="input" 
+            placeholder="ornekemail@gmail.com" 
+            sx={{ 
+              width: "100%",
+              backgroundColor: "#F8F8F8",
+              borderRadius: "4px",
+              padding: "1rem 1rem",
+              marginLeft: "0",
+              fontSize: "1rem",
+              color: "#333",
+              border: "none",
+              outline: "none",
+              fontFamily: "Arial, sans-serif",
+              "&::placeholder": {
+                color: "#9CA3AF",
+              },
+              "&:hover": {
+                backgroundColor: "#F3F4F6",
+              },
+              "&:focus": {
+                backgroundColor: "#FFFFFF",
+                boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
+              },
+            }}
+          />
         </Box>
       </Box>
 
@@ -444,7 +414,8 @@ const MyProfile = () => {
           cursor: "pointer",
           transition: "background-color 0.3s ease",
           marginLeft: "27.5rem",
-          marginTop: "4rem",
+          marginTop: "6rem",
+          marginBottom: "4rem",
           "&:hover": {
             backgroundColor: "#57AE76",
           },

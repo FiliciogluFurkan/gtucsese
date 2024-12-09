@@ -11,6 +11,7 @@ const MyReservations = (): JSX.Element => {
           marginTop: "4rem",
           marginLeft: "0.7rem",
           flexDirection: "column",
+          width: "100%",
         }}
       >
         <Box
@@ -40,15 +41,14 @@ const MyReservations = (): JSX.Element => {
 
         <Box
           sx={{
-            width: "82%",
+            width: "100%",
             backgroundColor: "#FFFFFF",
             padding: "15px",
             border: "1px solid #E0E0E0",
             borderRadius: "45px",
             display: "flex",
             flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-start",
+            alignItems: "flex-start",
             gap: "1.5rem",
           }}
         >
@@ -65,7 +65,10 @@ const MyReservations = (): JSX.Element => {
             />
           </Box>
 
-          <Box sx={{ flexDirection: "column" }}>
+          <Box sx={{ 
+            flexDirection: "column",
+            paddingTop: "0.5rem"
+          }}>
             <Typography
               sx={{
                 fontFamily: "Inter",
@@ -111,12 +114,13 @@ const MyReservations = (): JSX.Element => {
 
           <Box
             sx={{
-              paddingLeft: "34.3rem",
-              marginTop: "6.8rem",
+              marginLeft: "auto",
+              paddingTop: "6.8rem",
               fontFamily: "Inter",
               fontSize: "2rem",
               fontWeight: "600",
               color: "#404040",
+              marginRight: "2rem"
             }}
           >
             2500 TL
@@ -129,9 +133,15 @@ const MyReservations = (): JSX.Element => {
           marginTop: "4rem",
           marginLeft: "0.7rem",
           flexDirection: "column",
+          width: "100%",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Box sx={{ 
+          display: "flex", 
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%"
+        }}>
           <Box>
             <Box
               sx={{
@@ -159,7 +169,10 @@ const MyReservations = (): JSX.Element => {
             </Box>
           </Box>
 
-          <Box sx={{ paddingLeft: "45rem", paddingTop: "1rem" }}>
+          <Box sx={{ 
+            paddingRight: "2rem",
+            paddingTop: "1rem" 
+          }}>
             <img
               src={arrowdown}
               alt="your image"
@@ -170,15 +183,14 @@ const MyReservations = (): JSX.Element => {
 
         <Box
           sx={{
-            width: "82%",
+            width: "100%",
             backgroundColor: "#FFFFFF",
             padding: "15px",
             border: "1px solid #E0E0E0",
             borderRadius: "45px",
             display: "flex",
             flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-start",
+            alignItems: "flex-start",
             gap: "1.5rem",
           }}
         >
@@ -195,19 +207,20 @@ const MyReservations = (): JSX.Element => {
             />
           </Box>
 
-          <Box sx={{ flexDirection: "column" }}>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Box
-                sx={{
-                  fontFamily: "Inter",
-                  fontSize: "1rem",
-                  fontWeight: "400",
-                  color: " #757575",
-                }}
-              >
-                Aymos Halısaha
-              </Box>
-            </Box>
+          <Box sx={{ 
+            flexDirection: "column",
+            paddingTop: "0.5rem"
+          }}>
+            <Typography
+              sx={{
+                fontFamily: "Inter",
+                fontSize: "1rem",
+                fontWeight: "400",
+                color: " #757575",
+              }}
+            >
+              Aymos Halısaha
+            </Typography>
 
             <Typography
               sx={{
@@ -241,7 +254,12 @@ const MyReservations = (): JSX.Element => {
             </Box>
           </Box>
 
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ 
+            display: "flex", 
+            flexDirection: "column",
+            marginLeft: "auto",
+            marginRight: "2rem"
+          }}>
             <Box
               sx={{
                 display: "inline-flex",
@@ -251,17 +269,14 @@ const MyReservations = (): JSX.Element => {
                 color: "#ffffff",
                 width: "123px",
                 height: "30px",
-                paddingTop: "0.5rem",
-                paddingBottom: "0.5rem",
-                paddingLeft: "3rem",
-                paddingRight: "3rem",
+                padding: "0.5rem 3rem",
                 borderRadius: "7.5px",
                 fontSize: "13px",
                 fontWeight: "400",
                 fontFamily: "Poppins",
                 cursor: "pointer",
                 transition: "background-color 0.3s ease",
-                marginLeft: "35rem",
+                marginLeft: "auto",
                 marginTop: "1rem",
                 "&:hover": {
                   backgroundColor: "#57AE76",
@@ -271,16 +286,14 @@ const MyReservations = (): JSX.Element => {
               Değerlendir
             </Box>
 
-            <Box
-              sx={{
-                paddingLeft: "35rem",
-                marginTop: "4rem",
-                fontFamily: "Inter",
-                fontSize: "2rem",
-                fontWeight: "600",
-                color: "#404040",
-              }}
-            >
+            <Box sx={{
+              marginLeft: "auto",
+              marginTop: "4rem",
+              fontFamily: "Inter",
+              fontSize: "2rem",
+              fontWeight: "600",
+              color: "#404040",
+            }}>
               2500 TL
             </Box>
           </Box>
