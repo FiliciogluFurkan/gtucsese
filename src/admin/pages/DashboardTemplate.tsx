@@ -7,7 +7,6 @@ import Analyzes from "src/admin/components/analyzes/Analyzes";
 import Comments from "@/admin/components/comments/Reviews";
 import AdminAccount from "src/admin/components/account/Account";
 import Calendar from "src/admin/components/calendar/Calendar";
-import Logo from "src/assets/images/logo-dark.png";
 import { useAuthWithRoles } from "@/hooks/Auth";
 import ManageFacility from "src/admin/components/manage-facility/ManageFacility";
 
@@ -46,12 +45,20 @@ const DashboardTemplate = (): JSX.Element => {
             marginLeft: "2rem",
           }}
         >
-          <Box>
-            <img
-              style={{ height: "8rem", width: "13rem" }}
-              src={Logo}
-              alt="merhaba"
-            />
+          <Box
+            sx={{
+              fontSize: "1.5rem",
+              fontWeight: 800,
+              fontFamily: "Poppins",
+              marginLeft: "1rem",
+              paddingLeft: "1rem",
+              borderLeft: "0.3rem solid",
+              color: "#464255",
+              marginTop: "2rem",
+              marginBottom: "1rem"
+            }}
+          >
+            SAHAN CEPTE
           </Box>
 
           <Box
