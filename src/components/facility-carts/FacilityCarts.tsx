@@ -40,111 +40,107 @@ const FacilityCarts = ({ field }: CourtCartProps): JSX.Element => {
   return (
     <Box
       sx={{
-        width: "39.5rem",
-        height: "17.5rem",
-        marginLeft: "3.2rem",
+        width: "32rem",
+        height: "14rem",
+        marginLeft: "2rem",
         display: "flex",
         flexDirection: "row",
-        marginTop: "1.25rem",
+        marginTop: "1rem",
       }}
     >
-      <div>
+      <Box sx={{ flex: "0 0 auto" }}>
         <img
-          className="footballcourts-list-fields-section-card-images"
           src={field.images[0]}
+          style={{
+            width: "15rem",
+            height: "13rem",
+            borderRadius: "0.8rem",
+            objectFit: "cover",
+            margin: "0.5rem 0 0 0.8rem"
+          }}
         />
-      </div>
+      </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        <Box
-          sx={{
-            paddingLeft: "2rem",
-            paddingTop: "2rem",
-            fontSize: "0.9rem",
-            fontWeight: 400,
-            fontFamily: "Roboto",
-            color: "rgb(107, 114, 128)",
-            font: "inter",
-          }}
-        >
-          <span>
-            {field.city} / {field.district}{" "}
-          </span>
+      <Box sx={{ 
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        padding: "1rem 1.5rem",
+        height: "100%"
+      }}>
+        <Box sx={{
+          height: "1.5rem",
+          fontSize: "0.8rem",
+          color: "rgb(107, 114, 128)",
+          marginBottom: "0.5rem"
+        }}>
+          <span>{field.city} / {field.district}</span>
         </Box>
-        <Box
-          sx={{
-            paddingLeft: "2rem",
-            paddingTop: "0.625rem",
-            fontSize: "1.5rem",
-            fontWeight: 500,
-            fontFamily: "Roboto",
-            color: "rgb(55, 65, 81)",
-            font: "inter",
-          }}
-        >
+
+        <Box sx={{
+          height: "2rem",
+          fontSize: "1.4rem",
+          fontWeight: 500,
+          fontFamily: "Roboto",
+          color: "rgb(55, 65, 81)",
+          marginBottom: "1rem",
+          display: "flex",
+          alignItems: "center"
+        }}>
           {field.name.toUpperCase()}
         </Box>
 
-        <Box
-          sx={{
-            paddingLeft: "2rem",
-            paddingTop: "1.5rem",
-            width: "5rem",
-            color: "rgb(229, 231, 235)",
-          }}
-        >
-          <hr />
+        <hr style={{
+          width: "4rem",
+          border: "none",
+          borderTop: "1px solid rgb(229, 231, 235)",
+          margin: "0 0 1rem 0",
+          padding: 0,
+          height: 0
+        }} />
+
+        <Box sx={{
+          height: "3rem",
+          fontSize: "0.9rem",
+          color: "rgb(107, 114, 128)",
+          overflow: "hidden",
+          display: "-webkit-box",
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical",
+          marginBottom: "1rem"
+        }}>
+          {field.amenities || "Tesis özellikleri bulunmamaktadır"}
         </Box>
 
-        <Box
-          sx={{
-            paddingLeft: "2rem",
-            paddingTop: "1.5rem",
-            width: "22rem",
-            fontFamily: "inter",
-            fontWeight: 400,
-            color: "rgb(107, 114, 128)",
-            font: "inter",
-          }}
-        >
-          {field.amenities}
-        </Box>
+        <hr style={{
+          width: "4rem",
+          border: "none",
+          borderTop: "1px solid rgb(229, 231, 235)",
+          margin: "0 0 1rem 0",
+          padding: 0,
+          height: 0
+        }} />
 
-        <Box
-          sx={{
-            paddingLeft: "2rem",
-            paddingTop: "1.5rem",
-            width: "5rem",
-            color: "rgb(229, 231, 235)",
-          }}
-        >
-          <hr />
-        </Box>
-
-        <Box
-          sx={{ paddingTop: "1.5rem", display: "flex", flexDirection: "row" }}
-        >
-          <Box
-            sx={{
-              paddingTop: "0.2rem",
-              color: "rgb(55, 65, 81)",
-              fontFamily: "inter",
-              fontWeight: 400,
-              paddingLeft: "2rem",
-            }}
-          >
+        <Box sx={{ 
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          marginTop: "auto",
+        }}>
+          <Box sx={{
+            fontSize: "1rem",
+            color: "rgb(55, 65, 81)",
+            width: "2rem",
+            textAlign: "center"
+          }}>
             {field.rating}
           </Box>
 
-          <Box
-            sx={{
-              fontSize: "20px",
-              color: "#f59e0b",
-              stroke: "rgb(252, 211, 77)",
-              strokeWidth: "1px",
-              paddingLeft: "0.4rem",
-            }}
-          >
+          <Box sx={{
+            display: "flex",
+            alignItems: "center",
+            height: "20px"
+          }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -152,34 +148,35 @@ const FacilityCarts = ({ field }: CourtCartProps): JSX.Element => {
               viewBox="0 0 24 24"
               fill="#f59e0b"
               stroke="rgb(252, 211, 77)"
-              stroke-width="1"
+              strokeWidth="1"
             >
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
             </svg>
           </Box>
 
-          <Box
-            sx={{
-              paddingTop: "0.2rem",
-              color: "rgb(55, 65, 81)",
-              fontFamily: "inter",
-              fontWeight: 400,
-              paddingLeft: "0.2rem",
-            }}
-          >
+          <Box sx={{
+            fontSize: "0.9rem",
+            color: "rgb(55, 65, 81)",
+            width: "7rem"
+          }}>
             (100 inceleme)
           </Box>
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        <Box
-          sx={{
-            paddingLeft: "4rem",
-            paddingTop: "1.5rem",
-          }}
-          onClick={handleFavoriteToggle}
-        >
+      <Box sx={{ 
+        width: "7rem",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "1rem",
+        marginLeft: "16rem",
+        marginRight: "1rem"
+      }}>
+        <Box sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }} onClick={handleFavoriteToggle}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="19"
@@ -193,31 +190,30 @@ const FacilityCarts = ({ field }: CourtCartProps): JSX.Element => {
           </svg>
         </Box>
 
-        <Box
-          sx={{ paddingTop: "10rem", display: "flex", flexDirection: "row" }}
-        >
-          <Box
-            sx={{
-              width: "5.5rem",
-              fontFamily: "inter",
-              fontWeight: 500,
-              color: "rgb(55, 65, 81)",
-              fill: "rgb(55, 65, 81)",
-              fontSize: "1.2rem",
-            }}
-          >
-            {150 * 14} TL /
+        <Box sx={{ 
+          display: "flex", 
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          whiteSpace: "nowrap",
+          width: "100%"
+        }}>
+          <Box component="span" sx={{
+            fontSize: "1rem",
+            fontFamily: "inter",
+            fontWeight: 500,
+            color: "rgb(55, 65, 81)",
+            marginRight: "0.2rem"
+          }}>
+            {150 * 14} TL
           </Box>
-
-          <Box
-            sx={{
-              fontFamily: "inter",
-              fontWeight: 400,
-              fontSize: "1rem",
-              color: "rgb(55, 65, 81)",
-            }}
-          >
-            Saat
+          <Box component="span" sx={{
+            fontFamily: "inter",
+            fontWeight: 400,
+            fontSize: "1rem",
+            color: "rgb(55, 65, 81)",
+          }}>
+            / Saat
           </Box>
         </Box>
       </Box>

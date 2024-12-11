@@ -37,7 +37,7 @@ const Header = ({ currentTheme, toggleTheme }: HeaderProps): JSX.Element => {
         backgroundColor: isAtTop ? "rgb(12 12 12)" : "rgb(12 12 12)",
         color: "#fff",
         zIndex: 1000,
-        boxShadow: isAtTop ? "0 0 0" : "0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)",
+        boxShadow: location.pathname === "/" && isAtTop ? "none" : "none",
       }}
     >
       <div className="header-image-container">
