@@ -901,4 +901,4 @@ const CourtDetails: React.FC = () => {
   );
 };
 
-export default SahanCepte;
+export default CourtDetails;
