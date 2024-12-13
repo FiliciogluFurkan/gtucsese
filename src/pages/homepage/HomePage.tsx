@@ -5,7 +5,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import logo2 from "src/assets/images/logo-white.png";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { useCustomTheme } from "src/themes/Theme";
 import { IoBookmarksOutline, IoLocateOutline, IoSearch } from "react-icons/io5";
@@ -38,11 +37,15 @@ const Homepage: React.FC = () => {
             </div>
             <div className="homepage-welcome-appointment">
               <FormControl fullWidth>
-                <InputLabel id="city-select-label">Şehir</InputLabel>
+                <InputLabel id="city-select-label">İl Seçin</InputLabel>
                 <Select
                   className="homepage-welcome-appointment-form"
                   labelId="city-select-label"
                   id="city-select"
+                  style={{ borderRadius: '5rem',
+                    backgroundColor: '#ffffff',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',}}
                   value={city}
                   label="Şehir"
                   onChange={(event) => {
@@ -62,7 +65,7 @@ const Homepage: React.FC = () => {
                   className="homepage-welcome-appointment-label"
                   id="town-select-label"
                 >
-                  İlçe
+                  İlçe Seçin
                 </InputLabel>
                 <Select
                   className="homepage-welcome-appointment-form"
@@ -70,6 +73,10 @@ const Homepage: React.FC = () => {
                   id="town-select"
                   value={town}
                   label="İlçe"
+                  style={{ borderRadius: '5rem',
+                    backgroundColor: '#ffffff',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',}}
                   onChange={(event) => {
                     setTown(event.target.value);
                   }}
@@ -90,6 +97,11 @@ const Homepage: React.FC = () => {
                   id="day-select"
                   value={day}
                   label="Gün"
+                  style={{ borderRadius: '5rem',
+                    backgroundColor: '#ffffff',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                  }}
                   onChange={(event) => {
                     setDay(event.target.value);
                   }}
@@ -113,17 +125,10 @@ const Homepage: React.FC = () => {
                 Randevu Al
               </Button>
             </div>
+            <h2 className="homepage-welcome-inner-down">
+            Sahancepte'ye Hoş Geldin <br />Saha Kiralamak Şimdi Çok Kolay
+              </h2>
           </div>
-        </div>
-        <div className="welcome-container-image-container">
-          <img
-            className="welcome-container-image"
-            src={logo2}
-            /* style={{ width: "532px", height: "469px" }} */
-            style={{ width: "354px", height: "312px" }}
-            /*  style={{ width: "425px", height: "390px" }} */
-            alt="logo"
-          />
         </div>
       </div>
 
