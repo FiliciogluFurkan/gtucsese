@@ -3,11 +3,13 @@ import profile from "src/assets/images/admindashboard/placeholder.png";
 import { Review } from "src/interfaces/Review";
 import { renderStars } from "@/services/CommentService";
 
-interface CourtCommentCardsProps {
+interface FacilityCommentCardsProps {
   readonly review: Review;
 }
 
-const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
+const FacilityCommentCards = ({
+  review,
+}: FacilityCommentCardsProps): JSX.Element => {
   return (
     <Box
       sx={{
@@ -54,7 +56,7 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
               maxWidth: "150px",
             }}
           >
-            {review.fullName}
+            {review.author}
           </Box>
           <Box
             sx={{
@@ -67,7 +69,7 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
               marginLeft: "auto",
             }}
           >
-            {review.day} gün önce
+            {review.createdAt} gün önce
           </Box>
         </Box>
         <Box
@@ -80,7 +82,7 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
             wordBreak: "break-word",
           }}
         >
-          {review.review}
+          {review.content}
         </Box>
       </Box>
       <Box
@@ -93,15 +95,11 @@ const CourtCommentCards = ({ review }: CourtCommentCardsProps): JSX.Element => {
           paddingTop: "1rem",
         }}
       >
-        <Box>
-          {review.rating.toFixed(1)}
-        </Box>
-        <Box sx={{ paddingLeft: "0.5rem" }}>
-          {renderStars(review.rating)}
-        </Box>
+        <Box>{review.rating.toFixed(1)}</Box>
+        <Box sx={{ paddingLeft: "0.5rem" }}>{renderStars(review.rating)}</Box>
       </Box>
     </Box>
   );
 };
 
-export default CourtCommentCards;
+export default FacilityCommentCards;

@@ -32,7 +32,7 @@ const CommentOfCourts = ({ review }: CommentOfCourtsProps): JSX.Element => {
             fontWeight: "600",
           }}
         >
-          {review.fullName}
+          {review.author}
         </Typography>
 
         <Typography
@@ -42,14 +42,14 @@ const CommentOfCourts = ({ review }: CommentOfCourtsProps): JSX.Element => {
             width: "11ch",
           }}
         >
-          {review.day} gün önce
+          {review.createdAt} gün önce
         </Typography>
       </Box>
 
       <Box
         sx={{ display: "flex", flexDirection: "column", paddingTop: "1rem" }}
       >
-        <Typography sx={{ width: "30vw" }}>{review.review}</Typography>
+        <Typography sx={{ width: "30vw" }}>{review.content}</Typography>
 
         <Typography sx={{ paddingTop: "0.5rem" }}>
           {renderStars(review.rating)}
