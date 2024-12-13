@@ -24,7 +24,7 @@ import ball from "/src/assets/images/CourtDetails/ball.png";
 import court4 from "/src/assets/images/CourtDetails/court4.png";
 import Map from "/src/assets/images/CourtDetails/Map.png";
 
-const SahanCepte: React.FC = () => {
+const CourtDetails: React.FC = () => {
   const reviews = [
     {
       author: "Muhammet Taha Aydoğdu",
