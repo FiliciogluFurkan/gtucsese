@@ -1,472 +1,904 @@
-import { Box, Typography, Button } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import image1 from "src/assets/images/courtS2.jpg";
-import image2 from "src/assets/images/court-2.jpg";
-import image3 from "src/assets/images/court-3.jpg";
-import CommentOfCourts from "src/components/court-comments/CourtComments";
-import ReservationSystem from "src/components/reservation-system/ReservationSystem";
-import { renderStars } from "@/services/CommentService";
-import { Facility } from "@/interfaces/Facility";
-import {
-  Bath,
-  Utensils,
-  CreditCard,
-  Toilet,
-  SquareParking,
-} from "lucide-react";
-import { Review } from "@/interfaces/Review";
+import * as React from "react";
+import dayjs from "dayjs";
+import { Box, Typography } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 
-const CourtDetails = (): JSX.Element => {
-  const params = useParams();
+import "../index.css";
 
-  const [facility, setFacility] = useState<Facility | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [dummy, setDummy] = useState<Facility| null>(null);
+import stars from "/src/assets/images/CourtDetails/stars.png";
+import locationSymbol from "/src/assets/images/CourtDetails/locationSymbol.png";
+import cafe from "/src/assets/images/CourtDetails/cafe.png";
+import market from "/src/assets/images/CourtDetails/market.png";
+import otopark from "/src/assets/images/CourtDetails/otopark.png";
+import pool from "/src/assets/images/CourtDetails/pool.png";
+import wifi from "/src/assets/images/CourtDetails/wifi.png";
+import wind from "/src/assets/images/CourtDetails/wind.png";
+import court1 from "/src/assets/images/CourtDetails/court1.png";
+import court2 from "/src/assets/images/CourtDetails/court2.png";
+import court3 from "/src/assets/images/CourtDetails/court3.png";
+import bag from "/src/assets/images/CourtDetails/bag.png";
+import like from "/src/assets/images/CourtDetails/like.png";
+import ball from "/src/assets/images/CourtDetails/ball.png";
+import court4 from "/src/assets/images/CourtDetails/court4.png";
+import Map from "/src/assets/images/CourtDetails/Map.png";
 
-  useEffect(() => {
-    const fetchFacility = async () => {
-      try {
-        const response = await axios.get(
-          "https://db.aymoose.devodev.online/fields"
-        );
-        response.data.forEach((item:Facility) => {
-          if (item.id === params.id) {
-            setFacility(item);
-            console.log("Selected Field:", item);
-            console.log(facility)
-          }
-        });
-      } catch (err) {
-        console.error("Error fetching fields:", err);
-      }
-    };
-    fetchFacility();
-  }, [params.id]);
-
- 
-  useEffect(() => {
-    const dummyData: Facility = {
-      id: "1",
-      name: "Aydın Halısaha",
-      address: "Mustafa Kemal Paşa metrobüs durağı",
-      city: "İstanbul",
-      district: "Kadıköy",
-      phone: "0850 455 85 45",
-      courts: [], // Eğer sahalar (courts) bilgisi varsa burada doldurun.
-      amenities: ["6+6 · 7+7 · 8+8 Sahalar", "Ayakkabı", "Su", "Duş"],
-      location:
-        "Göztepe, Tütüncü Mehmet Efendi Cd. 18/A, 34730 Kadıköy/İstanbul",
-      openTime: "09:00",
-      closeTime: "22:00",
-      rating: (Math.random() * 4 + 1).toFixed(1), // 1.0 ile 5.0 arasında rastgele değer
-      description:
-        'Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki "Konum" bölümünden ulaşabilirsiniz.',
-      isActive: true,
-      images: [
-        image1,
-        image2,
-        image3,
-      ],
-      
-    };
-
-    setDummy(dummyData);
-  }, []);
-
-  const handlePrevious = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? (dummy?.images.length || 1) - 1 : prevIndex - 1
-    );
-  };
-
-  const handleNext = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === (dummy?.images.length || 1) - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const [reviews, setReviews] = useState<Review[]>([]);
-
-  const dummyReviews: Review[] = [
+const SahanCepte: React.FC = () => {
+  const reviews = [
     {
-      id: 1,
-      userId: 101,
-      review:
-        "Harika bir deneyimdi! Tesis oldukça temiz ve çalışanlar çok ilgiliydi.",
-      day: "3",
-      rating: 5,
-      fullName: "Mustafa Kemal",
+      author: "Muhammet Taha Aydoğdu",
+      content: "İnternet çekmiyo, maçta attığım golü paylaşamadım.",
+      date: "21 gün önce",
     },
     {
-      id: 2,
-      userId: 102,
-      review: "Genel olarak iyiydi ama yemekler biraz daha iyi olabilirdi.",
-      day: "4",
-      rating: 4.2,
-      fullName: "Mehmet Efendi",
+      author: "Emre Öztürk",
+      content:
+        "Zemin süper, tavsiye ederim. Fiyat biraz daha uygun olabilir. Konum iyi.",
+      date: "4 ay önce",
     },
     {
-      id: 3,
-      userId: 103,
-      review: "Tesisin konumu güzeldi ama odalar biraz eskiydi.",
-      day: "2",
-      rating: 4.8,
-      fullName: "Hasan Öztürk",
+      author: "Muhammet Taha Aydoğdu",
+      content: "İnternet çekmiyo, maçta attığım golü paylaşamadım.",
+      date: "21 gün önce",
     },
     {
-      id: 4,
-      userId: 104,
-      review:
-        "Çok memnun kalmadım, temizlik yeterli değildi ve personel ilgisizdi.Kesinlikle çok memnun kalmadım, temizlik yeterli değildi ve personel ilgisizdi.",
-      day: "23",
-      rating: 2,
-      fullName: "Ömer Özkan",
+      author: "Emre Öztürk",
+      content:
+        "Zemin süper, tavsiye ederim. Fiyat biraz daha uygun olabilir. Konum iyi.",
+      date: "4 ay önce",
     },
-    {
-      id: 5,
-      userId: 105,
-      review: "Tam bir hayal kırıklığı. Bir daha asla gitmem.",
-      day: "6",
-      rating: 1,
-      fullName: "Furkan Fevzi",
-    },
-  ];
-
-  useEffect(() => {
-    setReviews(dummyReviews);
-  }, []);
-
-  const [visibleCount, setVisibleCount] = useState(4);
-
-  const handleShowMore = () => {
-    setVisibleCount((prev) => prev + 4);
-  };
-
-  interface Feature {
-    icon: React.ReactNode;
-    name: string;
-  }
-  const features: Feature[] = [
-    { icon: <Bath size={18} />, name: "Duş" },
-    { icon: <Utensils size={18} />, name: "Yemek" },
-    { icon: <Bath size={18} />, name: "Havuz" },
-    { icon: <Toilet size={18} />, name: "Tuvalet" },
-    { icon: <SquareParking size={18} />, name: "Otopark" },
-    { icon: <CreditCard size={18} />, name: "Kredi Kartı" },
-    { icon: <Bath size={18} />, name: "Sauna" },
-    { icon: <Utensils size={18} />, name: "Bar" },
-    { icon: <Bath size={18} />, name: "Spa" },
   ];
 
   return (
-    <Box sx={{ width: "100vw", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Ana İçerik */}
       <Box
         sx={{
-          width: "100vw",
-          display: "flex",
-          flexDirection: "row",
+          flexGrow: 1,
           paddingTop: "8rem",
-          // backgroundColor: 'rgb(245, 245, 245)',
-          height: "90vh",
-          paddingBottom: "3rem",
-          justifyContent: "center",
+          paddingLeft: "3rem",
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: "1rem",
+          backgroundColor: "#FAFAFA",
         }}
       >
+        {/* Sol Box */}
         <Box
           sx={{
-            width: "40vw",
-            height: "100vh",
-            position: "relative",
-            marginLeft: "5rem",
-          }}
-        >
-          <img
-            src={dummy?.images[currentImageIndex]}
-            alt={"footballCourt"}
-            style={{
-              width: "45vw",
-              height: "60vh",
-              objectFit: "cover",
-              borderRadius: "1rem",
-            }}
-          />
-          <button
-            onClick={handlePrevious}
-            style={{
-              position: "absolute",
-              top: "30%",
-              left: "10px",
-              transform: "translateY(-50%)",
-              background: "rgba(0, 0, 0, 0.5)",
-              color: "white",
-              border: "none",
-              borderRadius: "50%",
-              width: "40px",
-              height: "40px",
-              cursor: "pointer",
-              zIndex: 10,
-            }}
-          >
-            {"<"}
-          </button>
-
-          <button
-            onClick={handleNext}
-            style={{
-              position: "absolute",
-              top: "30%",
-              left: "41vw",
-              transform: "translateY(-50%)",
-              background: "rgba(0, 0, 0, 0.5)",
-              color: "white",
-              border: "none",
-              borderRadius: "50%",
-              width: "40px",
-              height: "40px",
-              cursor: "pointer",
-              zIndex: 10,
-            }}
-          >
-            {">"}
-          </button>
-        </Box>
-
-        <Box
-          sx={{
-            width: "60vw",
-            height: "100vh",
+            width: { xs: "100%", sm: "60%" },
             display: "flex",
             flexDirection: "column",
-            paddingLeft: "10rem",
+            gap: "1rem",
           }}
         >
-          <Typography
-            variant="h4"
+          {/* İlk İçerik Kutusu */}
+          <Box
             sx={{
-              fontFamily: 'Montserrat", sans-serif',
-              fontSize: "1rem",
-              color: "#333",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.8rem",
+              padding: "1rem",
+              borderRadius: "8px",
+              backgroundColor: "#FAFAFA",
             }}
           >
-            {dummy?.name.toUpperCase()}
-          </Typography>
-
-          <Box
-            sx={{ display: "flex", flexDirection: "row", paddingTop: "0.5rem" }}
-          >
-            <Typography sx={{}}>{dummy?.rating}</Typography>
-            <Box sx={{ paddingTop: "0.2rem", paddingLeft: "0.5rem" }}>
-              {renderStars(Number(dummy?.rating))}
-            </Box>
-            <Typography sx={{ paddingLeft: "1rem", color: "#666" }}>
-              {reviews.length} Değerlendirme
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{ display: "flex", flexDirection: "row", paddingTop: "1rem" }}
-          >
-            <span
-              style={{ color: "#696969" }}
-              className="material-symbols-outlined"
-            >
-              schedule
-            </span>
-            <Typography sx={{ paddingLeft: "0.5rem", color: "#666" }}>
-              {dummy?.amenities}
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{ display: "flex", flexDirection: "row", paddingTop: "1rem" }}
-          >
-            <span
-              style={{ color: "#696969" }}
-              className="material-symbols-outlined"
-            >
-              call
-            </span>
-            <Typography sx={{ paddingLeft: "0.5rem", color: "#666" }}>
-              {dummy?.phone}
-            </Typography>
-          </Box>
-
-          <Typography
-            sx={{
-              fontFamily: '"Montserrat", sans-serif',
-              fontSize: "1rem",
-              color: "#333",
-              fontWeight: "bold",
-              paddingTop: "2.5rem",
-            }}
-          >
-            Tesis Açıklaması
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: '"Montserrat", sans-serif',
-              fontSize: "1rem",
-              color: "#333",
-              paddingTop: "1rem",
-              width: "35vw",
-            }}
-          >
-            {dummy?.description}
-          </Typography>
-
-          <Typography
-            sx={{
-              paddingTop: "2rem",
-              fontSize: "1rem",
-              color: "#333",
-              fontWeight: "bold",
-            }}
-          >
-            Konumu
-          </Typography>
-
-          <Box
-            sx={{ display: "flex", flexDirection: "row", paddingTop: "0.5rem" }}
-          >
-            <span
-              style={{ color: "#696969" }}
-              className="material-symbols-outlined"
-            >
-              location_on
-            </span>
-
-            <Typography
+            <Box
               sx={{
-                fontFamily: '"Montserrat", sans-serif',
-                fontSize: "1rem",
-                color: "#333",
+                fontFamily: "Poppins",
+                fontSize: "1.5rem",
+                color: "#1A1A1A",
+                wordWrap: "break-word",
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
               }}
             >
-              {dummy?.location}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-      <Box sx={{ width: "100vw", display: "flex", flexDirection: "row" }}>
-        <Box
-          sx={{
-            paddingLeft: "8rem",
-            width: "55vw",
-            marginTop: "2rem",
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "70vh",
-            maxHeight: "70vh",
-            overflowY: "auto",
-            scrollbarWidth: "thin",
-            "&::-webkit-scrollbar": {
-              width: "8px",
-              marginLeft: "4px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "#7a7c7b",
-              borderRadius: "10px",
-            },
-            "&::-webkit-scrollbar-track": {
-              backgroundColor: "#f0f0f0",
-              marginLeft: "4px",
-            },
-          }}
-        >
-          <Typography
-            fontWeight={700}
-            sx={{ fontSize: "1.5rem", color: "#333", fontFamily: "Montserrat" }}
-          >
-            Yorumlar ({reviews.length})
-          </Typography>
-          <hr style={{ marginTop: "1rem", width: "40vw" }} />
-          <Box>
-            {reviews.slice(0, visibleCount).map((review, index) => (
-              <CommentOfCourts key={index} review={review} />
-            ))}
+              Aymoose Halısaha
+            </Box>
 
-            {visibleCount < reviews.length && (
-              <Box marginTop={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#434945",
-                    color: "#FFFFFF",
-                    borderRadius: "0.5rem",
-                    padding: "2px 5px",
-                    fontSize: "16px",
-                    "&:hover": {
-                      backgroundColor: "#7a7c7b",
-                    },
-                  }}
-                  onClick={handleShowMore}
-                >
-                  Daha Fazla Göster
-                </Button>
-              </Box>
-            )}
-          </Box>
-        </Box>
-
-        <Box sx={{ width: "45vw" }}>
-          <ReservationSystem />
-        </Box>
-      </Box>
-
-      <Typography
-        fontWeight={700}
-        sx={{
-          fontSize: "1.5rem",
-          color: "#333",
-          fontFamily: "Montserrat",
-          marginTop: "7rem",
-          marginLeft: "8rem",
-        }}
-      >
-        Tesis Özellikleri
-      </Typography>
-
-      <Box
-        sx={{
-          marginTop: "20px",
-          width: "50vw",
-          paddingLeft: "8rem",
-          marginBottom: "10rem",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "1rem",
-            fontFamily: "Montserrat",
-            fontSize: "1rem",
-            color: "#333",
-          }}
-        >
-          {features.map((feature, index) => (
+            {/* Yıldız ve İnceleme */}
             <Box
-              key={index}
               sx={{
                 display: "flex",
-                alignItems: "center",
+                flexDirection: "row",
                 gap: "1rem",
-                padding: "5px",
-                width: "calc(33.33% - 1rem)",
+                alignItems: "center",
               }}
             >
-              {feature.icon}
-              <Typography sx={{ fontSize: "1rem", color: "#333" }}>
-                {feature.name}
-              </Typography>
+              <img
+                src={stars}
+                alt="stars"
+                style={{ width: "auto", height: "auto", objectFit: "cover" }}
+              />
+              <Box sx={{ color: "#4F4F4F", fontWeight: "100" }}>
+                4.5 (1200 Reviews)
+              </Box>
             </Box>
-          ))}
+
+            {/* Konum */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "1rem",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={locationSymbol}
+                alt="location"
+                style={{ width: "auto", height: "auto", objectFit: "cover" }}
+              />
+              <Box sx={{ color: "#333333", fontWeight: "100" }}>
+                1234 Example Street, City
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Halısahamız Hakkında */}
+          <Box
+            sx={{
+              border: "1px solid #E0E0E0",
+              borderRadius: "8px",
+              padding: "2rem",
+              backgroundColor: "#FFFFFF",
+              marginTop: "2rem",
+              minHeight: "300px",
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                color: "#1A1A1A",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Halısahamız Hakkında
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#333333",
+                marginBottom: "2rem",
+                lineHeight: "1.8",
+              }}
+            >
+              Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında
+              bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki
+              "Konum" bölümünden ulaşabilirsiniz.
+              <br />
+              <br />
+              Rezervasyon yapmak için sayfanın en üst kısmındaki "Rezervasyon
+              Yap" bölümünden istediğiniz tarih ve saati seçip rezervasyon
+              oluşturabilirsiniz. Lorem Ipsum is simply dummy text of the
+              printing and typesetting industry.
+              <br />
+              <br />
+              Lorem Ipsum has been the industry's standard dummy text.
+            </Typography>
+
+            {/* Tesis Özellikleri */}
+            <Box
+              sx={{
+                borderTop: "1px solid #E0E0E0",
+                paddingTop: "1.5rem",
+                marginTop: "1.5rem",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#1A1A1A",
+                  marginBottom: "1rem",
+                }}
+              >
+                Tesis Özellikleri
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr 1fr",
+                    sm: "1fr 1fr 1fr 1fr",
+                  },
+                  gap: "1rem",
+                  color: "#4F4F4F",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <img
+                    src={wifi}
+                    alt="wifi"
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Typography variant="body2">Free Wifi</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <img
+                    src={wind}
+                    alt="wind"
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Typography variant="body2">Duş</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <img
+                    src={otopark}
+                    alt="otopark"
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Typography variant="body2">Park Alanı</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <img
+                    src={market}
+                    alt="market"
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Typography variant="body2">Dükkan</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <img
+                    src={pool}
+                    alt="pool"
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Typography variant="body2">Yüzme Sahası</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <img
+                    src={cafe}
+                    alt="cafe"
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Typography variant="body2">Kafe</Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+            <Box
+              sx={{
+                border: "1px solid #E0E0E0",
+                borderRadius: "8px",
+                backgroundColor: "#FFFFFF",
+                marginTop: "2rem",
+                minHeight: "300px",
+                width: "32%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+              }}
+            >
+              <img
+                src={court1}
+                alt="court1"
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  paddingBottom: "1rem",
+                }}
+              />
+
+              <Typography
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: "500",
+                  fontFamily: "Inter",
+                  colo: "#1A1A1A",
+                  paddingLeft: "1rem",
+                }}
+              >
+                Saha 1
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={bag}
+                  alt="bag"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  6+6
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={ball}
+                  alt="ball"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  25 x 40 metre
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={like}
+                  alt="like"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  2500 TL/Saat
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                border: "1px solid #E0E0E0",
+                borderRadius: "8px",
+                backgroundColor: "#FFFFFF",
+                marginTop: "2rem",
+                minHeight: "300px",
+                width: "32%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+              }}
+            >
+              <img
+                src={court2}
+                alt="court2"
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  paddingBottom: "1rem",
+                }}
+              />
+
+              <Typography
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: "500",
+                  fontFamily: "Inter",
+                  colo: "#1A1A1A",
+                  paddingLeft: "1rem",
+                }}
+              >
+                Saha 2
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={bag}
+                  alt="bag"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  7+7
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={ball}
+                  alt="ball"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  30 x 50 metre
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={like}
+                  alt="like"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  4000 TL/Saat
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                border: "1px solid #E0E0E0",
+                borderRadius: "8px",
+                backgroundColor: "#FFFFFF",
+                marginTop: "2rem",
+                minHeight: "300px",
+                width: "32%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+              }}
+            >
+              <img
+                src={court3}
+                alt="court3"
+                style={{
+                  width: "100%",
+                  height: "50%",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  paddingBottom: "1rem",
+                }}
+              />
+
+              <Typography
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: "500",
+                  fontFamily: "Inter",
+                  colo: "#1A1A1A",
+                  paddingLeft: "1rem",
+                }}
+              >
+                Saha 3
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={bag}
+                  alt="bag"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  7+7
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={ball}
+                  alt="ball"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  30 x 50 metre
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.75rem",
+                  paddingLeft: "1rem",
+                }}
+              >
+                <img
+                  src={like}
+                  alt="like"
+                  style={{
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: "400",
+                    fontFamily: "Inter",
+                    color: "#4F4F4F",
+                  }}
+                  variant="body2"
+                >
+                  4000 TL/Saat
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              border: "1px solid #E0E0E0",
+              borderRadius: "8px",
+              padding: "2rem",
+              backgroundColor: "#FFFFFF",
+              marginTop: "2rem",
+              minHeight: "300px",
+              marginBottom: "8rem",
+            }}
+          >
+            {reviews.map((review, index) => (
+              <Box
+                key={index}
+                sx={{
+                  borderBottom:
+                    index < reviews.length - 1 ? "1px solid #E0E0E0" : "none",
+                  paddingY: "1rem",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "1rem",
+                      fontFamily: "Roboto",
+                      color: "#000000",
+                    }}
+                  >
+                    {review.author}
+                  </Box>
+                  <Box
+                    sx={{
+                      fontWeight: "300",
+                      fontSize: "1rem",
+                      fontFamily: "Roboto",
+                      color: "#000000",
+                    }}
+                  >
+                    {review.date}
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    fontWeight: "300",
+                    fontSize: "1rem",
+                    fontFamily: "Roboto",
+                    color: "#000000",
+                  }}
+                >
+                  {review.content}
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        {/* Sağ Box */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "11.5rem",
+            marginLeft: "2rem",
+            marginRight: "2rem",
+            width: { xs: "100%", sm: "40%" },
+          }}
+        >
+          <Box sx={{ marginBottom: "1rem" }}>
+            <img
+              src={court4}
+              alt="court4"
+              style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "cover",
+                borderRadius: "12px",
+              }}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              backgroundColor: "#FFFFFF",
+              borderRadius: "8px",
+              padding: "8px",
+              width: "100%",
+              marginBottom: "1rem",
+            }}
+          >
+            {["Saha 1", "Saha 2", "Saha 3"].map((saha, index) => (
+              <Box
+                key={index}
+                sx={{
+                  flex: 1,
+                  textAlign: "center",
+                  color: "#1A1A1A",
+                  fontSize: "1.1rem",
+                  fontWeight: 500,
+                  fontFamily: "Inter",
+                  cursor: "pointer",
+                }}
+              >
+                {saha}
+              </Box>
+            ))}
+          </Box>
+
+          <Box
+            sx={{
+              marginBottom: "2rem",
+              width: "100%",
+              borderRadius: "8px",
+              backgroundColor: "#FFFFFF",
+              "& .MuiPaper-root": {
+                backgroundColor: "#FFFFFF",
+                boxShadow: "none",
+                width: "100%",
+              },
+              "& .MuiPickersLayout-root": {
+                backgroundColor: "#FFFFFF",
+                width: "100%",
+              },
+
+              "& .MuiTypography-root": {
+                fontSize: "1.1rem",
+              },
+              "& .MuiDayCalendar-weekDayLabel": {
+                fontSize: "1rem",
+                margin: "4px 0",
+              },
+              "& .MuiPickersDay-root": {
+                fontSize: "1.1rem",
+                margin: "8px 2px",
+                height: "40px",
+                width: "40px",
+              },
+              "& .MuiDayCalendar-header": {
+                marginBottom: "8px",
+              },
+              "& .MuiPickersCalendarHeader-label": {
+                fontSize: "1.4rem",
+              },
+              "& .MuiPickersDay-today": {
+                fontSize: "1.1rem",
+              },
+              "& .MuiDatePickerToolbar-title": {
+                fontSize: "2rem",
+              },
+              "& .MuiTypography-overline": {
+                fontSize: "1rem",
+              },
+
+              "& .MuiDayCalendar-monthContainer": {
+                rowGap: "8px",
+              },
+            }}
+          >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <StaticDatePicker defaultValue={dayjs("2024-04-02")} />
+            </LocalizationProvider>
+          </Box>
+
+          <Box sx={{ marginBottom: "1rem" }}>
+            <img
+              src={Map}
+              alt="court4"
+              style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "cover",
+                borderRadius: "12px",
+              }}
+            />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
 
-export default CourtDetails;
+export default SahanCepte;
