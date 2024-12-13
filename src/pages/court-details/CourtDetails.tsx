@@ -5,7 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 
-import "../index.css";
+import "@/components/court-details/CourtDetails.css";
 
 import stars from "/src/assets/images/CourtDetails/stars.png";
 import locationSymbol from "/src/assets/images/CourtDetails/locationSymbol.png";
