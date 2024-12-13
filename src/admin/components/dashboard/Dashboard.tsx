@@ -6,7 +6,8 @@ import currentrezervation from "src/assets/images/admindashboard/Group118.png";
 import canceledrezervation from "src/assets/images/admindashboard/Group121.png";
 import totalprice from "src/assets/images/admindashboard/Group84.png";
 import icon2 from "src/assets/images/admindashboard/Icon1.png";
-import CourtsCommentsCards from "src/admin/components/court-comment-cards/CourtCommentCards";
+import CourtsCommentsCards from "@/admin/components/facility-comment-cards/FacilityCommentCards";
+import { Review } from "@/interfaces/Review";
 
 const Dashboard = (): JSX.Element => {
   const [name, setName] = React.useState<string>("Ahmet");
@@ -26,73 +27,95 @@ const Dashboard = (): JSX.Element => {
     console.log(totalPrice);
   }, []);
 
+  // nice mock n3gger
+  // TODO: change with real comments
   const comments = [
     {
-      id: 1,
-      userId: 101,
-      fullName: "Ahmet Yılmaz",
-      review:
+      id: "1",
+      author: "Ahmet Yılmaz",
+      content:
         "Harika bir saha, zemini çok iyi. Yiyecek ve içecek olsa daha iyi olurdu. Maçtan sonra terli terli dışarıda yemek yemeden burada yiyip evimize giderdik.",
-      day: "2",
       rating: 5,
+      title: "Güzel saha",
+      createdAt: "2",
+      updatedAt: "2",
+      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
+      facilityName: "Saha 1",
     },
     {
-      id: 2,
-      userId: 102,
-      fullName: "Mehmet Kaya",
-      review: "Işıklandırma yetersizdi. Saat 8 oldu hala ışıklar açılmamıştı.",
-      day: "4",
+      id: "2",
+      author: "Mehmet Kaya",
+      content: "Işıklandırma yetersizdi. Saat 8 oldu hala ışıklar açılmamıştı.",
       rating: 3.5,
+      title: "Güzel saha",
+      createdAt: "2",
+      updatedAt: "2",
+      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
+      facilityName: "Saha 1",
     },
     {
-      id: 3,
-      userId: 103,
-      fullName: "Elif Demir",
-      review: "Çalışanlar çok ilgiliydi, sahada oynamak keyifliydi.",
-      day: "1",
+      id: "3",
+      author: "Elif Demir",
+      content: "Çalışanlar çok ilgiliydi, sahada oynamak keyifliydi.",
       rating: 4.5,
+      title: "Güzel saha",
+      createdAt: "2",
+      updatedAt: "2",
+      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
+      facilityName: "Saha 1",
     },
     {
-      id: 4,
-      userId: 104,
-      fullName: "Hüseyin Çelik",
-      review: "Saha biraz bakımsız ama yine de keyifliydi.",
+      id: "4",
+      author: "Hüseyin Çelik",
+      content: "Saha biraz bakımsız ama yine de keyifliydi.",
       day: "5",
       rating: 3,
     },
     {
-      id: 5,
-      userId: 105,
-      fullName: "Ayşe Öztürk",
-      review: "Oldukça ferah ve geniş bir saha. Tavsiye ederim.",
-      day: "7",
+      id: "5",
+      author: "Ayşe Öztürk",
+      content: "Oldukça ferah ve geniş bir saha. Tavsiye ederim.",
       rating: 5,
+      title: "Güzel saha",
+      createdAt: "2",
+      updatedAt: "2",
+      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
+      facilityName: "Saha 1",
     },
     {
-      id: 6,
-      userId: 106,
-      fullName: "Emre Şahin",
-      review: "Otopark sorunluydu, biraz daha iyi olabilirdi.",
-      day: "10",
-      rating: 2.4,
-    },
-    {
-      id: 7,
-      userId: 107,
-      fullName: "Fatma Aydın",
-      review: "Fiyat performans olarak gayet iyi.",
-      day: "3",
-      rating: 4,
-    },
-    {
-      id: 8,
-      userId: 108,
-      fullName: "Ali Yıldırım",
-      review: "Saha güzel ama duşlar biraz kirliydi.",
-      day: "6",
+      id: "6",
+      author: "Emre Şahin",
+      content: "Otopark sorunluydu, biraz daha iyi olabilirdi.",
       rating: 3,
+      title: "Güzel saha",
+      createdAt: "2",
+      updatedAt: "2",
+      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
+      facilityName: "Saha 1",
     },
-  ];
+    {
+      id: "7",
+      author: "Fatma Aydın",
+      content: "Fiyat performans olarak gayet iyi.",
+      rating: 4,
+      title: "Güzel saha",
+      createdAt: "2",
+      updatedAt: "2",
+      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
+      facilityName: "Saha 1",
+    },
+    {
+      id: "8",
+      author: "Ali Yıldırım",
+      content: "Saha güzel ama duşlar biraz kirliydi.",
+      rating: 3,
+      title: "Güzel saha",
+      createdAt: "2",
+      updatedAt: "2",
+      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
+      facilityName: "Saha 1",
+    },
+  ] as Review[];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -193,10 +216,10 @@ const Dashboard = (): JSX.Element => {
               <img
                 src={currentrezervation}
                 alt="your image"
-                style={{ 
+                style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -288,10 +311,10 @@ const Dashboard = (): JSX.Element => {
               <img
                 src={Group}
                 alt="your image"
-                style={{ 
+                style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -383,10 +406,10 @@ const Dashboard = (): JSX.Element => {
               <img
                 src={canceledrezervation}
                 alt="your image"
-                style={{ 
+                style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -478,10 +501,10 @@ const Dashboard = (): JSX.Element => {
               <img
                 src={totalprice}
                 alt="your image"
-                style={{ 
+                style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -536,7 +559,14 @@ const Dashboard = (): JSX.Element => {
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "row", marginTop: "3rem", marginBottom: "2rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: "3rem",
+          marginBottom: "2rem",
+        }}
+      >
         <Box
           sx={{
             fontFamily: "Barlow",
@@ -569,9 +599,9 @@ const Dashboard = (): JSX.Element => {
               color: "#00B074",
               cursor: "pointer",
               backgroundColor: "white",
-              "&:hover": { 
+              "&:hover": {
                 backgroundColor: "white",
-                opacity: 0.9 
+                opacity: 0.9,
               },
             }}
           >
@@ -591,9 +621,9 @@ const Dashboard = (): JSX.Element => {
               color: "#00B074",
               cursor: "pointer",
               backgroundColor: "white",
-              "&:hover": { 
+              "&:hover": {
                 backgroundColor: "white",
-                opacity: 0.9 
+                opacity: 0.9,
               },
             }}
           >
@@ -614,9 +644,9 @@ const Dashboard = (): JSX.Element => {
         }}
       >
         {comments.slice(currentIndex, currentIndex + 3).map((review, index) => (
-          <Box 
-            key={index} 
-            sx={{ 
+          <Box
+            key={index}
+            sx={{
               width: "38%",
               minWidth: "300px",
             }}

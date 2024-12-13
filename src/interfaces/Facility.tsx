@@ -2,18 +2,22 @@ import { Court } from "./Court";
 
 export interface Facility {
   id: string;
+  phoneNumber: string;
   name: string;
-  address: string;
+  description: string;
   city: string;
   district: string;
-  phone: string;
-  courts: Court[];
-  amenities: string[];
+  fullAddress: string;
   location: string;
-  openTime: string;
+  contactDetails: string;
+  openTime: number;
+  closeTime: number;
+  imageUrls: string[];
   rating: string;
-  closeTime: string;
-  description: string;
+  reviewCount: number;
+  lowerPriceLimit: number;
+  upperPriceLimit: number;
+  amenities: any;
+  courts: Court[];
   isActive: boolean;
-  images: string[];
 }

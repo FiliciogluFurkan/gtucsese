@@ -24,7 +24,7 @@ const cities = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya"];
 const districts = ["Kadıköy", "Çankaya", "Bornova", "Osmangazi", "Muratpaşa"];
 
 const Facilities = (): JSX.Element => {
-  const [fields, setFields] = useState<Facility[]>([]);
+  const [facilities, setFacilities] = useState<Facility[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string>(
     "Cumhuriyet, Gebze teknik üniversitesi tenis kulübü, 41400 Gebze/Kocaeli"
   );
@@ -37,14 +37,14 @@ const Facilities = (): JSX.Element => {
     const fetchFields = async () => {
       try {
         const response = await axios.get(
-          "https://db.aymoose.devodev.online/fields"
+          "http://localhost:5858/api/v1/facilities"
         );
-        setFields(response.data);
+        setFacilities(response.data);
         console.log(response.data);
       } catch (err) {}
     };
     fetchFields();
-    console.log(fields);
+    console.log(facilities);
   }, []);
 
   const handleClick = (
@@ -300,22 +300,22 @@ const Facilities = (): JSX.Element => {
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Box sx={{ width: "60%", overflowY: "auto", height: "100vh", flex: 1 }}>
           <div className="footballcourts-list-fields-section">
-            {fields.map((field) => {
+            {facilities.map((facility) => {
               const handleMouseEnter = () => {
-                setSelectedLocation(field.location);
+                setSelectedLocation(facility.location);
               };
 
               const handleClick = () => {
-                navigate(`/fields/field-details/${field.id}`);
+                navigate(`/facility/${facility.id}`);
               };
 
               return (
                 <div
-                  key={field.id}
+                  key={facility.id}
                   onMouseEnter={handleMouseEnter}
                   onClick={handleClick}
                 >
-                  <FacilityCarts field={field} />
+                  <FacilityCarts facility={facility} />
                   <hr className="footballcourts-container-informations-hr-list-section" />
                 </div>
               );
