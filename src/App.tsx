@@ -13,6 +13,7 @@ import PasswordReset from "./components/PasswordReset";
 import Support from "./pages/Support";
 import Profil from "./pages/Profil";
 import Reservations from "./pages/Reservations";
+import CourtDetails from "./pages/CourtDetails";
 
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
@@ -44,6 +45,7 @@ function App() {
         <Route path="/password-reset" Component={PasswordReset}></Route>
         <Route path="/Profil" Component={Profil}></Route>
         <Route path="/Reservations" Component={Reservations}></Route>
+        <Route path="/CourtDetails" Component={CourtDetails}></Route>
       </Routes>
       {location.pathname !== '/fields' && <Footer />}
     </ThemeProvider>
