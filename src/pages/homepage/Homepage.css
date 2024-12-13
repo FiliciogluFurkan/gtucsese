@@ -17,7 +17,7 @@ body {
    
 }
 .welcome-container {
-    background-image: url('/src/assets/images/omer5.jpg');
+    background-image: url('/src/assets/images/anasayfa.png');
     display: flex;
     flex-direction: row;
     background-size: cover;
@@ -28,21 +28,6 @@ body {
     min-height: 80.5vh;
 }
 
-
-.welcome-container-image-container {
-    width: 100%;
-    height: 100%;
-    margin-top: 20vh;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.welcome-container-image {
-    width: 50%;
-    height: 100%;
-    margin-right: 13rem;
-}
 
 .homepage-welcome-content {
     display: flex;
@@ -65,31 +50,45 @@ body {
 }
 
 .homepage-welcome-header {
-    font-size: 3.125rem; 
-    font-weight: bold; 
-    color: white;
-    font-family: 'Open Sans', sans-serif; 
+    margin-top: 2 rem;
+    font-size: 2.10rem; 
+    font-weight: 700; 
+    color: #101010;
+    font-family: 'Montserrat'; 
 }
 
 
 .homepage-welcome-inner {
-    color: rgba(255, 255, 255, 0.8);
+    color: #8d9196cc;
     font-family: 'Inter', sans-serif;
+    font-size: 1.10rem; 
     width: 18rem; 
-    font-weight: 500; 
-    margin-top: 1.5rem;
+    font-weight: 550; 
+    margin-top: 0.5rem;
+    font-family: 'Montserrat';
 }
 .homepage-welcome-appointment {
-    background-color: rgba(247, 247, 247, 0.295);
+    background-color: rgb(255, 255, 255);
     background-color: "transparent";
-    border-radius: 0.5rem; 
-    margin-top: 1.25rem; 
+    border-radius: 5rem; 
+    margin-top: 1.5rem; 
     display: flex;
     flex-direction: row;
-    padding: 1rem;
+    padding: 0.5rem;
    /*  padding-left: 0; */
 
 }
+.homepage-welcome-inner-down {
+    color: #484848;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50rem;
+    align-items: flex-start;
+    margin-top: 4rem;
+    font-family: 'Montserrat'; 
+}
+
 
 .homepage-welcome-appointment-label {
     font-size: 1.125rem !important; 
@@ -98,20 +97,25 @@ body {
     color: rgb(31, 31, 31) !important;
     font-family: 'Poppins', sans-serif;
     margin-right: 0.5rem;
+    
 }
+
 
 .homepage-welcome-appointment-form {
     background-color: rgb(240, 240, 240);
     margin-right: 0.5rem;
     height: 7vh;
-    width: 10vw;
+    width: 11vw;
+    
+
 }
 
 #homepage-welcome-appointment-button {
     min-height: 100%;
     word-break: keep-all;
     font-weight: 600;
-    min-width: 10vw;
+    min-width: 7vw;
+    border-radius: 10rem;
     max-height: 7vh;
 }
 
