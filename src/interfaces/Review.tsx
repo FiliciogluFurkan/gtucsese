@@ -1,8 +1,11 @@
 export interface Review {
-  id: number;
-  userId: number;
-  review: string;
-  day: string;
+  id: string;
   rating: number;
-  fullName: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  author: string;
+  profilePicture: string;
+  facilityName: string;
 }

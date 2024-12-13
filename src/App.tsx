@@ -34,6 +34,9 @@ const App = (): JSX.Element => {
   }, [auth.events, auth.signinSilent]);
 
   const toggleTheme = () => {
+    {
+      console.log("Bearer " + auth.user?.access_token);
+    }
     setIsDarkMode(!isDarkMode);
   };
 

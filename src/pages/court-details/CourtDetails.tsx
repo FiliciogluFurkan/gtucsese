@@ -1,54 +1,47 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Box, Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
-
-import "@/components/court-details/CourtDetails.css";
-
-import stars from "/src/assets/images/CourtDetails/stars.png";
-import locationSymbol from "/src/assets/images/CourtDetails/locationSymbol.png";
-import cafe from "/src/assets/images/CourtDetails/cafe.png";
-import market from "/src/assets/images/CourtDetails/market.png";
-import otopark from "/src/assets/images/CourtDetails/otopark.png";
-import pool from "/src/assets/images/CourtDetails/pool.png";
-import wifi from "/src/assets/images/CourtDetails/wifi.png";
-import wind from "/src/assets/images/CourtDetails/wind.png";
-import court1 from "/src/assets/images/CourtDetails/court1.png";
-import court2 from "/src/assets/images/CourtDetails/court2.png";
-import court3 from "/src/assets/images/CourtDetails/court3.png";
-import bag from "/src/assets/images/CourtDetails/bag.png";
-import like from "/src/assets/images/CourtDetails/like.png";
-import ball from "/src/assets/images/CourtDetails/ball.png";
-import court4 from "/src/assets/images/CourtDetails/court4.png";
-import Map from "/src/assets/images/CourtDetails/Map.png";
+import "@/pages/court-details/CourtDetails.css";
+import stars from "src/assets/images/CourtDetails/stars.png";
+import locationSymbol from "src/assets/images/CourtDetails/locationSymbol.png";
+import cafe from "src/assets/images/CourtDetails/cafe.png";
+import market from "src/assets/images/CourtDetails/market.png";
+import otopark from "src/assets/images/CourtDetails/otopark.png";
+import pool from "src/assets/images/CourtDetails/pool.png";
+import wifi from "src/assets/images/CourtDetails/wifi.png";
+import wind from "src/assets/images/CourtDetails/wind.png";
+import court1 from "src/assets/images/CourtDetails/court1.png";
+import court2 from "src/assets/images/CourtDetails/court2.png";
+import court3 from "src/assets/images/CourtDetails/court3.png";
+import bag from "src/assets/images/CourtDetails/bag.png";
+import like from "src/assets/images/CourtDetails/like.png";
+import ball from "src/assets/images/CourtDetails/ball.png";
+import court4 from "src/assets/images/CourtDetails/court4.png";
+import Map from "src/assets/images/CourtDetails/Map.png";
+import { Review } from "@/interfaces/Review";
+import axios from "axios";
+import { useSendAuthenticatedRequest } from "@/services/AuthorizedRequests";
 
 const CourtDetails: React.FC = () => {
-  const reviews = [
-    {
-      author: "Muhammet Taha Aydoğdu",
-      content: "İnternet çekmiyo, maçta attığım golü paylaşamadım.",
-      date: "21 gün önce",
-    },
-    {
-      author: "Emre Öztürk",
-      content:
-        "Zemin süper, tavsiye ederim. Fiyat biraz daha uygun olabilir. Konum iyi.",
-      date: "4 ay önce",
-    },
-    {
-      author: "Muhammet Taha Aydoğdu",
-      content: "İnternet çekmiyo, maçta attığım golü paylaşamadım.",
-      date: "21 gün önce",
-    },
-    {
-      author: "Emre Öztürk",
-      content:
-        "Zemin süper, tavsiye ederim. Fiyat biraz daha uygun olabilir. Konum iyi.",
-      date: "4 ay önce",
-    },
-  ];
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const { sendAuthenticatedRequest } = useSendAuthenticatedRequest();
+
+  useEffect(() => {
+    sendAuthenticatedRequest({
+      url: `${apiUrl}/reviews`,
+      method: "GET",
+    })
+      .then((response) => {
+        setReviews(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <div
@@ -757,7 +750,7 @@ const CourtDetails: React.FC = () => {
                       color: "#000000",
                     }}
                   >
-                    {review.date}
+                    {review.createdAt}
                   </Box>
                 </Box>
                 <Box
