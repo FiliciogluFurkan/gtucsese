@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import "@/pages/court-details/CourtDetails.css";
 import stars from "src/assets/images/CourtDetails/stars.png";
 import locationSymbol from "src/assets/images/CourtDetails/locationSymbol.png";
@@ -25,12 +32,17 @@ import { useCustomTheme } from "@/themes/Theme";
 import { getFormattedDate } from "@/services/TimeServices";
 import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
+import { useAuthWithRoles } from "@/hooks/Auth";
 
 const CourtDetails: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const [facility, setFacility] = useState<Facility | null>();
   const theme = useCustomTheme();
+  const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const handleRatingChange = (newValue: any) => {
+    setRating(newValue); // Update rating state
+  };
   const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -72,16 +84,53 @@ const CourtDetails: React.FC = () => {
     fetchReviews();
   }, []);
 
+  const auth = useAuthWithRoles();
+  const [newReview, setNewReview] = useState("");
+  const [author, setAuthor] = useState(
+    auth ? auth.user?.access_token : "Guest"
+  ); // Default to "Guest" if no current user
+  console.log(author);
+
+  const handleReviewChange = (event: any) => {
+    setNewReview(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    // Handle the submission logic (e.g., adding review to state or sending it to an API)
+    if (newReview) {
+      console.log("Author:", auth.user?.access_token);
+      axios.post(
+        apiUrl + "/api/v1/reviews",
+        {
+          userId: auth.user?.profile.sub,
+          facilityId: facility?.id,
+          title: "New Review",
+          content: newReview,
+          rating: rating,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user?.access_token}`,
+          },
+        }
+      );
+
+      setNewReview(""); // Reset the input field
+    }
+  };
+
   useEffect(() => {
     const currentDate = getFormattedDate();
+    console.log(currentDate);
+
     const fetchTimeSlots = async () => {
       try {
         const response = await axios({
           method: "GET",
           url:
             apiUrl +
-            "/api/v1/reservations/slots/0ad878f5-4b8d-4bd9-ad50-da48af70032c/" +
-            currentDate,
+            "/api/v1/reservations/slots/d0128d4c-a92d-44ef-b587-d87c5571f4d4/" +
+            "17-12-2024",
         });
         // Handle the response here
         console.log(response.data["timeSlots"]);
@@ -156,7 +205,7 @@ const CourtDetails: React.FC = () => {
                       overflowWrap: "break-word",
                     }}
                   >
-                    Aymoose Halısaha
+                    Aydın Halısaha
                   </Box>
 
                   {/* Yıldız ve İnceleme */}
@@ -184,7 +233,7 @@ const CourtDetails: React.FC = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      4.5 (1200 Reviews)
+                      4.0 (20 Reviews)
                     </Box>
                   </Box>
 
@@ -533,7 +582,7 @@ const CourtDetails: React.FC = () => {
                       }}
                       variant="body2"
                     >
-                      2500 TL/Saat
+                      1500 TL/Saat
                     </Typography>
                   </Box>
                 </Box>
@@ -660,7 +709,7 @@ const CourtDetails: React.FC = () => {
                       }}
                       variant="body2"
                     >
-                      4000 TL/Saat
+                      2000 TL/Saat
                     </Typography>
                   </Box>
                 </Box>
@@ -787,7 +836,7 @@ const CourtDetails: React.FC = () => {
                       }}
                       variant="body2"
                     >
-                      4000 TL/Saat
+                      1700 TL/Saat
                     </Typography>
                   </Box>
                 </Box>
@@ -803,6 +852,18 @@ const CourtDetails: React.FC = () => {
                   marginBottom: "8rem",
                 }}
               >
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: "1.25rem",
+                    fontFamily: "Roboto",
+                    color: "#000000",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Reviews
+                </Typography>
+
                 {reviews.map((review, index) => (
                   <Box
                     key={index}
@@ -853,8 +914,125 @@ const CourtDetails: React.FC = () => {
                     >
                       {review.content}
                     </Box>
+                    <Box
+                      sx={{
+                        marginTop: "1rem",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontWeight: "400",
+                          fontSize: "1rem",
+                          fontFamily: "Roboto",
+                          color: "#000000",
+                          marginRight: "0.5rem",
+                        }}
+                      >
+                        Rating:
+                      </Typography>
+                      <Rating name="read-only" value={review.rating} readOnly />
+                    </Box>
                   </Box>
                 ))}
+
+                {/* Add a new review section */}
+                <Box
+                  sx={{
+                    marginTop: "2rem",
+                    borderTop: "1px solid #E0E0E0",
+                    paddingTop: "1rem",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "1.125rem",
+                      fontFamily: "Roboto",
+                      color: "#000000",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    Add a Review
+                  </Typography>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    value="Mehmet Hayrullah Özkul"
+                    onChange={(e) => setAuthor(e.target.value)}
+                    sx={{
+                      marginBottom: "1rem",
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: "8px",
+                      },
+                    }}
+                    disabled
+                  />
+                  <TextField
+                    label="Write your review"
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    fullWidth
+                    value={newReview}
+                    onChange={handleReviewChange}
+                    sx={{
+                      marginBottom: "1.5rem",
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: "8px",
+                      },
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      marginBottom: "1.5rem",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontWeight: "400",
+                        fontSize: "1rem",
+                        fontFamily: "Roboto",
+                        color: "#000000",
+                        marginRight: "0.5rem",
+                      }}
+                    >
+                      Rating:
+                    </Typography>
+                    <Rating
+                      name="rating"
+                      value={rating}
+                      onChange={handleRatingChange}
+                      sx={{
+                        "& .MuiRating-iconFilled": {
+                          color: "#4CAF50",
+                        },
+                        "& .MuiRating-iconEmpty": {
+                          color: "#E0E0E0",
+                        },
+                      }}
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    sx={{
+                      borderRadius: "8px",
+                      textTransform: "none",
+                      padding: "0.5rem 2rem",
+                      backgroundColor: "#4CAF50",
+                      "&:hover": {
+                        backgroundColor: "#388E3C",
+                      },
+                    }}
+                  >
+                    Submit Review
+                  </Button>
+                </Box>
               </Box>
             </Box>
 

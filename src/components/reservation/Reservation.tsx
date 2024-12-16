@@ -33,7 +33,7 @@ const Reservation = ({ slots }: ReservationProps): JSX.Element => {
             fontSize: { lg: "1.4rem", xs: "0.8rem" },
           }}
         >
-          5 Nisan 2024
+          17 Aralık 2024
         </Box>
         <Stack
           sx={{

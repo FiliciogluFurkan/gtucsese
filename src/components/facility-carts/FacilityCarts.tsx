@@ -9,7 +9,7 @@ interface CourtCartProps {
 }
 
 const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
-  const fieldId = facility;
+  const fieldId = facility.id;
   console.log(facility);
 
   const [isFavorited, setIsFavorited] = useState(false);
@@ -79,6 +79,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           }}
         >
           <span>
+            {" "}
             {facility.city} / {facility.district}
           </span>
         </Box>
@@ -95,7 +96,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
             alignItems: "center",
           }}
         >
-          {facility.name.toUpperCase()}
+          {facility.name.toString()}
         </Box>
 
         <hr
@@ -109,6 +110,19 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           }}
         />
 
+        {facility.amenities.map((amenity: string, index: number) => (
+          <Box
+            key={index}
+            sx={{
+              height: "1.5rem",
+              fontSize: "0.8rem",
+              color: "rgb(107, 114, 128)",
+              marginBottom: "0.5rem",
+            }}
+          >
+            {amenity}
+          </Box>
+        ))}
         <Box
           sx={{
             height: "3rem",
@@ -121,7 +135,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
             marginBottom: "1rem",
           }}
         >
-          {facility.amenities || "Tesis özellikleri bulunmamaktadır"}
+          {facility.description}
         </Box>
 
         <hr
@@ -181,7 +195,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
               width: "7rem",
             }}
           >
-            (100 inceleme)
+            {facility.reviewCount} Yorum
           </Box>
         </Box>
       </Box>
@@ -237,7 +251,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
               marginRight: "0.2rem",
             }}
           >
-            {150 * 14} TL
+            {facility.lowerPriceLimit} - {facility.upperPriceLimit} TL
           </Box>
           <Box
             component="span"

@@ -30,7 +30,9 @@ const Header = ({ currentTheme, toggleTheme }: HeaderProps): JSX.Element => {
 
   const isSelected = (path: string) => location.pathname === path;
 
-  return location.pathname === '/admin/dashboard' ? <></> : (
+  return location.pathname === "/admin/dashboard" ? (
+    <></>
+  ) : (
     <div
       className="header"
       style={{
@@ -67,9 +69,15 @@ const Header = ({ currentTheme, toggleTheme }: HeaderProps): JSX.Element => {
             </Link>
           </div>
           <div
-            className={`header-tab ${isSelected("/fields") ? "selected" : ""}`}
+            className={`header-tab ${
+              isSelected("/facilities") ? "selected" : ""
+            }`}
           >
-            <Link color="inherit" className="header-tab-text" href="/fields">
+            <Link
+              color="inherit"
+              className="header-tab-text"
+              href="/facilities"
+            >
               HALI SAHALAR
             </Link>
           </div>
