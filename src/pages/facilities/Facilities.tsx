@@ -31,13 +31,14 @@ const Facilities = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [listType, setListType] = useState<"cities" | "districts" | null>(null);
   const [sortOption, setSortOption] = useState("recommended");
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFields = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5858/api/v1/facilities"
+          "https://db.aymoose.devodev.online/fields"
         );
         setFacilities(response.data);
         console.log(response.data);
