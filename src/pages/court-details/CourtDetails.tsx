@@ -40,7 +40,7 @@ const CourtDetails: React.FC = () => {
   const theme = useCustomTheme();
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState<Review[]>([]);
-  const handleRatingChange = (event: any, newValue: any) => {
+  const handleRatingChange = (newValue: any) => {
     setRating(newValue); // Update rating state
   };
   const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
@@ -89,6 +89,7 @@ const CourtDetails: React.FC = () => {
   const [author, setAuthor] = useState(
     auth ? auth.user?.access_token : "Guest"
   ); // Default to "Guest" if no current user
+  console.log(author);
 
   const handleReviewChange = (event: any) => {
     setNewReview(event.target.value);
@@ -120,6 +121,8 @@ const CourtDetails: React.FC = () => {
 
   useEffect(() => {
     const currentDate = getFormattedDate();
+    console.log(currentDate);
+
     const fetchTimeSlots = async () => {
       try {
         const response = await axios({
