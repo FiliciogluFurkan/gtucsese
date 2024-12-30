@@ -110,7 +110,7 @@ const CourtDetails: React.FC = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${auth.user?.access_token}`,
+           
           },
         }
       );
@@ -205,7 +205,7 @@ const CourtDetails: React.FC = () => {
                       overflowWrap: "break-word",
                     }}
                   >
-                    Aydın Halısaha
+                    {facility.name}
                   </Box>
 
                   {/* Yıldız ve İnceleme */}
@@ -233,7 +233,7 @@ const CourtDetails: React.FC = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      4.0 (20 Reviews)
+                      {facility.rating} ({facility.reviewCount})
                     </Box>
                   </Box>
 
@@ -262,7 +262,7 @@ const CourtDetails: React.FC = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      1234 Example Street, City
+                      {facility.location}
                     </Box>
                   </Box>
                 </Box>
@@ -300,18 +300,7 @@ const CourtDetails: React.FC = () => {
                       fontSize: { xl: "0.9rem", lg: "0.8rem", xs: "0.7rem" },
                     }}
                   >
-                    Tesisimiz Mustafa Kemal Paşa metrobüs durağının yanında
-                    bulunmaktadır. Detaylı konum bilgisine sayfanın en altındaki
-                    "Konum" bölümünden ulaşabilirsiniz.
-                    <br />
-                    <br />
-                    Rezervasyon yapmak için sayfanın en üst kısmındaki
-                    "Rezervasyon Yap" bölümünden istediğiniz tarih ve saati
-                    seçip rezervasyon oluşturabilirsiniz. Lorem Ipsum is simply
-                    dummy text of the printing and typesetting industry.
-                    <br />
-                    <br />
-                    Lorem Ipsum has been the industry's standard dummy text.
+                   {facility.description}
                   </Typography>
 
                   {/* Tesis Özellikleri */}

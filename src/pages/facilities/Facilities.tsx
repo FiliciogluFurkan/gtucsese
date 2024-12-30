@@ -19,6 +19,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
 
+
 const cities = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya"];
 
 const districts = ["Kadıköy", "Çankaya", "Bornova", "Osmangazi", "Muratpaşa"];
@@ -32,13 +33,18 @@ const Facilities = (): JSX.Element => {
   const [listType, setListType] = useState<"cities" | "districts" | null>(null);
   const [sortOption, setSortOption] = useState("recommended");
   /* const apiUrl = import.meta.env.VITE_API_URL; */
+  const apiUrl = "https://server.sahancepte.com";
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFields = async () => {
       try {
-        const response = await axios.get(
-          "https://db.aymoose.devodev.online/fields"
+        const response = await axios.get(        
+          apiUrl + "/api/v1/facilities",
+          {
+            
+          }
         );
         setFacilities(response.data);
         console.log(response.data);
@@ -299,9 +305,12 @@ const Facilities = (): JSX.Element => {
       </div>
 
       <Box sx={{ display: "flex", flexDirection: "row" }}>
+        
         <Box sx={{ width: "60%", overflowY: "auto", height: "100vh", flex: 1 }}>
+        
           <div className="footballcourts-list-fields-section">
-            {facilities.map((facility) => {
+            {facilities.map((facility) => { 
+              
               const handleMouseEnter = () => {
                 setSelectedLocation(facility.location);
               };
@@ -322,8 +331,9 @@ const Facilities = (): JSX.Element => {
               );
             })}
           </div>
+          
         </Box>
-
+        
         <Box sx={{ width: "38rem", height: "100vh", flexShrink: 0 }}>
           <iframe
             className="football-courts-location-map-iframe"

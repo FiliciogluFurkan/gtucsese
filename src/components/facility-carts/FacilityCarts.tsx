@@ -99,7 +99,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           {facility.name.toString()}
         </Box>
 
-        <hr
+     {/*   <hr
           style={{
             width: "4rem",
             border: "none",
@@ -108,36 +108,26 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
             padding: 0,
             height: 0,
           }}
-        />
-
-        {facility.amenities.map((amenity: string, index: number) => (
-          <Box
-            key={index}
-            sx={{
-              height: "1.5rem",
-              fontSize: "0.8rem",
-              color: "rgb(107, 114, 128)",
-              marginBottom: "0.5rem",
+        /> */}
+      <Box          
+            sx={{display: "flex" , flexDirection: "row"}}        
+          >         
+        {facility.amenities.map((amenity: { name: string; id: string; imageUrl: string }, ) => (
+          
+            <img
+            src={amenity.imageUrl || "/images/placeholder.png"}
+            style={{
+              width: "2rem",
+              height: "2rem",
+              borderRadius: "0.3rem",
+              objectFit: "cover",
+              margin: "0.3rem 0.3rem 0.3rem 0.3rem",
             }}
-          >
-            {amenity}
-          </Box>
+          />
         ))}
-        <Box
-          sx={{
-            height: "3rem",
-            fontSize: "0.9rem",
-            color: "rgb(107, 114, 128)",
-            overflow: "hidden",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            marginBottom: "1rem",
-          }}
-        >
-          {facility.description}
-        </Box>
-
+      </Box>       
+        
+        {/*
         <hr
           style={{
             width: "4rem",
@@ -147,7 +137,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
             padding: 0,
             height: 0,
           }}
-        />
+        />*/}
 
         <Box
           sx={{
