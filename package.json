@@ -6,8 +6,10 @@
   "scripts": {
     "start": "vite",
     "start:dev": "vite --mode dev",
+    "start dev": "vite --mode dev",
     "build": "tsc -b && vite build",
     "build:dev": "tsc -b && vite build --mode dev",
+    "build dev": "tsc -b && vite build --mode dev",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -16,6 +18,7 @@
     "@emotion/styled": "^11.14.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@mui/base": "^5.0.0-beta.68",
     "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.10",
     "@mui/x-date-pickers": "^7.23.2",

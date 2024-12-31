@@ -1,73 +1,90 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Button, Input, Stack } from "@mui/material";
+import { useState, useEffect } from "react";
 import frieren from "src/assets/images/Profil/frieren.png";
-
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Account } from "@/interfaces/Account";
+import { useSendAuthenticatedRequest } from "@/services/AuthorizedRequests";
+import { useSnackbar } from "@/components/snackbar/Snackbar";
+import { formatInstantAsDate } from "@/services/TimeServices";
 
-const MyProfile = () => {
-  const genders = ["Erkek", "Kadın"];
+const MyProfile = (): JSX.Element => {
+  const { sendAuthenticatedRequest } = useSendAuthenticatedRequest();
+  const [account, setAccount] = useState<Account | null>(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [mailAddress, setMailAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
 
-  const cities = ["İstanbul", "Ankara", "Sakarya", "Burdur", "Ordu", "Sivas"];
+  const showSnackbar = useSnackbar();
 
-  const ages = [
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31",
-    "32",
-    "33",
-    "34",
-    "35",
-    "36",
-    "37",
-    "38",
-    "39",
-    "40",
-  ];
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  // Her seçim için ayrı durum değişkenleri
-  const [gender, setGender] = React.useState<string>("");
-  const [city, setCity] = React.useState<string>("");
-  const [age, setAge] = React.useState<string>("");
-
-  // Her seçim için ayrı handleChange işlevleri
-  const handleGenderChange = (event: SelectChangeEvent<string>) => {
-    setGender(event.target.value);
+  const fetchAccount = async () => {
+    try {
+      const response = await sendAuthenticatedRequest({
+        url: apiUrl + "/api/v1/account/my",
+        method: "get",
+      });
+      console.log(response.data);
+      setFirstName(response.data.firstName);
+      setLastName(response.data.lastName);
+      setMailAddress(response.data.email);
+      setPhoneNumber(response.data.phoneNumber);
+      const date = formatInstantAsDate(response.data.createdAt);
+      setCreatedAt(date);
+      setAccount(response.data);
+    } catch (err) {
+      console.error("Failed to fetch account:", err);
+    }
   };
 
-  const handleCityChange = (event: SelectChangeEvent<string>) => {
-    setCity(event.target.value);
+  const updateAccount = async () => {
+    try {
+      const response = await sendAuthenticatedRequest({
+        url: apiUrl + "/api/v1/accounts/my",
+        method: "patch",
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+        },
+      });
+      if (response.status !== 200) {
+        throw new Error("Failed to update account");
+      }
+      showSnackbar("Hesap bilgileriniz başarıyla güncellendi.", "success");
+      fetchAccount();
+    } catch (err) {
+      console.error("Failed to update account:", err);
+      showSnackbar(
+        "Hesap bilgileriniz güncellenirken bir hata oluştu.",
+        "error"
+      );
+    }
   };
 
-  const handleAgeChange = (event: SelectChangeEvent<string>) => {
-    setAge(event.target.value);
-  };
+  useEffect(() => {
+    fetchAccount();
+  }, []);
 
   return (
-    <div style={{ width: "100%" }}>
-      <Box sx={{ 
-        display: "flex", 
-        paddingTop: "6rem", 
-        flexDirection: "row",
-        width: "100%" 
-      }}>
+    <Stack
+      sx={{
+        height: "calc(100vh - 13rem)",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          paddingTop: "6rem",
+          flexDirection: "row",
+          width: "100%",
+        }}
+      >
         <Box>
           <img
-            src={frieren}
+            src={account?.profilePicture || frieren}
             alt="your image"
             style={{ width: "auto", height: "auto", objectFit: "cover" }}
           />
@@ -82,7 +99,7 @@ const MyProfile = () => {
               color: "#000000",
             }}
           >
-            Ömer Faruk ORUÇ
+            {account?.firstName + " " + account?.lastName}
           </Box>
 
           <Box
@@ -93,7 +110,7 @@ const MyProfile = () => {
               color: "#000000",
             }}
           >
-            omerfarukorc@gmail.com
+            {account?.email}
           </Box>
         </Box>
 
@@ -126,304 +143,291 @@ const MyProfile = () => {
         </Box>
       </Box>
 
-      <Box sx={{ 
-        flexDirection: "column", 
-        paddingTop: "5rem",
-        width: "100%"
-      }}>
-        <Box>
-          <Box sx={{ 
-            display: "flex", 
+      <Stack
+        gap={4}
+        sx={{
+          flexDirection: "column",
+          paddingTop: "5rem",
+          width: "100%",
+        }}
+      >
+        <Stack
+          sx={{
+            display: "flex",
             flexDirection: "row",
             width: "100%",
-            gap: "2rem"
-          }}>
-            <Box component="input" 
-              placeholder="İsim Soyisim" 
-              sx={{ 
-                width: "100%",
-                backgroundColor: "#F8F8F8",
-                borderRadius: "4px",
-                padding: "1rem 1rem",
-                fontSize: "1rem",
-                color: "#333",
-                border: "none",
-                outline: "none",
-                fontFamily: "Arial, sans-serif",
-                "&::placeholder": {
-                  color: "#9CA3AF",
-                },
-                "&:hover": {
-                  backgroundColor: "#F3F4F6",
-                },
-                "&:focus": {
-                  backgroundColor: "#FFFFFF",
-                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
-                },
-              }}
-            />
-            <Box component="input" 
-              placeholder="Kullanıcı Adı" 
-              sx={{ 
-                width: "100%",
-                backgroundColor: "#F8F8F8",
-                borderRadius: "4px",
-                padding: "1rem 1rem",
-                marginLeft: "0",
-                fontSize: "1rem",
-                color: "#333",
-                border: "none",
-                outline: "none",
-                fontFamily: "Arial, sans-serif",
-                "&::placeholder": {
-                  color: "#9CA3AF",
-                },
-                "&:hover": {
-                  backgroundColor: "#F3F4F6",
-                },
-                "&:focus": {
-                  backgroundColor: "#FFFFFF",
-                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
-                },
-              }}
-            />
-          </Box>
-        </Box>
-
-        <Box sx={{ 
-          display: "flex", 
-          flexDirection: "row",
-          width: "100%",
-          gap: "2rem",
-          marginTop: "3rem"
-        }}>
-          <FormControl sx={{ 
-            width: "100%",
-            backgroundColor: "#F8F8F8"
-          }}>
-            <InputLabel
-              sx={{
-                fontWeight: "400",
-                fontFamily: "Poppins",
-                fontSize: "0.9rem",
-                color: "#9CA3AF",
-              }}
-              id="gender-select-label"
-            >
-              Cinsiyet
-            </InputLabel>
-            <Select
-              labelId="gender-select-label"
-              id="gender-select"
-              value={gender}
-              onChange={handleGenderChange}
-              input={<OutlinedInput label="Cinsiyet" />}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#FFFFFF",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                    borderRadius: "8px",
-                  },
-                },
-              }}
-              sx={{
-                fontFamily: "Poppins",
-                fontSize: "1rem",
-                fontWeight: "400",
-                color: "#3D3838",
-              }}
-            >
-              {genders.map((genderOption) => (
-                <MenuItem
-                  key={genderOption}
-                  value={genderOption}
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontSize: "1rem",
-                    fontWeight: "400",
-                    color: "#3D3838",
-                  }}
-                >
-                  {genderOption}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl sx={{ 
-            width: "100%",
-            backgroundColor: "#F8F8F8",
-            marginLeft: "0",
-          }}>
-            <InputLabel
-              sx={{
-                fontWeight: "400",
-                fontFamily: "Poppins",
-                fontSize: "0.9rem",
-                color: "#9CA3AF",
-              }}
-              id="city-select-label"
-            >
-              Şehir Seçiniz
-            </InputLabel>
-            <Select
-              labelId="city-select-label"
-              id="city-select"
-              value={city}
-              onChange={handleCityChange}
-              input={<OutlinedInput label="Şehir Seçiniz" />}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#FFFFFF",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                    borderRadius: "8px",
-                  },
-                },
-              }}
-              sx={{
-                fontFamily: "Poppins",
-                fontSize: "1rem",
-                fontWeight: "400",
-                color: "#3D3838",
-              }}
-            >
-              {cities.map((cityOption) => (
-                <MenuItem
-                  key={cityOption}
-                  value={cityOption}
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontSize: "1rem",
-                    fontWeight: "400",
-                    color: "#3D3838",
-                  }}
-                >
-                  {cityOption}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-
-        <Box sx={{ 
-          display: "flex", 
-          flexDirection: "row",
-          width: "100%",
-          gap: "2rem",
-          marginTop: "3rem"
-        }}>
-          <FormControl sx={{ 
-            width: "100%",
-            backgroundColor: "#F8F8F8"
-          }}>
-            <InputLabel
-              sx={{
-                fontWeight: "400",
-                fontFamily: "Poppins",
-                fontSize: "0.9rem",
-                color: "#9CA3AF",
-              }}
-              id="age-select-label"
-            >
-              Yaşınızı Seçiniz
-            </InputLabel>
-            <Select
-              labelId="age-select-label"
-              id="age-select"
-              value={age}
-              onChange={handleAgeChange}
-              input={<OutlinedInput label="Yaşınızı Seçiniz" />}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#FFFFFF",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                    borderRadius: "8px",
-                  },
-                },
-              }}
-              sx={{
-                fontFamily: "Poppins",
-                fontSize: "1rem",
-                fontWeight: "400",
-                color: "#3D3838",
-              }}
-            >
-              {ages.map((ageOption) => (
-                <MenuItem
-                  key={ageOption}
-                  value={ageOption}
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontSize: "1rem",
-                    fontWeight: "400",
-                    color: "#3D3838",
-                  }}
-                >
-                  {ageOption}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <Box component="input" 
-            placeholder="ornekemail@gmail.com" 
-            sx={{ 
-              width: "100%",
-              backgroundColor: "#F8F8F8",
-              borderRadius: "4px",
-              padding: "1rem 1rem",
-              marginLeft: "0",
-              fontSize: "1rem",
-              color: "#333",
-              border: "none",
-              outline: "none",
-              fontFamily: "Arial, sans-serif",
-              "&::placeholder": {
-                color: "#9CA3AF",
-              },
-              "&:hover": {
-                backgroundColor: "#F3F4F6",
-              },
-              "&:focus": {
-                backgroundColor: "#FFFFFF",
-                boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
-              },
+            gap: "2rem",
+          }}
+        >
+          <Stack
+            sx={{
+              width: "50%",
             }}
-          />
-        </Box>
-      </Box>
+          >
+            <InputLabel
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "1rem",
+                color: "#000000",
+                fontWeight: 500,
+              }}
+            >
+              İsim
+            </InputLabel>
+            <Input
+              value={firstName}
+              placeholder="İsim"
+              onChange={(e) => setFirstName(e.target.value)}
+              sx={{
+                width: "100%",
+                marginTop: "0.5rem",
+                backgroundColor: "#F8F8F8",
+                borderRadius: "1rem",
+                padding: "1rem 1rem",
+                fontSize: "1rem",
+                color: "#333",
+                border: "none",
+                outline: "none",
+                textDecoration: "none",
+                borderBottom: "none",
+                boxShadow: "none",
+                ":before": {
+                  borderBottom: "none",
+                },
+                fontFamily: "Arial, sans-serif",
+                "&::placeholder": {
+                  color: "#9CA3AF",
+                },
+                "&:hover": {
+                  backgroundColor: "#F3F4F6",
+                },
+                "&:focus": {
+                  backgroundColor: "#FFFFFF",
+                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
+                },
+              }}
+            />
+          </Stack>
+          <Stack
+            sx={{
+              width: "50%",
+            }}
+          >
+            <InputLabel
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "1rem",
+                color: "#000000",
+                fontWeight: 500,
+              }}
+            >
+              Soyisim
+            </InputLabel>
+            <Input
+              value={lastName}
+              placeholder="Soyisim"
+              onChange={(e) => setLastName(e.target.value)}
+              sx={{
+                width: "100%",
+                marginTop: "0.5rem",
+                backgroundColor: "#F8F8F8",
+                borderRadius: "1rem",
+                padding: "1rem 1rem",
+                fontSize: "1rem",
+                color: "#333",
+                border: "none",
+                outline: "none",
+                textDecoration: "none",
+                borderBottom: "none",
+                boxShadow: "none",
+                ":before": {
+                  borderBottom: "none",
+                },
+                fontFamily: "Arial, sans-serif",
+                "&::placeholder": {
+                  color: "#9CA3AF",
+                },
+                "&:hover": {
+                  backgroundColor: "#F3F4F6",
+                },
+                "&:focus": {
+                  backgroundColor: "#FFFFFF",
+                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
+                },
+              }}
+            />
+          </Stack>
+        </Stack>
+
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            gap: "2rem",
+          }}
+        >
+          <Stack
+            sx={{
+              width: "50%",
+            }}
+          >
+            <InputLabel
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "1rem",
+                color: "#000000",
+                fontWeight: 500,
+              }}
+            >
+              Mail Adresi
+            </InputLabel>
+            <Input
+              value={mailAddress}
+              placeholder="Mail Adresi"
+              onChange={(e) => setMailAddress(e.target.value)}
+              sx={{
+                width: "100%",
+                marginTop: "0.5rem",
+                backgroundColor: "#F8F8F8",
+                borderRadius: "1rem",
+                padding: "1rem 1rem",
+                fontSize: "1rem",
+                color: "#333",
+                border: "none",
+                outline: "none",
+                textDecoration: "none",
+                borderBottom: "none",
+                boxShadow: "none",
+                ":before": {
+                  borderBottom: "none",
+                  content: "none",
+                },
+
+                ":disabled": {
+                  backgroundColor: "#F8F8F8",
+                  color: "#333",
+                  border: "none",
+                  outline: "none",
+                  textDecoration: "none",
+                  borderBottom: "none",
+                  boxShadow: "none",
+                  ":before": {
+                    borderBottom: "none",
+                  },
+                },
+                fontFamily: "Arial, sans-serif",
+                "&::placeholder": {
+                  color: "#9CA3AF",
+                },
+              }}
+              disabled
+            />
+          </Stack>
+          <Stack
+            sx={{
+              width: "50%",
+            }}
+          >
+            <InputLabel
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: "1rem",
+                color: "#000000",
+                fontWeight: 500,
+              }}
+            >
+              Telefon Numarası
+            </InputLabel>
+            <Input
+              value={phoneNumber}
+              placeholder="Telefon Numarası"
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              sx={{
+                width: "100%",
+                marginTop: "0.5rem",
+                backgroundColor: "#F8F8F8",
+                borderRadius: "1rem",
+                padding: "1rem 1rem",
+                fontSize: "1rem",
+                color: "#333",
+                border: "none",
+                outline: "none",
+                textDecoration: "none",
+                borderBottom: "none",
+                boxShadow: "none",
+                ":before": {
+                  borderBottom: "none",
+                },
+                fontFamily: "Arial, sans-serif",
+                "&::placeholder": {
+                  color: "#9CA3AF",
+                },
+                "&:hover": {
+                  backgroundColor: "#F3F4F6",
+                },
+                "&:focus": {
+                  backgroundColor: "#FFFFFF",
+                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
+                },
+              }}
+            />
+          </Stack>
+        </Stack>
+      </Stack>
 
       <Box
+        sx={{
+          marginTop: "1.2rem",
+          marginLeft: "0.5rem",
+          color: "rgb(100,100,100)",
+          fontSize: "0.8rem",
+          fontWeight: 400,
+          fontFamily: "Poppins",
+        }}
+      >
+        Hesap Oluşturulma Tarihi: {createdAt}
+      </Box>
+      <Box
+        width={"100%"}
         sx={{
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#36C191",
+          marginTop: { xs: "3rem", sm: "5rem" },
+
           color: "#ffffff",
-          paddingTop: "0.5rem",
-          paddingBottom: "0.5rem",
-          paddingLeft: "6rem",
-          paddingRight: "6rem",
           borderRadius: "8px",
           fontSize: "1rem",
           fontWeight: "400",
           fontFamily: "Poppins",
           cursor: "pointer",
           transition: "background-color 0.3s ease",
-          marginLeft: "27.5rem",
-          marginTop: "6rem",
-          marginBottom: "4rem",
-          "&:hover": {
-            backgroundColor: "#57AE76",
-          },
         }}
       >
-        Değişiklikleri Kaydet
+        <Button
+          variant="contained"
+          onClick={updateAccount}
+          sx={{
+            backgroundColor: "#36C191",
+            color: "#ffffff",
+            borderRadius: "8px",
+            fontSize: "1rem",
+            fontWeight: "400",
+
+            paddingX: { xs: "1rem", md: "2rem" },
+            fontFamily: "Poppins",
+            cursor: "pointer",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "#57AE76",
+            },
+          }}
+        >
+          Değişiklikleri Kaydet
+        </Button>
       </Box>
-    </div>
+    </Stack>
   );
 };
 

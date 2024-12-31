@@ -51,3 +51,17 @@ export const prettyHour = (hour: number) => {
     return hour + ":" + "00";
   }
 };
+
+export const formatInstantAsDate = (isoString: string): string => {
+  const date = new Date(isoString);
+
+  // Create date formatter for Turkey
+  const formatter = new Intl.DateTimeFormat("tr-TR", {
+    timeZone: "Europe/Istanbul",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+
+  return formatter.format(date).replace(/\./g, "-");
+};

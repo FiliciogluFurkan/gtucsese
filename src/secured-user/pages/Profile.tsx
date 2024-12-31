@@ -1,51 +1,34 @@
-import { Box, Typography } from "@mui/material";
-import { useState } from "react";
-import MyProfile from "src/secured-user/components/my/MyProfile";
-import MyReservations from "src/secured-user/components/my/MyReservations";
-import MyFavorites from "src/secured-user/components/my/MyFavorites";
-import MyComments from "src/secured-user/components/my/MyComments";
+import { Box, Link } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
-const Profile = () => {
-  const [activeTab, setActiveTab] = useState("profil");
+interface ProfileProps {
+  children: React.ReactNode;
+}
 
-  // Tıklama handler'ı
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-  };
-
-  const renderComponent = () => {
-    switch (activeTab) {
-      case "profil":
-        return <MyProfile />;
-      case "rezervasyonlar":
-        return <MyReservations />;
-      case "degerlendirmeler":
-        return <MyComments />;
-      case "favoriler":
-        return <MyFavorites />;
-    }
-  };
+const Profile = ({ children }: ProfileProps): JSX.Element => {
+  const location = useLocation();
 
   return (
     <div
       style={{
-        paddingTop: "8rem",
+        paddingTop: "4.5rem",
         display: "flex",
         justifyContent: "center",
-        width: "100vw"
+        width: "100vw",
       }}
     >
-      <Box sx={{ 
-        width: "100%",
-        maxWidth: "1400px",
-        paddingX: "2rem",
-        paddingBottom: "8rem" 
-      }}>
+      <Box
+        sx={{
+          paddingTop: "4.5rem",
+          width: { lg: "80%", sm: "100%" },
+        }}
+      >
         <Box
           sx={{
             width: "100%",
             backgroundColor: "#D9F3EABA",
             padding: "1rem",
+            height: { sm: "3rem", md: "4rem" },
             borderRadius: "8px",
             display: "flex",
             flexDirection: "row",
@@ -54,14 +37,15 @@ const Profile = () => {
             gap: "1rem",
           }}
         >
-          <Typography
+          <Link
+            href="/profilim"
             variant="h6"
-            onClick={() => handleTabClick("profil")}
             sx={{
               fontSize: "1.1rem",
               fontWeight: 500,
+              textDecoration: "none",
               fontFamily: "Barlow",
-              color: activeTab === "profil" ? "#2E7D32" : "#000000",
+              color: location.pathname === "/profilim" ? "#2E7D32" : "#000000",
               cursor: "pointer",
               transition: "color 0.3s ease",
               "&:hover": {
@@ -70,15 +54,19 @@ const Profile = () => {
             }}
           >
             Profil Düzenle
-          </Typography>
-          <Typography
+          </Link>
+          <Link
+            href="/rezervasyonlarim"
             variant="h6"
-            onClick={() => handleTabClick("rezervasyonlar")}
             sx={{
               fontSize: "1.1rem",
               fontWeight: 500,
               fontFamily: "Barlow",
-              color: activeTab === "rezervasyonlar" ? "#2E7D32" : "#000000",
+              textDecoration: "none",
+              color:
+                location.pathname === "/rezervasyonlarim"
+                  ? "#2E7D32"
+                  : "#000000",
               cursor: "pointer",
               transition: "color 0.3s ease",
               "&:hover": {
@@ -87,15 +75,19 @@ const Profile = () => {
             }}
           >
             Rezervasyonlarım
-          </Typography>
-          <Typography
+          </Link>
+          <Link
+            href="/degerlendirmelerim"
             variant="h6"
-            onClick={() => handleTabClick("degerlendirmeler")}
             sx={{
               fontSize: "1.1rem",
+              textDecoration: "none",
               fontWeight: 500,
               fontFamily: "Barlow",
-              color: activeTab === "degerlendirmeler" ? "#2E7D32" : "#000000",
+              color:
+                location.pathname === "/degerlendirmelerim"
+                  ? "#2E7D32"
+                  : "#000000",
               cursor: "pointer",
               transition: "color 0.3s ease",
               "&:hover": {
@@ -104,15 +96,17 @@ const Profile = () => {
             }}
           >
             Değerlendirmelerim
-          </Typography>
-          <Typography
+          </Link>
+          <Link
+            href="/favorilerim"
             variant="h6"
-            onClick={() => handleTabClick("favoriler")}
             sx={{
+              textDecoration: "none",
               fontSize: "1.1rem",
               fontWeight: 500,
               fontFamily: "Barlow",
-              color: activeTab === "favoriler" ? "#2E7D32" : "#000000",
+              color:
+                location.pathname === "/favorilerim" ? "#2E7D32" : "#000000",
               cursor: "pointer",
               transition: "color 0.3s ease",
               "&:hover": {
@@ -121,10 +115,10 @@ const Profile = () => {
             }}
           >
             Favorilerim
-          </Typography>
+          </Link>
         </Box>
 
-        {renderComponent()}
+        {children}
       </Box>
     </div>
   );

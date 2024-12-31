@@ -1,14 +1,21 @@
 import { useAuth } from "react-oidc-context";
 import { useState, useEffect } from "react";
+import { DecodedJwt } from "@/services/DecodedJwt";
 
 export const useAuthWithRoles = () => {
   const { user, signinRedirect, signoutRedirect, isAuthenticated } = useAuth();
+  const [decodedJwt, setDecodedJwt] = useState<DecodedJwt | null>(null);
+  const [id, setId] = useState<string | null>(null);
   const [roles, setRoles] = useState<string[]>([]);
 
   // Fetch roles from the OIDC user object or any other source
   useEffect(() => {
     if (user) {
-      const userRoles = (user.profile?.roles as string[]) || ["random-role"]; // Assuming roles are in the profile object
+      const token = user.access_token;
+      const decoded = new DecodedJwt(token);
+      setDecodedJwt(decoded);
+      setId(decoded.getPayload().sub);
+      const userRoles = decoded.getPayload().realm_access.roles as string[];
       setRoles(userRoles);
     }
   }, [user]);
@@ -18,8 +25,10 @@ export const useAuthWithRoles = () => {
 
   return {
     user,
+    id,
     isAuthenticated,
     roles,
+    decodedJwt,
     hasRole,
     signinRedirect,
     signoutRedirect,
