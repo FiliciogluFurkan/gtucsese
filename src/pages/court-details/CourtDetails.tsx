@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import "@/pages/court-details/CourtDetails.css";
-import stars from "src/assets/images/CourtDetails/stars.png";
 import locationSymbol from "src/assets/images/CourtDetails/locationSymbol.png";
 import cafe from "src/assets/images/CourtDetails/cafe.png";
 import court1 from "src/assets/images/CourtDetails/court1.png";
