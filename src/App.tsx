@@ -20,7 +20,7 @@ import DashboardTemplate from "src/admin/pages/DashboardTemplate";
 import SecuredRoute from "src/components/secured-route/SecuredRoute";
 import MyProfile from "./secured-user/components/my/MyProfile";
 import MyReservations from "./secured-user/components/my/MyReservations";
-import MyComments from "./secured-user/components/my/MyComments";
+import MyComments from "./secured-user/components/my/MyReviews";
 import MyFavorites from "./secured-user/components/my/MyFavorites";
 import { SnackbarProvider } from "./components/snackbar/Snackbar";
 
