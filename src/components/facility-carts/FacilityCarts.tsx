@@ -40,7 +40,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
   return (
     <Box
       sx={{
-        width: "32rem",
+        width: "86rem",
         height: "14rem",
         marginLeft: "2rem",
         display: "flex",
@@ -73,7 +73,8 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
         <Box
           sx={{
             height: "1.5rem",
-            fontSize: "0.8rem",
+            fontSize: "0.9rem",
+            fontFamily: "Roboto",
             color: "rgb(107, 114, 128)",
             marginBottom: "0.5rem",
           }}
@@ -88,7 +89,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           sx={{
             height: "2rem",
             fontSize: "1.4rem",
-            fontWeight: 500,
+            fontWeight: 400,
             fontFamily: "Roboto",
             color: "rgb(55, 65, 81)",
             marginBottom: "1rem",
@@ -117,8 +118,8 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
             <img
             src={amenity.imageUrl || "/images/placeholder.png"}
             style={{
-              width: "2rem",
-              height: "2rem",
+              width: "1.5rem",
+              height: "1.5rem",
               borderRadius: "0.3rem",
               objectFit: "cover",
               margin: "0.3rem 0.3rem 0.3rem 0.3rem",
@@ -150,6 +151,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           <Box
             sx={{
               fontSize: "1rem",
+              fontFamily: "Roboto",
               color: "rgb(55, 65, 81)",
               width: "2rem",
               textAlign: "center",
@@ -183,6 +185,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
               fontSize: "0.9rem",
               color: "rgb(55, 65, 81)",
               width: "7rem",
+              fontFamily: "Roboto",
             }}
           >
             {facility.reviewCount} Yorum
@@ -192,13 +195,14 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
 
       <Box
         sx={{
-          width: "7rem",
+         
+          width: "15rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "1rem",
-          marginLeft: "16rem",
-          marginRight: "1rem",
+          marginLeft: "1rem",
+          marginRight: "auto",
         }}
       >
         <Box
@@ -256,9 +260,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           </Box>
         </Box>
       </Box>
-      <div>
-        <hr />
-      </div>
+      
     </Box>
   );
 };

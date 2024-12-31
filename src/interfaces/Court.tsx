@@ -8,7 +8,7 @@ export interface Court {
   numberOfReviews: number;
   phoneNumber: string;
   amenities: string[];
-  capacity: string;
+  capacity: number;
   price: number;
   city: string;
   district: string;
