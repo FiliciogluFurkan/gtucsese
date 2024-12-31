@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import frieren from "src/assets/images/Profil/frieren.png";
 import InputLabel from "@mui/material/InputLabel";
 import { Account } from "@/interfaces/Account";
-import { useSendAuthenticatedRequest } from "@/services/AuthorizedRequests";
+import { useSendAuthenticatedRequest } from "@/services/UseSendAuthenticatedRequest";
 import { useSnackbar } from "@/components/snackbar/Snackbar";
 import { formatInstantAsDate } from "@/services/TimeServices";
+import { useCustomTheme } from "@/themes/Theme";
 
 const MyProfile = (): JSX.Element => {
+  const theme = useCustomTheme();
   const { sendAuthenticatedRequest } = useSendAuthenticatedRequest();
   const [account, setAccount] = useState<Account | null>(null);
   const [firstName, setFirstName] = useState("");
@@ -169,6 +171,7 @@ const MyProfile = (): JSX.Element => {
                 fontFamily: "Poppins",
                 fontSize: "1rem",
                 color: "#000000",
+
                 fontWeight: 500,
               }}
             >
@@ -181,12 +184,13 @@ const MyProfile = (): JSX.Element => {
               sx={{
                 width: "100%",
                 marginTop: "0.5rem",
-                backgroundColor: "#F8F8F8",
-                borderRadius: "1rem",
-                padding: "1rem 1rem",
+                backgroundColor: theme.palette.background.primary.w253,
+                border: "none",
+                borderRadius: "0.5rem",
+                padding: "0.6rem",
                 fontSize: "1rem",
                 color: "#333",
-                border: "none",
+
                 outline: "none",
                 textDecoration: "none",
                 borderBottom: "none",
@@ -230,9 +234,9 @@ const MyProfile = (): JSX.Element => {
               sx={{
                 width: "100%",
                 marginTop: "0.5rem",
-                backgroundColor: "#F8F8F8",
-                borderRadius: "1rem",
-                padding: "1rem 1rem",
+                backgroundColor: theme.palette.background.primary.w253,
+                borderRadius: "0.5rem",
+                padding: "0.6rem",
                 fontSize: "1rem",
                 color: "#333",
                 border: "none",
@@ -289,9 +293,9 @@ const MyProfile = (): JSX.Element => {
               sx={{
                 width: "100%",
                 marginTop: "0.5rem",
-                backgroundColor: "#F8F8F8",
-                borderRadius: "1rem",
-                padding: "1rem 1rem",
+                backgroundColor: theme.palette.background.primary.w253,
+                borderRadius: "0.5rem",
+                padding: "0.6rem",
                 fontSize: "1rem",
                 color: "#333",
                 border: "none",
@@ -346,12 +350,12 @@ const MyProfile = (): JSX.Element => {
               sx={{
                 width: "100%",
                 marginTop: "0.5rem",
-                backgroundColor: "#F8F8F8",
-                borderRadius: "1rem",
-                padding: "1rem 1rem",
+                backgroundColor: theme.palette.background.primary.w253,
+                border: "none",
+                borderRadius: "0.5rem",
+                padding: "0.6rem",
                 fontSize: "1rem",
                 color: "#333",
-                border: "none",
                 outline: "none",
                 textDecoration: "none",
                 borderBottom: "none",

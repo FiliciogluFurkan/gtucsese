@@ -1,3 +1,4 @@
+import { useCustomTheme } from "@/themes/Theme";
 import { Box, Link } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
@@ -7,11 +8,14 @@ interface ProfileProps {
 
 const Profile = ({ children }: ProfileProps): JSX.Element => {
   const location = useLocation();
+  const theme = useCustomTheme();
 
   return (
     <div
       style={{
+        minHeight: "100vh",
         paddingTop: "4.5rem",
+        backgroundColor: theme.palette.background.primary.w250,
         display: "flex",
         justifyContent: "center",
         width: "100vw",
@@ -20,13 +24,15 @@ const Profile = ({ children }: ProfileProps): JSX.Element => {
       <Box
         sx={{
           paddingTop: "4.5rem",
+          paddingBottom: "4.5rem",
+
           width: { lg: "80%", sm: "100%" },
         }}
       >
         <Box
           sx={{
             width: "100%",
-            backgroundColor: "#D9F3EABA",
+            backgroundColor: "rgba(217, 243, 234, 0.73)",
             padding: "1rem",
             height: { sm: "3rem", md: "4rem" },
             borderRadius: "8px",

@@ -55,13 +55,27 @@ export const prettyHour = (hour: number) => {
 export const formatInstantAsDate = (isoString: string): string => {
   const date = new Date(isoString);
 
-  // Create date formatter for Turkey
-  const formatter = new Intl.DateTimeFormat("tr-TR", {
-    timeZone: "Europe/Istanbul",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  // Array of month names in Turkish
+  const turkishMonths = [
+    "Ocak",
+    "Şubat",
+    "Mart",
+    "Nisan",
+    "Mayıs",
+    "Haziran",
+    "Temmuz",
+    "Ağustos",
+    "Eylül",
+    "Ekim",
+    "Kasım",
+    "Aralık",
+  ];
 
-  return formatter.format(date).replace(/\./g, "-");
+  // Get the day, month index, and year
+  const day = date.getDate();
+  const month = turkishMonths[date.getMonth()]; // Month is 0-based
+  const year = date.getFullYear();
+
+  // Format the date as "12 Mayıs 2024"
+  return `${day} ${month} ${year}`;
 };
