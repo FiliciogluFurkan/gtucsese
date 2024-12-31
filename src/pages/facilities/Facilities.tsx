@@ -48,7 +48,9 @@ const Facilities = (): JSX.Element => {
         );
         setFacilities(response.data);
         console.log(response.data);
-      } catch (err) {}
+      } catch (err) {
+        
+      }
     };
     fetchFields();
     console.log(facilities);

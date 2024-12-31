@@ -8,17 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import "@/pages/court-details/CourtDetails.css";
-import stars from "src/assets/images/CourtDetails/stars.png";
 import locationSymbol from "src/assets/images/CourtDetails/locationSymbol.png";
 import cafe from "src/assets/images/CourtDetails/cafe.png";
-import market from "src/assets/images/CourtDetails/market.png";
-import otopark from "src/assets/images/CourtDetails/otopark.png";
-import pool from "src/assets/images/CourtDetails/pool.png";
-import wifi from "src/assets/images/CourtDetails/wifi.png";
-import wind from "src/assets/images/CourtDetails/wind.png";
 import court1 from "src/assets/images/CourtDetails/court1.png";
-import court2 from "src/assets/images/CourtDetails/court2.png";
-import court3 from "src/assets/images/CourtDetails/court3.png";
 import bag from "src/assets/images/CourtDetails/bag.png";
 import like from "src/assets/images/CourtDetails/like.png";
 import ball from "src/assets/images/CourtDetails/ball.png";
@@ -32,11 +24,14 @@ import { useCustomTheme } from "@/themes/Theme";
 import { getFormattedDate } from "@/services/TimeServices";
 import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
+import { Court } from "@/interfaces/Court";
 import { useAuthWithRoles } from "@/hooks/UseAuthWithRoles";
+import { formatInstantAsDate } from '../../services/TimeServices';
 
 const CourtDetails: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const [facility, setFacility] = useState<Facility | null>();
+  const [courts , setCourts] = useState<Court[]>([]);
   const theme = useCustomTheme();
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -66,21 +61,53 @@ const CourtDetails: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    
+    if (facility != null) {
+      const fetchCourts = async () => {
+        try {
+          const response = await axios.get(apiUrl + '/api/v1/courts', {
+            params: { facility: uuid }, 
+          });
+
+          console.log("Courts fetched successfully:", response.data);
+          if(response.status === 200){
+            const courts = response.data as Court[];
+            console.log("200 alındı");
+            setCourts(courts);
+          }
+          
+        } catch (error) {
+          console.error("Error fetching courts:", error);
+        }
+        
+      };
+      
+      fetchCourts();
+      
+      console.log("courts: printed")
+      console.log(courts); 
+    }
+  }, [facility]); 
+
+  useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await axios({
           method: "GET",
-          url: apiUrl + "/api/v1/reviews",
+          url: apiUrl + "/api/v1/reviews", 
+          params: {
+            facility: uuid, 
+          },
         });
-        // Handle the response here
+        
         console.log(response.data);
         setReviews(response.data);
       } catch (error) {
-        // Handle any errors here
+       
         console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchReviews();
   }, []);
 
@@ -95,27 +122,38 @@ const CourtDetails: React.FC = () => {
     setNewReview(event.target.value);
   };
 
-  const handleSubmit = () => {
-    // Handle the submission logic (e.g., adding review to state or sending it to an API)
+  const handleSubmit = async () => {
     if (newReview) {
       console.log("Author:", auth.user?.access_token);
-      axios.post(
-        apiUrl + "/api/v1/reviews",
-        {
-          userId: auth.user?.profile.sub,
-          facilityId: facility?.id,
-          title: "New Review",
-          content: newReview,
-          rating: rating,
-        },
-        {
-          headers: {},
-        }
-      );
-
-      setNewReview(""); // Reset the input field
+      console.log("Facility ID:", facility?.id);
+      console.log("User ID:", auth.user?.profile.sub);
+      console.log("New Review:", newReview);
+      try {
+        const response = await axios.post(
+          apiUrl + "/api/v1/reviews",
+          {
+            userId: auth.user?.profile.sub,
+            facilityId: facility?.id,
+            title: "New Review",
+            content: newReview,
+            rating: rating,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user?.access_token}`,
+            },
+          }
+        );
+  
+        console.log("Review submitted successfully:", response.data);
+        setNewReview(""); // Reset the input field
+      } catch (error) {
+        // Log the error
+        console.error("Error fetching data:", error);
+      }
     }
   };
+  
 
   useEffect(() => {
     const currentDate = getFormattedDate();
@@ -171,7 +209,7 @@ const CourtDetails: React.FC = () => {
 
                 flexDirection: { md: "column", xs: "column" },
                 gap: "1rem",
-                width: { xl: "100%", lg: "100%", sm: "100%" },
+                width: { xl: "70%", lg: "60%", sm: "60%" },
               }}
             >
               {/* Sol Box */}
@@ -215,15 +253,7 @@ const CourtDetails: React.FC = () => {
                       alignItems: "center",
                     }}
                   >
-                    <img
-                      src={stars}
-                      alt="stars"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
+                    
                     <Box
                       sx={{
                         color: "#4F4F4F",
@@ -334,96 +364,37 @@ const CourtDetails: React.FC = () => {
                         color: "#4F4F4F",
                       }}
                     >
-                      <Box
+                      <Box          
+                          sx={{display: "flex" , flexDirection: "row"}}        
+                        >         
+                      {facility.amenities.map((amenity: { name: string; id: string; imageUrl: string }, ) => (
+                        <Box
                         sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "0.75rem",
-                        }}
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "1rem",
+                        marginLeft: "1rem"
+                      }}
                       >
                         <img
-                          src={wifi}
-                          alt="wifi"
+                          src={amenity.imageUrl || "/images/placeholder.png"}
                           style={{
-                            width: "auto",
-                            height: "auto",
+                            width: "1.5rem",
+                            height: "1.5rem",
+                            borderRadius: "0.3rem",
                             objectFit: "cover",
+                            margin: "0.3rem 0.3rem 0.3rem 0.3rem",
                           }}
                         />
-                        <Typography variant="body2">Free Wifi</Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "0.75rem",
-                        }}
-                      >
-                        <img
-                          src={wind}
-                          alt="wind"
-                          style={{
-                            width: "auto",
-                            height: "auto",
-                            objectFit: "cover",
-                          }}
-                        />
-                        <Typography variant="body2">Duş</Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "0.75rem",
-                        }}
-                      >
-                        <img
-                          src={otopark}
-                          alt="otopark"
-                          style={{
-                            width: "auto",
-                            height: "auto",
-                            objectFit: "cover",
-                          }}
-                        />
-                        <Typography variant="body2">Park Alanı</Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "0.75rem",
-                        }}
-                      >
-                        <img
-                          src={market}
-                          alt="market"
-                          style={{
-                            width: "auto",
-                            height: "auto",
-                            objectFit: "cover",
-                          }}
-                        />
-                        <Typography variant="body2">Dükkan</Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "0.75rem",
-                        }}
-                      >
-                        <img
-                          src={pool}
-                          alt="pool"
-                          style={{
-                            width: "auto",
-                            height: "auto",
-                            objectFit: "cover",
-                          }}
-                        />
-                        <Typography variant="body2">Yüzme Sahası</Typography>
-                      </Box>
+                        <Typography variant="body2">{amenity.name}</Typography>
+                      </Box>  
+                          
+                      ))}
+                    </Box>  
+                      
+                      
+                      
+                      
                       <Box
                         sx={{
                           display: "flex",
@@ -447,386 +418,136 @@ const CourtDetails: React.FC = () => {
                 </Box>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+              {courts.map((court : Court) => (
+                <Box
+                sx={{
+                  border: "1px solid #E0E0E0",
+                  borderRadius: "8px",
+                  backgroundColor: "#FFFFFF",
+                  marginTop: "2rem",
+                  minHeight: "300px",
+                  width: "32%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                <img
+                  src={court1}
+                  alt="court1"
+                  style={{
+                    width: "100%",
+                    height: "50%",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    paddingBottom: "1rem",
+                  }}
+                />
+
+                <Typography
+                  sx={{
+                    fontSize: "1.1rem",
+                    fontWeight: "500",
+                    fontFamily: "Inter",
+                    colo: "#1A1A1A",
+                    paddingLeft: "1rem",
+                  }}
+                >
+                  {court.name}
+                </Typography>
+
                 <Box
                   sx={{
-                    border: "1px solid #E0E0E0",
-                    borderRadius: "8px",
-                    backgroundColor: "#FFFFFF",
-                    marginTop: "2rem",
-                    minHeight: "300px",
-                    width: "32%",
                     display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                    paddingLeft: "1rem",
                   }}
                 >
                   <img
-                    src={court1}
-                    alt="court1"
+                    src={bag}
+                    alt="bag"
                     style={{
-                      width: "100%",
-                      height: "50%",
+                      width: "auto",
+                      height: "auto",
                       objectFit: "cover",
-                      borderRadius: "8px",
-                      paddingBottom: "1rem",
                     }}
                   />
-
                   <Typography
                     sx={{
-                      fontSize: "1.1rem",
-                      fontWeight: "500",
+                      fontSize: "0.9rem",
+                      fontWeight: "400",
                       fontFamily: "Inter",
-                      colo: "#1A1A1A",
-                      paddingLeft: "1rem",
+                      color: "#4F4F4F",
                     }}
+                    variant="body2"
                   >
-                    Saha 1
+                    {court.capacity / 2}+{court.capacity / 2}
                   </Typography>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={bag}
-                      alt="bag"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      6+6
-                    </Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={ball}
-                      alt="ball"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      25 x 40 metre
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={like}
-                      alt="like"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      1500 TL/Saat
-                    </Typography>
-                  </Box>
                 </Box>
 
                 <Box
                   sx={{
-                    border: "1px solid #E0E0E0",
-                    borderRadius: "8px",
-                    backgroundColor: "#FFFFFF",
-                    marginTop: "2rem",
-                    minHeight: "300px",
-                    width: "32%",
                     display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                    paddingLeft: "1rem",
                   }}
                 >
                   <img
-                    src={court2}
-                    alt="court2"
+                    src={ball}
+                    alt="ball"
                     style={{
-                      width: "100%",
-                      height: "50%",
+                      width: "auto",
+                      height: "auto",
                       objectFit: "cover",
-                      borderRadius: "8px",
-                      paddingBottom: "1rem",
                     }}
                   />
-
                   <Typography
                     sx={{
-                      fontSize: "1.1rem",
-                      fontWeight: "500",
+                      fontSize: "0.9rem",
+                      fontWeight: "400",
                       fontFamily: "Inter",
-                      colo: "#1A1A1A",
-                      paddingLeft: "1rem",
+                      color: "#4F4F4F",
                     }}
+                    variant="body2"
                   >
-                    Saha 2
+                    {court.width} x {court.height} metre
                   </Typography>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={bag}
-                      alt="bag"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      7+7
-                    </Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={ball}
-                      alt="ball"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      30 x 50 metre
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={like}
-                      alt="like"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      2000 TL/Saat
-                    </Typography>
-                  </Box>
                 </Box>
-
                 <Box
                   sx={{
-                    border: "1px solid #E0E0E0",
-                    borderRadius: "8px",
-                    backgroundColor: "#FFFFFF",
-                    marginTop: "2rem",
-                    minHeight: "300px",
-                    width: "32%",
                     display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
+                    flexDirection: "row",
+                    gap: "0.75rem",
+                    paddingLeft: "1rem",
                   }}
                 >
                   <img
-                    src={court3}
-                    alt="court3"
+                    src={like}
+                    alt="like"
                     style={{
-                      width: "100%",
-                      height: "50%",
+                      width: "auto",
+                      height: "auto",
                       objectFit: "cover",
-                      borderRadius: "8px",
-                      paddingBottom: "1rem",
                     }}
                   />
-
                   <Typography
                     sx={{
-                      fontSize: "1.1rem",
-                      fontWeight: "500",
+                      fontSize: "0.9rem",
+                      fontWeight: "400",
                       fontFamily: "Inter",
-                      colo: "#1A1A1A",
-                      paddingLeft: "1rem",
+                      color: "#4F4F4F",
                     }}
+                    variant="body2"
                   >
-                    Saha 3
+                    {court.price} TL/Saat
                   </Typography>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={bag}
-                      alt="bag"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      7+7
-                    </Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={ball}
-                      alt="ball"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      30 x 50 metre
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "0.75rem",
-                      paddingLeft: "1rem",
-                    }}
-                  >
-                    <img
-                      src={like}
-                      alt="like"
-                      style={{
-                        width: "auto",
-                        height: "auto",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        fontSize: "0.9rem",
-                        fontWeight: "400",
-                        fontFamily: "Inter",
-                        color: "#4F4F4F",
-                      }}
-                      variant="body2"
-                    >
-                      1700 TL/Saat
-                    </Typography>
-                  </Box>
                 </Box>
+              </Box>       
+                          
+                      ))}
+                
               </Box>
               <Box
                 sx={{
@@ -888,7 +609,7 @@ const CourtDetails: React.FC = () => {
                           color: "#000000",
                         }}
                       >
-                        {review.createdAt}
+                        {formatInstantAsDate(review.createdAt)}
                       </Box>
                     </Box>
                     <Box
@@ -946,7 +667,7 @@ const CourtDetails: React.FC = () => {
                   <TextField
                     variant="outlined"
                     fullWidth
-                    value="Mehmet Hayrullah Özkul"
+                    value= {auth ? auth.decodedJwt?.getPayload().name as string : "Anonim Kullanıcı"}
                     onChange={(e) => setAuthor(e.target.value)}
                     sx={{
                       marginBottom: "1rem",
@@ -992,7 +713,9 @@ const CourtDetails: React.FC = () => {
                     <Rating
                       name="rating"
                       value={rating}
-                      onChange={handleRatingChange}
+                      onChange={(e,newValue)=>{handleRatingChange(newValue); console.log(e);}
+                        
+                      }
                       sx={{
                         "& .MuiRating-iconFilled": {
                           color: "#4CAF50",
@@ -1029,7 +752,7 @@ const CourtDetails: React.FC = () => {
                 display: "flex",
                 marginTop: { xl: "10rem", lg: "8rem", sm: "7rem" },
                 flexDirection: "column",
-                width: { xs: "100%", sm: "40%" },
+                width: { md: "30%", sm: "40%" },
               }}
             >
               <Button
