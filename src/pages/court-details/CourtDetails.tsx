@@ -32,7 +32,7 @@ import { useCustomTheme } from "@/themes/Theme";
 import { getFormattedDate } from "@/services/TimeServices";
 import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
-import { useAuthWithRoles } from "@/hooks/Auth";
+import { useAuthWithRoles } from "@/hooks/UseAuthWithRoles";
 
 const CourtDetails: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -109,9 +109,7 @@ const CourtDetails: React.FC = () => {
           rating: rating,
         },
         {
-          headers: {
-           
-          },
+          headers: {},
         }
       );
 
@@ -300,7 +298,7 @@ const CourtDetails: React.FC = () => {
                       fontSize: { xl: "0.9rem", lg: "0.8rem", xs: "0.7rem" },
                     }}
                   >
-                   {facility.description}
+                    {facility.description}
                   </Typography>
 
                   {/* Tesis Özellikleri */}

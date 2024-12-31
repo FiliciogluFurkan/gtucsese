@@ -7,7 +7,7 @@ import Analyzes from "src/admin/components/analyzes/Analyzes";
 import Comments from "@/admin/components/comments/Reviews";
 import AdminAccount from "src/admin/components/account/Account";
 import Calendar from "src/admin/components/calendar/Calendar";
-import { useAuthWithRoles } from "@/hooks/Auth";
+import { useAuthWithRoles } from "@/hooks/UseAuthWithRoles";
 import ManageFacility from "src/admin/components/manage-facility/ManageFacility";
 
 const DashboardTemplate = (): JSX.Element => {
@@ -19,7 +19,7 @@ const DashboardTemplate = (): JSX.Element => {
       case "Admin Paneli":
         return <Dashboard />;
       case "Tesis Detayları":
-        return < ManageFacility/>;
+        return <ManageFacility />;
       case "Rezervasyon Durumu":
         return <MyCourts />;
       case "Rezervasyonlarım":
@@ -55,7 +55,7 @@ const DashboardTemplate = (): JSX.Element => {
               borderLeft: "0.3rem solid",
               color: "#464255",
               marginTop: "2rem",
-              marginBottom: "1rem"
+              marginBottom: "1rem",
             }}
           >
             SAHAN CEPTE
@@ -132,7 +132,8 @@ const DashboardTemplate = (): JSX.Element => {
               display: "flex",
               flexDirection: "row",
               padding: "0.5rem 1rem",
-              color: selectedTitle === "Rezervasyon Durumu" ? "#00B074" : "#464255",
+              color:
+                selectedTitle === "Rezervasyon Durumu" ? "#00B074" : "#464255",
               borderRadius: "4px",
               marginTop: "0.8rem",
               "&:hover": {

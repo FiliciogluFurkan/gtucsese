@@ -1,9 +1,9 @@
+import { useAuthWithRoles } from "@/hooks/UseAuthWithRoles";
 import axios from "axios";
 import { useState } from "react";
-import { useAuth } from "react-oidc-context";
 
 export const useSendAuthenticatedRequest = () => {
-  const auth = useAuth();
+  const auth = useAuthWithRoles();
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -33,16 +33,18 @@ export const useSendAuthenticatedRequest = () => {
     try {
       const response = await axios({ method, url, data, ...config });
 
-      if (
-        response.status < 200 ||
-        response.status >= 300 ||
-        (response.data && response.data.status !== 200)
-      ) {
-        throw new Error(response.data?.message || "Request failed");
+      // Modified error checking logic
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error(
+          response.data?.message ||
+            "Request failed with status code " + response.status
+        );
       }
 
+      // Remove the check for response.data.status === 200
       return response;
     } catch (error) {
+      setError(error as Error);
       throw error;
     } finally {
       setLoading(false);

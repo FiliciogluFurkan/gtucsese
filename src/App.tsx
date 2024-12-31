@@ -18,6 +18,11 @@ import Profil from "src/secured-user/pages/Profile";
 import Reservations from "src/pages/reservations/Reservations";
 import DashboardTemplate from "src/admin/pages/DashboardTemplate";
 import SecuredRoute from "src/components/secured-route/SecuredRoute";
+import MyProfile from "./secured-user/components/my/MyProfile";
+import MyReservations from "./secured-user/components/my/MyReservations";
+import MyComments from "./secured-user/components/my/MyComments";
+import MyFavorites from "./secured-user/components/my/MyFavorites";
+import { SnackbarProvider } from "./components/snackbar/Snackbar";
 
 const App = (): JSX.Element => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -29,29 +34,51 @@ const App = (): JSX.Element => {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Header
-        currentTheme={isDarkMode ? "dark" : "light"}
-        toggleTheme={toggleTheme}
-      />
-      <Routes>
-        <Route path="/" Component={HomePage}></Route>
-        <Route path="/about" Component={About}></Route>
-        <Route path="/facilities" Component={FootballCourts}></Route>
-        <Route path="/createteam" Component={CreateTeam}></Route>
-        <Route path="/help" Component={Support}></Route>
-        <Route path="/facility/:uuid" Component={CourtDetails} />
-        <Route path="/login" Component={Login}></Route>
-        <Route path="/signup" Component={SignUp}></Route>
-        <Route path="/password-reset" Component={PasswordReset}></Route>
+      <SnackbarProvider>
+        <Header
+          currentTheme={isDarkMode ? "dark" : "light"}
+          toggleTheme={toggleTheme}
+        />
+        <Routes>
+          <Route path="/" Component={HomePage}></Route>
+          <Route path="/about" Component={About}></Route>
+          <Route path="/facilities" Component={FootballCourts}></Route>
+          <Route path="/createteam" Component={CreateTeam}></Route>
+          <Route path="/help" Component={Support}></Route>
+          <Route path="/facility/:uuid" Component={CourtDetails} />
+          <Route path="/login" Component={Login}></Route>
+          <Route path="/signup" Component={SignUp}></Route>
+          <Route path="/password-reset" Component={PasswordReset}></Route>
 
-        <Route path="/reservations" Component={Reservations}></Route>
+          <Route path="/reservations" Component={Reservations}></Route>
 
-        <Route element={<SecuredRoute />}>
-          <Route path="/profile" element={<Profil />} />
-          <Route path="/admin/dashboard" element={<DashboardTemplate />} />
-        </Route>
-      </Routes>
-      {location.pathname !== "/dd" && <Footer />}
+          <Route element={<SecuredRoute />}>
+            <Route
+              path="/profilim"
+              element={<Profil children={<MyProfile />} />}
+            />
+            <Route
+              path="/rezervasyonlarim"
+              element={<Profil children={<MyReservations />} />}
+            />
+            <Route
+              path="/degerlendirmelerim"
+              element={<Profil children={<MyComments />} />}
+            />
+            <Route
+              path="/favorilerim"
+              element={<Profil children={<MyFavorites />} />}
+            />
+
+            <Route path="/admin/dashboard" element={<DashboardTemplate />} />
+          </Route>
+        </Routes>
+        {location.pathname !== "/profilim" &&
+          location.pathname !== "/rezervasyonlarim" &&
+          location.pathname !== "/degerlendirmelerim" &&
+          location.pathname !== "/favorilerim" &&
+          location.pathname !== "/admin/dashboard" && <Footer />}
+      </SnackbarProvider>
     </ThemeProvider>
   );
 };
