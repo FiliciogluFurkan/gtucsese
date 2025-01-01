@@ -13,7 +13,7 @@ import {
   IconButton,
   Grow,
 } from "@mui/material";
-import { tr } from "date-fns/locale";
+import 'dayjs/locale/tr';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PersonIcon from "@mui/icons-material/Person";
@@ -236,7 +236,7 @@ const ReservationSystem = (): JSX.Element => {
                 Tarih Seç
               </Button>
             }
-            locale={tr}
+            locale="tr-TR"
           />
         </Box>
       </Box>

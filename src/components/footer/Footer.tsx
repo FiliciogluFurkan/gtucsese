@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
             >
               {[
                 { text: 'Hakkımızda', href: '/about' },
-                { text: 'İletişim', href: '/contact' },
+                { text: 'İletişim', href: '/help' },
                 { text: 'Gizlilik Politikası', href: '/privacy' },
                 { text: 'Kullanım Şartları', href: '/terms' },
                 { text: 'Sıkça Sorulan Sorular', href: '/faq' }

@@ -57,8 +57,31 @@ const CourtDetails: React.FC = () => {
     fetchFacility();
   }, []);
 
-  const makeReservation = (courtId: string, date: Date, hour: number) => {
-    console.log("Making reservation for", courtId, date, hour);
+  const makeReservation = async (courtId: string, date: Date, hour: number) => {
+    try {
+      const response = await axios.post(
+        `${apiUrl}/api/v1/reservations`,
+        {
+          courtId,
+          date,
+          hour,
+          userId: auth.user?.profile.sub
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user?.access_token}`,
+          },
+        }
+      );
+      
+      if (response.status === 201) {
+        // Başarılı rezervasyon
+        alert('Rezervasyon başarıyla oluşturuldu!');
+      }
+    } catch (error) {
+      console.error('Rezervasyon oluşturulurken hata:', error);
+      alert('Rezervasyon oluşturulurken bir hata oluştu.');
+    }
   };
 
   useEffect(() => {
