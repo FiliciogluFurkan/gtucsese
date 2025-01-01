@@ -35,11 +35,10 @@ export const generateTimeSlots = (courtName: string): TimeSlot[] => {
   return slots;
 };
 
-export const getFormattedDate = (): string => {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0"); // Add leading zero if day is single digit
-  const month = String(today.getMonth() + 1).padStart(2, "0"); // getMonth() returns 0-based month (January is 0)
-  const year = today.getFullYear();
+export const getFormattedDate = (date: Date): string => {
+  const day = String(date.getDate()).padStart(2, "0"); // Add leading zero if day is single digit
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() returns 0-based month (January is 0)
+  const year = date.getFullYear();
 
   return `${day}-${month}-${year}`;
 };
@@ -78,4 +77,31 @@ export const formatInstantAsDate = (isoString: string): string => {
 
   // Format the date as "12 Mayıs 2024"
   return `${day} ${month} ${year}`;
+};
+
+export const getDayString = (day: number): string => {
+  if (day === -1) {
+    return "Cumartesi";
+  } else if (day === 7) {
+    return "Pazar";
+  }
+
+  switch (day) {
+    case 0:
+      return "Pazar";
+    case 1:
+      return "Pazartesi";
+    case 2:
+      return "Salı";
+    case 3:
+      return "Çarşamba";
+    case 4:
+      return "Perşembe";
+    case 5:
+      return "Cuma";
+    case 6:
+      return "Cumartesi";
+    default:
+      return "Unknown";
+  }
 };
