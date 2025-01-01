@@ -1,12 +1,77 @@
-import { Box, Button, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+} from "@mui/material";
 import { TimeSlotStatus } from "@/interfaces/TimeSlot";
-import { prettyHour } from "@/services/TimeServices";
+import {
+  formatInstantAsDate,
+  getDayString,
+  getFormattedDate,
+  prettyHour,
+} from "@/services/TimeServices";
+import { useEffect, useState } from "react";
+import { Court } from "@/interfaces/Court";
+import axios from "axios";
 
 interface ReservationProps {
-  slots: TimeSlotStatus[];
+  courts: Court[];
+  handleMakeReservation: (courtId: string, date: Date, hour: number) => void;
 }
 
-const Reservation = ({ slots }: ReservationProps): JSX.Element => {
+const Reservation = ({
+  courts,
+  handleMakeReservation,
+}: ReservationProps): JSX.Element => {
+  const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const fetchTimeSlots = async (date: string, courtId: string) => {
+    try {
+      const response = await axios({
+        method: "GET",
+        url: `${apiUrl}/api/v1/reservations/slots/${courtId}/${date}`,
+      });
+      // Handle the response here
+      console.log(response.data["timeSlots"]);
+      setTimeSlots(response.data["timeSlots"]);
+    } catch (error) {
+      // Handle any errors here
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const [selectedCourt, setSelectedCourt] = useState<Court | null>(() => {
+    if (courts.length > 0) {
+      return courts[0];
+    }
+    console.log("No courts found", courts);
+    return null;
+  });
+  const [selectedDate, setSelectedDate] = useState<Date>(() => {
+    const date = new Date();
+    date.setHours(date.getHours() + 3);
+    return date;
+  });
+
+  useEffect(() => {
+    if (courts.length > 0) {
+      setSelectedCourt(courts[0]);
+    }
+  }, [courts]);
+
+  useEffect(() => {
+    const currentDate = getFormattedDate(selectedDate);
+    fetchTimeSlots(currentDate, selectedCourt?.id || "");
+  }, [selectedCourt]);
+
+  if (courts.length === 0 || selectedCourt === null) {
+    return <Box sx={{ color: "black" }}>Saha bulunamadı.</Box>;
+  }
   return (
     <Stack
       sx={{
@@ -27,31 +92,72 @@ const Reservation = ({ slots }: ReservationProps): JSX.Element => {
         }}
         width="100%"
       >
-        <Box
+        <Stack
           sx={{
             fontFamily: "Poppins",
+            justifyContent: "flex-start",
+            width: "100%",
             fontSize: { lg: "1.4rem", xs: "0.8rem" },
           }}
         >
-          17 Aralık 2024
+          <FormControl
+            sx={{
+              zIndex: 10,
+              position: "relative",
+            }}
+            fullWidth
+          >
+            <InputLabel id="court-select-label">Saha</InputLabel>
+            <Select
+              labelId="court-select-label"
+              id="court-select"
+              MenuProps={{
+                style: { zIndex: 35001 },
+              }}
+              value={selectedCourt?.name}
+              label="Age"
+              defaultValue={selectedCourt ? selectedCourt.name : "UCAN"}
+              onChange={(event) => {
+                setSelectedCourt(
+                  courts.find((court) => court.name === event.target.value) ||
+                    null
+                );
+              }}
+            >
+              {courts.map((court, index) => (
+                <MenuItem key={index} value={court.name}>
+                  {court.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Stack>
+        <Box
+          sx={{
+            fontFamily: "Poppins",
+            marginTop: "1rem",
+            fontSize: { lg: "1.4rem", xs: "0.8rem" },
+          }}
+        >
+          {formatInstantAsDate(selectedDate.toISOString())}
         </Box>
         <Stack
           sx={{
             marginTop: { xl: "1.3rem", xs: "1.5rem" },
-            fontSize: { xl: "1.1rem", md: "1rem", xs: "1rem" },
+            fontSize: { xl: "0.9rem", md: "0.8rem", xs: "0.8rem" },
           }}
           width="100%"
           flexDirection="row"
           justifyContent="space-between"
         >
           <Box marginTop="0.2rem" width="30%" textAlign="left">
-            Pazar
+            {getDayString(selectedDate.getUTCDay() - 1)}
           </Box>
           <Box width="40%" fontWeight={600} textAlign="center">
-            Pazartesi
+            {getDayString(selectedDate.getUTCDay())}
           </Box>
           <Box marginTop="0.2rem" width="30%" textAlign="right">
-            Salı
+            {getDayString(selectedDate.getUTCDay() + 1)}
           </Box>
         </Stack>
       </Stack>
@@ -61,7 +167,7 @@ const Reservation = ({ slots }: ReservationProps): JSX.Element => {
         flexWrap="wrap"
         sx={{ marginTop: { xl: "0.1rem", xs: "0.1rem" } }}
       >
-        {slots.map((slot, index) => (
+        {timeSlots.map((slot, index) => (
           <TimeSlot key={index} status={slot} hour={index} />
         ))}
       </Stack>
@@ -109,7 +215,8 @@ const TimeSlot = ({ status, hour }: TimeSlotProps): JSX.Element => {
           }}
           disabled
         >
-          <Box>Zamanı Geçmiş</Box>
+          <Box>{prettyHour(hour)}</Box>
+          <Box>{prettyHour(hour + 1)}</Box>
         </Button>
       );
     } else if (status === TimeSlotStatus.CLOSED) {
@@ -133,7 +240,8 @@ const TimeSlot = ({ status, hour }: TimeSlotProps): JSX.Element => {
           }}
           disabled
         >
-          <Box>Kapalı</Box>
+          <Box>{prettyHour(hour)}</Box>
+          <Box>{prettyHour(hour + 1)}</Box>
         </Button>
       );
     }
