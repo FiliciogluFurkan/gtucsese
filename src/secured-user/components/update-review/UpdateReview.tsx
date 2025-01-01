@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Box, Modal, Typography, Rating, Button, Stack } from "@mui/material";
 import { Review } from "@/interfaces/Review";
 import { useCustomTheme } from "@/themes/Theme";
-import { Court } from "@/interfaces/Court";
 
 interface UpdateReviewProps {
   isOpen: boolean;

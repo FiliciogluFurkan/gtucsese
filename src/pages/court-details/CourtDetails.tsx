@@ -19,9 +19,7 @@ import Map from "src/assets/images/CourtDetails/Map.png";
 import { Review } from "@/interfaces/Review";
 import axios from "axios";
 import Reservation from "@/components/reservation/Reservation";
-import { TimeSlotStatus } from "@/interfaces/TimeSlot";
 import { useCustomTheme } from "@/themes/Theme";
-import { getFormattedDate } from "@/services/TimeServices";
 import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
 import { Court } from "@/interfaces/Court";
@@ -38,7 +36,6 @@ const CourtDetails: React.FC = () => {
   const handleRatingChange = (newValue: any) => {
     setRating(newValue); // Update rating state
   };
-  const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {

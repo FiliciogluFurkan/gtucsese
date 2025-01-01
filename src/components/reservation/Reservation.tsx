@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   FormControl,
-  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -30,6 +29,26 @@ const Reservation = ({
 }: ReservationProps): JSX.Element => {
   const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<number>(-1);
+  const [selectedCourt, setSelectedCourt] = useState<Court | null>(() => {
+    if (courts.length > 0) {
+      return courts[0];
+    }
+    console.log("No courts found", courts);
+    return null;
+  });
+  const [selectedDate] = useState<Date>(() => {
+    const date = new Date();
+    date.setHours(date.getHours() + 3);
+    return date;
+  });
+
+  useEffect(() => {
+    if (courts.length > 0) {
+      setSelectedCourt(courts[0]);
+    }
+  }, [courts]);
+
   const fetchTimeSlots = async (date: string, courtId: string) => {
     try {
       const response = await axios({
@@ -44,25 +63,6 @@ const Reservation = ({
       console.error("Error fetching data:", error);
     }
   };
-
-  const [selectedCourt, setSelectedCourt] = useState<Court | null>(() => {
-    if (courts.length > 0) {
-      return courts[0];
-    }
-    console.log("No courts found", courts);
-    return null;
-  });
-  const [selectedDate, setSelectedDate] = useState<Date>(() => {
-    const date = new Date();
-    date.setHours(date.getHours() + 3);
-    return date;
-  });
-
-  useEffect(() => {
-    if (courts.length > 0) {
-      setSelectedCourt(courts[0]);
-    }
-  }, [courts]);
 
   useEffect(() => {
     const currentDate = getFormattedDate(selectedDate);
@@ -168,11 +168,23 @@ const Reservation = ({
         sx={{ marginTop: { xl: "0.1rem", xs: "0.1rem" } }}
       >
         {timeSlots.map((slot, index) => (
-          <TimeSlot key={index} status={slot} hour={index} />
+          <TimeSlot
+            isSelected={selectedTimeSlot === index}
+            key={index}
+            status={slot}
+            setSelectedTimeSlot={setSelectedTimeSlot}
+            hour={index}
+          />
         ))}
       </Stack>
       {/* Footer */}
-      <Stack></Stack>
+      <Stack>
+        <Button
+          onClick={() => {
+            handleMakeReservation(selectedCourt.id, selectedDate, 1);
+          }}
+        ></Button>
+      </Stack>
     </Stack>
   );
 };
@@ -180,9 +192,16 @@ const Reservation = ({
 interface TimeSlotProps {
   status: TimeSlotStatus;
   hour: number;
+  isSelected: boolean;
+  setSelectedTimeSlot: (index: number) => void;
 }
 
-const TimeSlot = ({ status, hour }: TimeSlotProps): JSX.Element => {
+const TimeSlot = ({
+  status,
+  hour,
+  isSelected,
+  setSelectedTimeSlot,
+}: TimeSlotProps): JSX.Element => {
   const selectBackground = (status: TimeSlotStatus) => {
     switch (status) {
       case TimeSlotStatus.PAST_TIME:
@@ -192,7 +211,31 @@ const TimeSlot = ({ status, hour }: TimeSlotProps): JSX.Element => {
     }
   };
 
-  {
+  if (isSelected) {
+    return (
+      <Button
+        sx={{
+          width: { lg: "23%", xs: "23%" },
+          margin: { lg: "1%", xs: "1%" },
+          color: "rgb(0,0,0)",
+          display: "flex",
+          flexDirection: "column",
+          fontWeight: "300",
+          borderRadius: "0.2rem",
+          justifyContent: "center",
+          alignItems: "center",
+          minWidth: "0 !important",
+          height: { xl: "3.6rem", lg: "3.6rem", xs: "3rem" },
+          fontSize: { xl: "0.8rem", xs: "0.8rem" },
+          paddingY: { xs: "0.6rem" },
+          bgcolor: "rgb(0,0,0)",
+        }}
+      >
+        <Box>{prettyHour(hour)}</Box>
+        <Box>{prettyHour(hour + 1)}</Box>
+      </Button>
+    );
+  } else {
     // TODO: Implement a better swith case solution for this
     if (status === TimeSlotStatus.PAST_TIME) {
       return (
@@ -247,6 +290,9 @@ const TimeSlot = ({ status, hour }: TimeSlotProps): JSX.Element => {
     }
     return (
       <Button
+        onClick={() => {
+          setSelectedTimeSlot(hour);
+        }}
         sx={{
           width: { lg: "23%", xs: "23%" },
           margin: { lg: "1%", xs: "1%" },
