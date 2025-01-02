@@ -145,7 +145,7 @@ const Header = ({ currentTheme }: HeaderProps): JSX.Element => {
                       });
                 }}
               >
-                {auth.user ? "Çıkış Yap" : "Bize Katıl"}
+                {auth.isAuthenticated ? "Çıkış Yap" : "Bize Katıl"}
               </Button>
             </div>
 
@@ -166,14 +166,14 @@ const Header = ({ currentTheme }: HeaderProps): JSX.Element => {
               }}
               className="header-tab-text"
               onClick={() => {
-                auth.user
+                auth.isAuthenticated
                   ? (window.location.href = "/profilim")
                   : auth.signinRedirect({ redirect_uri: window.location.href });
               }}
             >
-              {auth.user ? "Profilim" : "Giriş Yap"}
+              {auth.isAuthenticated ? "Profilim" : "Giriş Yap"}
             </Button>
-            {auth.user && (
+            {auth.isAuthenticated && (
               <Button
                 color="inherit"
                 sx={{

@@ -7,6 +7,7 @@ interface UpdateReviewProps {
   isOpen: boolean;
   onClose: () => void;
   review: Review | null;
+
   onSubmit: (updatedReview: Partial<Review>) => void;
 }
 

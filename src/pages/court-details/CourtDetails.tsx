@@ -19,26 +19,23 @@ import Map from "src/assets/images/CourtDetails/Map.png";
 import { Review } from "@/interfaces/Review";
 import axios from "axios";
 import Reservation from "@/components/reservation/Reservation";
-import { TimeSlotStatus } from "@/interfaces/TimeSlot";
 import { useCustomTheme } from "@/themes/Theme";
-import { getFormattedDate } from "@/services/TimeServices";
 import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
 import { Court } from "@/interfaces/Court";
 import { useAuthWithRoles } from "@/hooks/UseAuthWithRoles";
-import { formatInstantAsDate } from '../../services/TimeServices';
+import { formatInstantAsDate } from "../../services/TimeServices";
 
 const CourtDetails: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const [facility, setFacility] = useState<Facility | null>();
-  const [courts , setCourts] = useState<Court[]>([]);
+  const [courts, setCourts] = useState<Court[]>([]);
   const theme = useCustomTheme();
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState<Review[]>([]);
   const handleRatingChange = (newValue: any) => {
     setRating(newValue); // Update rating state
   };
-  const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -60,53 +57,53 @@ const CourtDetails: React.FC = () => {
     fetchFacility();
   }, []);
 
+  const makeReservation = (courtId: string, date: Date, hour: number) => {
+    console.log("Making reservation for", courtId, date, hour);
+  };
+
   useEffect(() => {
-    
     if (facility != null) {
       const fetchCourts = async () => {
         try {
-          const response = await axios.get(apiUrl + '/api/v1/courts', {
-            params: { facility: uuid }, 
+          const response = await axios.get(apiUrl + "/api/v1/courts", {
+            params: { facility: uuid },
           });
 
           console.log("Courts fetched successfully:", response.data);
-          if(response.status === 200){
+          if (response.status === 200) {
             const courts = response.data as Court[];
             console.log("200 alındı");
             setCourts(courts);
           }
-          
         } catch (error) {
           console.error("Error fetching courts:", error);
         }
-        
       };
-      
+
       fetchCourts();
       
       
     }
-  }, [facility]); 
+  }, [facility]);
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await axios({
           method: "GET",
-          url: apiUrl + "/api/v1/reviews", 
+          url: apiUrl + "/api/v1/reviews",
           params: {
-            facility: uuid, 
+            facility: uuid,
           },
         });
-        
+
         console.log(response.data);
         setReviews(response.data);
       } catch (error) {
-       
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchReviews();
   }, []);
 
@@ -148,31 +145,6 @@ const CourtDetails: React.FC = () => {
       }
     }
   };
-  
-
-  useEffect(() => {
-    const currentDate = getFormattedDate();
-    console.log(currentDate);
-
-    const fetchTimeSlots = async () => {
-      try {
-        const response = await axios({
-          method: "GET",
-          url:
-            apiUrl +
-            "/api/v1/reservations/slots/d0128d4c-a92d-44ef-b587-d87c5571f4d4/" +
-            "17-12-2024",
-        });
-        // Handle the response here
-        console.log(response.data["timeSlots"]);
-        setTimeSlots(response.data["timeSlots"]);
-      } catch (error) {
-        // Handle any errors here
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchTimeSlots();
-  }, []);
 
   return (
     <Box
@@ -188,8 +160,8 @@ const CourtDetails: React.FC = () => {
     >
       <Box
         sx={{
-          width: { xl: "70%", lg: "80%", sm: "80%", xs: "90%" },
-          maxWidth: { xl: "70%", lg: "80%", sm: "80%", xs: "90%" },
+          width: { xl: "75%", lg: "80%", sm: "80%", xs: "90%" },
+          maxWidth: { xl: "75%", lg: "80%", sm: "80%", xs: "90%" },
           marginTop: { xl: "3rem", lg: "2rem" },
           gap: { xl: "2rem", lg: "1.5rem", xs: "1rem" },
           display: "flex",
@@ -204,7 +176,7 @@ const CourtDetails: React.FC = () => {
 
                 flexDirection: { md: "column", xs: "column" },
                 gap: "1rem",
-                width: { xl: "70%", lg: "60%", sm: "60%" },
+                width: { xl: "60%", lg: "60%", sm: "60%" },
               }}
             >
               {/* Sol Box */}
@@ -248,7 +220,6 @@ const CourtDetails: React.FC = () => {
                       alignItems: "center",
                     }}
                   >
-                    
                     <Box
                       sx={{
                         color: "#4F4F4F",
@@ -429,113 +400,111 @@ const CourtDetails: React.FC = () => {
                   }}
                 />
 
-                <Typography
-                  sx={{
-                    fontSize: "1.1rem",
-                    fontWeight: "500",
-                    fontFamily: "Inter",
-                    colo: "#1A1A1A",
-                    paddingLeft: "1rem",
-                  }}
-                >
-                  {court.name}
-                </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "1.1rem",
+                        fontWeight: "500",
+                        fontFamily: "Inter",
+                        colo: "#1A1A1A",
+                        paddingLeft: "1rem",
+                      }}
+                    >
+                      {court.name}
+                    </Typography>
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "0.75rem",
-                    paddingLeft: "1rem",
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "0.75rem",
+                        paddingLeft: "1rem",
                     marginTop: "0.5rem",
-                  }}
-                >
-                  <img
-                    src={bag}
-                    alt="bag"
-                    style={{
-                      width: "auto",
-                      height: "auto",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: "0.9rem",
-                      fontWeight: "400",
-                      fontFamily: "Inter",
-                      color: "#4F4F4F",
-                    }}
-                    variant="body2"
-                  >
-                    {court.capacity / 2}+{court.capacity / 2}
-                  </Typography>
-                </Box>
+                      }}
+                    >
+                      <img
+                        src={bag}
+                        alt="bag"
+                        style={{
+                          width: "auto",
+                          height: "auto",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "0.9rem",
+                          fontWeight: "400",
+                          fontFamily: "Inter",
+                          color: "#4F4F4F",
+                        }}
+                        variant="body2"
+                      >
+                        {court.capacity / 2}+{court.capacity / 2}
+                      </Typography>
+                    </Box>
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "0.75rem",
-                    paddingLeft: "1rem",
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "0.75rem",
+                        paddingLeft: "1rem",
                     marginTop: "0.25rem",
-                  }}
-                >
-                  <img
-                    src={ball}
-                    alt="ball"
-                    style={{
-                      width: "auto",
-                      height: "auto",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: "0.9rem",
-                      fontWeight: "400",
-                      fontFamily: "Inter",
-                      color: "#4F4F4F",
-                    }}
-                    variant="body2"
-                  >
-                    {court.width} x {court.height} metre
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "0.75rem",
+                      }}
+                    >
+                      <img
+                        src={ball}
+                        alt="ball"
+                        style={{
+                          width: "auto",
+                          height: "auto",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "0.9rem",
+                          fontWeight: "400",
+                          fontFamily: "Inter",
+                          color: "#4F4F4F",
+                        }}
+                        variant="body2"
+                      >
+                        {court.width} x {court.height} metre
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "0.75rem",
                     marginTop: "0.25rem",
-                    paddingLeft: "1rem",
-                  }}
-                >
-                  <img
-                    src={like}
-                    alt="like"
-                    style={{
-                      width: "auto",
-                      height: "auto",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: "0.9rem",
-                      fontWeight: "400",
-                      fontFamily: "Inter",
-                      color: "#4F4F4F",
-                    }}
-                    variant="body2"
-                  >
-                    {court.price} TL/Saat
-                  </Typography>
-                </Box>
-              </Box>       
-                          
-                      ))}
-                
+                        paddingLeft: "1rem",
+                      }}
+                    >
+                      <img
+                        src={like}
+                        alt="like"
+                        style={{
+                          width: "auto",
+                          height: "auto",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "0.9rem",
+                          fontWeight: "400",
+                          fontFamily: "Inter",
+                          color: "#4F4F4F",
+                        }}
+                        variant="body2"
+                      >
+                        {court.price} TL/Saat
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
               </Box>
               <Box
                 sx={{
@@ -655,7 +624,11 @@ const CourtDetails: React.FC = () => {
                   <TextField
                     variant="outlined"
                     fullWidth
-                    value= {auth ? auth.decodedJwt?.getPayload().name as string : "Anonim Kullanıcı"}
+                    value={
+                      auth
+                        ? (auth.decodedJwt?.getPayload().name as string)
+                        : "Anonim Kullanıcı"
+                    }
                     onChange={(e) => setAuthor(e.target.value)}
                     sx={{
                       marginBottom: "1rem",
@@ -701,9 +674,10 @@ const CourtDetails: React.FC = () => {
                     <Rating
                       name="rating"
                       value={rating}
-                      onChange={(e,newValue)=>{handleRatingChange(newValue); console.log(e);}
-                        
-                      }
+                      onChange={(e, newValue) => {
+                        handleRatingChange(newValue);
+                        console.log(e);
+                      }}
                       sx={{
                         "& .MuiRating-iconFilled": {
                           color: "#4CAF50",
@@ -771,62 +745,10 @@ const CourtDetails: React.FC = () => {
                 />
               </Box>
 
-              {/* <Box
-            sx={{
-              marginBottom: "2rem",
-              width: "100%",
-              borderRadius: "8px",
-              backgroundColor: "#FFFFFF",
-              "& .MuiPaper-root": {
-                backgroundColor: "#FFFFFF",
-                boxShadow: "none",
-                width: "100%",
-              },
-              "& .MuiPickersLayout-root": {
-                backgroundColor: "#FFFFFF",
-                width: "100%",
-              },
-
-              "& .MuiTypography-root": {
-                fontSize: "1.1rem",
-              },
-              "& .MuiDayCalendar-weekDayLabel": {
-                fontSize: "1rem",
-                margin: "4px 0",
-              },
-              "& .MuiPickersDay-root": {
-                fontSize: "1.1rem",
-                margin: "8px 2px",
-                height: "40px",
-                width: "40px",
-              },
-              "& .MuiDayCalendar-header": {
-                marginBottom: "8px",
-              },
-              "& .MuiPickersCalendarHeader-label": {
-                fontSize: "1.4rem",
-              },
-              "& .MuiPickersDay-today": {
-                fontSize: "1.1rem",
-              },
-              "& .MuiDatePickerToolbar-title": {
-                fontSize: "2rem",
-              },
-              "& .MuiTypography-overline": {
-                fontSize: "1rem",
-              },
-
-              "& .MuiDayCalendar-monthContainer": {
-                rowGap: "8px",
-              },
-            }}
-          >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <StaticDatePicker defaultValue={dayjs("2024-04-02")} />
-            </LocalizationProvider>
-          </Box> */}
-
-              <Reservation slots={timeSlots} />
+              <Reservation
+                courts={courts}
+                handleMakeReservation={makeReservation}
+              />
 
               <Box sx={{ marginTop: { xl: "2rem", xs: "1rem" } }}>
                 <img
