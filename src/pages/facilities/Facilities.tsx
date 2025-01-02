@@ -235,6 +235,7 @@ const Facilities = (): JSX.Element => {
         >
           <Box
             sx={{
+
               width: "18%",
               marginRight: "10rem",
               height: "3rem",
@@ -245,8 +246,8 @@ const Facilities = (): JSX.Element => {
               onChange={handleSortChange}
               sx={{
                 width: "100%",
-                border: "1px solid #ccc",
-                borderRadius: "0.25rem",
+                
+                borderRadius: "0.5rem",
                 height: "100%",
                 "& .MuiSelect-icon": { color: "#1976d2" },
               }}
@@ -318,7 +319,7 @@ const Facilities = (): JSX.Element => {
               };
 
               const handleClick = () => {
-                navigate(`/facility/${facility.id}`);
+                navigate(`/halisaha/${facility.id}`);
               };
 
               return (

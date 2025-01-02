@@ -4,12 +4,12 @@ import {
   Button,
   Divider,
   Rating,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import "@/pages/court-details/CourtDetails.css";
 import locationSymbol from "src/assets/images/CourtDetails/locationSymbol.png";
-import cafe from "src/assets/images/CourtDetails/cafe.png";
 import court1 from "src/assets/images/CourtDetails/court1.png";
 import bag from "src/assets/images/CourtDetails/bag.png";
 import like from "src/assets/images/CourtDetails/like.png";
@@ -105,9 +105,8 @@ const CourtDetails: React.FC = () => {
       };
 
       fetchCourts();
-
-      console.log("courts: printed");
-      console.log(courts);
+      
+      
     }
   }, [facility]);
 
@@ -134,9 +133,7 @@ const CourtDetails: React.FC = () => {
 
   const auth = useAuthWithRoles();
   const [newReview, setNewReview] = useState("");
-  const [author, setAuthor] = useState(
-    auth ? auth.user?.access_token : "Guest"
-  ); // Default to "Guest" if no current user
+  const [author, setAuthor] = useState(auth?.user?.access_token || "");
   console.log(author);
 
   const handleReviewChange = (event: any) => {
@@ -145,10 +142,7 @@ const CourtDetails: React.FC = () => {
 
   const handleSubmit = async () => {
     if (newReview) {
-      console.log("Author:", auth.user?.access_token);
-      console.log("Facility ID:", facility?.id);
-      console.log("User ID:", auth.user?.profile.sub);
-      console.log("New Review:", newReview);
+      
       try {
         const response = await axios.post(
           apiUrl + "/api/v1/reviews",
@@ -165,8 +159,7 @@ const CourtDetails: React.FC = () => {
             },
           }
         );
-
-        console.log("Review submitted successfully:", response.data);
+        console.log(response.status)
         setNewReview(""); // Reset the input field
       } catch (error) {
         // Log the error
@@ -359,89 +352,75 @@ const CourtDetails: React.FC = () => {
                         color: "#4F4F4F",
                       }}
                     >
-                      <Box sx={{ display: "flex", flexDirection: "row" }}>
-                        {facility.amenities.map(
-                          (amenity: {
-                            name: string;
-                            id: string;
-                            imageUrl: string;
-                          }) => (
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                gap: "1rem",
-                                marginLeft: "1rem",
-                              }}
-                            >
-                              <img
-                                src={
-                                  amenity.imageUrl || "/images/placeholder.png"
-                                }
-                                style={{
-                                  width: "1.5rem",
-                                  height: "1.5rem",
-                                  borderRadius: "0.3rem",
-                                  objectFit: "cover",
-                                  margin: "0.3rem 0.3rem 0.3rem 0.3rem",
-                                }}
-                              />
-                              <Typography variant="body2">
-                                {amenity.name}
-                              </Typography>
-                            </Box>
-                          )
-                        )}
-                      </Box>
-
-                      <Box
+                    <Stack
+                        direction="row"
+                               
+                          sx={{  flexWrap: "wrap", // Enable wrapping
+                            gap: "2rem", // Optional: Additional gap between rows
+                            margin: "0.5rem", // Optional: Add margin around the Stack
+                            justifyContent: "flex-start",
+                            width: "80rem",
+                            maxWidth: "100%",
+                            marginLeft: "0px"}}      
+                        >         
+                      {facility.amenities.map((amenity: { name: string; id: string; imageUrl: string }, ) => (
+                        <Box
                         sx={{
                           display: "flex",
                           flexDirection: "row",
-                          gap: "0.75rem",
-                        }}
+                          alignItems: "center", // Center items vertically
+                          gap: "0.7rem",
+                          flex: "1 1 calc(15% - 1rem)", // Dynamically size items (adjust for more per row)
+                          minWidth: "6rem", // Minimum width to prevent elements from becoming too small
+                          maxWidth: "15%", // Ensure consistent sizing
+                          boxSizing: "border-box", // Include padding/borders in width calculation
+                      }}
                       >
                         <img
-                          src={cafe}
-                          alt="cafe"
+                          src={amenity.imageUrl || "/images/placeholder.png"}
                           style={{
-                            width: "auto",
-                            height: "auto",
+                            width: "1.5rem",
+                            height: "1.5rem",
+                            borderRadius: "0.3rem",
                             objectFit: "cover",
+                           
                           }}
                         />
-                        <Typography variant="body2">Kafe</Typography>
-                      </Box>
+                        <Typography variant="body2">{amenity.name}</Typography>
+                      </Box>  
+                          
+                      ))}
+                    </Stack>                     
                     </Box>
                   </Box>
                 </Box>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
-                {courts.map((court: Court) => (
-                  <Box
-                    sx={{
-                      border: "1px solid #E0E0E0",
-                      borderRadius: "8px",
-                      backgroundColor: "#FFFFFF",
-                      marginTop: "2rem",
-                      minHeight: "300px",
-                      width: "32%",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "1rem",
-                    }}
-                  >
-                    <img
-                      src={court1}
-                      alt="court1"
-                      style={{
-                        width: "100%",
-                        height: "50%",
-                        objectFit: "cover",
-                        borderRadius: "8px",
-                        paddingBottom: "1rem",
-                      }}
-                    />
+              <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" , flexWrap: "wrap",}}>
+              {courts.map((court : Court) => (
+                <Box
+                sx={{
+                  border: "1px solid #E0E0E0",
+                  borderRadius: "8px",
+                  backgroundColor: "#FFFFFF",
+                  marginTop: "2rem",
+                  minHeight: "30rem",
+                  width: "32%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                <img
+                  src={court1}
+                  alt="court1"
+                  style={{
+                    width: "100%",
+                    height: "50%",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    paddingBottom: "1rem",
+                  }}
+                />
 
                     <Typography
                       sx={{
@@ -461,6 +440,7 @@ const CourtDetails: React.FC = () => {
                         flexDirection: "row",
                         gap: "0.75rem",
                         paddingLeft: "1rem",
+                    marginTop: "0.5rem",
                       }}
                     >
                       <img
@@ -491,6 +471,7 @@ const CourtDetails: React.FC = () => {
                         flexDirection: "row",
                         gap: "0.75rem",
                         paddingLeft: "1rem",
+                    marginTop: "0.25rem",
                       }}
                     >
                       <img
@@ -519,6 +500,7 @@ const CourtDetails: React.FC = () => {
                         display: "flex",
                         flexDirection: "row",
                         gap: "0.75rem",
+                    marginTop: "0.25rem",
                         paddingLeft: "1rem",
                       }}
                     >
@@ -566,7 +548,7 @@ const CourtDetails: React.FC = () => {
                     marginBottom: "1rem",
                   }}
                 >
-                  Reviews
+                  Değerlendirmeler
                 </Typography>
 
                 {reviews.map((review, index) => (
@@ -731,18 +713,24 @@ const CourtDetails: React.FC = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleSubmit}
+                    onClick={() => {
+                      
+                        handleSubmit();
+                       
+
+                    }}
+                    disabled={!auth.isAuthenticated}
                     sx={{
                       borderRadius: "8px",
                       textTransform: "none",
                       padding: "0.5rem 2rem",
-                      backgroundColor: "#4CAF50",
+                      backgroundColor:  "#4CAF50", 
                       "&:hover": {
                         backgroundColor: "#388E3C",
                       },
                     }}
                   >
-                    Submit Review
+                    Değerlendir
                   </Button>
                 </Box>
               </Box>

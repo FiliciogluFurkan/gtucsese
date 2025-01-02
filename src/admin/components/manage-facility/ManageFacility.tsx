@@ -47,6 +47,7 @@ const ManageFacility = () => {
     closeTime: 22,
     lowerPriceLimit: 50,
     upperPriceLimit: 150,
+    capacities: [16,14],
     contactDetails: "Asım Şekip Kayayı Arayın",
     reviewCount: 25,
     description:
