@@ -7,6 +7,10 @@ import { useSendAuthenticatedRequest } from "@/services/UseSendAuthenticatedRequ
 import { useSnackbar } from "@/components/snackbar/Snackbar";
 import { formatInstantAsDate } from "@/services/TimeServices";
 import { useCustomTheme } from "@/themes/Theme";
+import axios from "axios";
+import { useAuth } from "react-oidc-context";
+import { Modal } from "@mui/material";
+import { useRef } from "react";
 
 const MyProfile = (): JSX.Element => {
   const theme = useCustomTheme();
@@ -17,6 +21,9 @@ const MyProfile = (): JSX.Element => {
   const [mailAddress, setMailAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [createdAt, setCreatedAt] = useState("");
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const authState = useAuth();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const showSnackbar = useSnackbar();
 
@@ -70,6 +77,41 @@ const MyProfile = (): JSX.Element => {
     fetchAccount();
   }, []);
 
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Dosya kontrolü
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      // API'ye istek gönderimi
+      const response = await axios.patch(
+        `${apiUrl}/api/v1/account/my/profile-picture`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${authState.user?.access_token}`,
+          },
+        }
+      );
+
+      setIsImageModalOpen(false);
+      console.log("Image uploaded successfully:", response.data);
+    } catch (error: any) {
+      console.error("Error uploading image:", error);
+
+      if (error.response) {
+        console.error("Response error:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Request setup error:", error.message);
+      }
+    }
+  };
+
+
   return (
     <Stack
       sx={{
@@ -84,13 +126,30 @@ const MyProfile = (): JSX.Element => {
           width: "100%",
         }}
       >
-        <Box>
+
+        <Box
+          onClick={() => setIsImageModalOpen(true)}
+          sx={{
+            cursor: "pointer",
+            '&:hover': {
+              opacity: 0.8,
+            }
+          }}
+        >
+          <img
+            src={account?.profilePicture || frieren}
+            alt="profile"
+            style={{ width: "90", height: "90", objectFit: "cover", borderRadius: "50%" }}
+          />
+        </Box>
+
+        {/*  <Box>
           <img
             src={account?.profilePicture || frieren}
             alt="your image"
-            style={{ width: "auto", height: "auto", objectFit: "cover" }}
+            style={{ width: "90", height: "90", objectFit: "cover", borderRadius: "50%" }}
           />
-        </Box>
+        </Box> */}
 
         <Box sx={{ paddingLeft: "2rem", paddingTop: "1.25rem" }}>
           <Box
@@ -430,6 +489,88 @@ const MyProfile = (): JSX.Element => {
         >
           Değişiklikleri Kaydet
         </Button>
+        <Modal
+          open={isImageModalOpen}
+          onClose={() => setIsImageModalOpen(false)}
+          aria-labelledby="image-modal-title"
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 420,
+              bgcolor: '#f9f9f9',
+              borderRadius: '16px',
+              boxShadow: '0px 20px 40px rgba(0, 0, 0, 0.1)',
+              border: 'none',
+              p: 3,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
+              maxWidth: '90%',
+            }}
+          >
+            <h2
+              id="image-modal-title"
+              style={{
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '1.7rem',
+                fontWeight: '600',
+                marginBottom: '1rem',
+                color: '#2e2e2e',
+              }}
+            >
+              Profil Fotoğrafını Değiştir
+            </h2>
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handleImageUpload}
+              style={{ display: 'none' }}
+            />
+            <Box
+              onClick={() => fileInputRef.current?.click()}
+              sx={{
+                backgroundColor: '#4CAF50',
+                color: '#ffffff',
+                padding: '1rem 1.5rem',
+                borderRadius: '30px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '1.1rem',
+                fontWeight: '500',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  backgroundColor: '#45a049',
+                  transform: 'scale(1.05)',
+                },
+              }}
+            >
+              Fotoğraf Seç
+            </Box>
+            <Box
+              sx={{
+                marginTop: '1.2rem',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '0.9rem',
+                color: '#666',
+                opacity: '0.8',
+                maxWidth: '280px',
+              }}
+            >
+              <p>Profil fotoğrafınızı değiştirmek için yukarıdaki butona tıklayın.</p>
+            </Box>
+          </Box>
+        </Modal>
+
       </Box>
     </Stack>
   );

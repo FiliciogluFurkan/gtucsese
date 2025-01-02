@@ -1,96 +1,232 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, Button, Box, Badge } from '@mui/material';
+import { Card, CardContent, Typography, Button, Box, Badge, Modal } from '@mui/material';
 import { Clock, Calendar, MapPin, CheckCircle } from 'lucide-react';
-import { Randevu } from '@/interfaces/Randevu';
-
-
-const dummyRandevular: Randevu[] = [
-  {
-    id: 1,
-    tarih: '2024-03-15',
-    saat: '14:00',
-    kullaniciAdi: 'Ahmet Yılmaz',
-    telefon: '0532 123 45 67',
-    halaSaha: 'Çim Saha 1',
-    durum: 'bekleyen',
-  },
-  {
-    id: 2,
-    tarih: '2024-03-16',
-    saat: '16:30',
-    kullaniciAdi: 'Mehmet Demir',
-    telefon: '0545 678 90 12',
-    halaSaha: 'Halı Saha 2',
-    durum: 'onaylandi',
-  },
-  {
-    id: 3,
-    tarih: '2024-03-14',
-    saat: '10:00',
-    kullaniciAdi: 'Ayşe Kaya',
-    telefon: '0555 987 65 43',
-    halaSaha: 'Çim Saha 3',
-    durum: 'bekleyen',
-  },
-];
+import { useEffect } from 'react';
+import { useAuth } from 'react-oidc-context';
+import { pendingReservations } from '@/interfaces/admin/PendingAppointments';
+import axios from 'axios';
 
 const FacilityReservationManagement: React.FC = () => {
-  const [randevular, setRandevular] = useState<Randevu[]>(dummyRandevular);
 
-  const bekleyenRandevular = randevular.filter((r) => r.durum === 'bekleyen');
-  const onaylananRandevular = randevular.filter((r) => r.durum === 'onaylandi');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [reservations, setReservations] = useState<any[]>([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const authState = useAuth();
+  const [pendingReservations, setPendingReservations] = useState<pendingReservations[]>([]);
+  const [approvedReservations, setApprovedReservations] = useState<pendingReservations[]>([]);
 
-  const randevuOnayla = (id: number) => {
-    const guncelRandevular = randevular.map((randevu) =>
-      randevu.id === id ? { ...randevu, durum: 'onaylandi' as const } : randevu
-    );
-    setRandevular(guncelRandevular);
+
+  const fetchUserDetails = async (userId: string) => {
+    console.log(reservations)
+    try {
+      const response = await axios.get(`${apiUrl}/api/v1/account/${userId}`);
+      return response.data;  // response.data, kullanıcı bilgilerini içeriyor
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      return null;  // hata durumunda null döndür
+    }
   };
 
+  useEffect(() => {
+    try{
+      fetchApprovedReservations();
+    }catch(error){
+
+    }
+  }, []);
+
+  const fetchCourtName = async (courtId: string) => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/v1/courts/${courtId}`);
+      return response.data.name;  // response.data, kullanıcı bilgilerini içeriyor
+    } catch (error) {
+      console.error("Error fetching court name:", error);
+      return null;  // hata durumunda null döndür
+    }
+  };
+
+  const fetchApprovedReservations = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/v1/reservations?type=owner&status=APPROVED`, {
+        headers: {
+          Authorization: `Bearer ${authState.user?.access_token}`,
+        },
+      });
+  
+      const reservationsData = response.data;
+  
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Bugünün saatini sıfırlayarak sadece tarihi karşılaştırmak için
+  
+      const approvedReservations1 = await Promise.all(
+        reservationsData
+          .filter((randevu: any) => {
+            // Tarihi dönüştür
+            const [day, month, year] = randevu.date.split('-').map(Number); // Gün, Ay, Yıl olarak ayır
+            const reservationDate = new Date(year, month - 1, day); // Ay 0 tabanlıdır
+            reservationDate.setHours(0, 0, 0, 0); // Saatleri sıfırla
+            return reservationDate >= today; // Karşılaştır
+          })
+          .map(async (randevu: any) => {
+            const userDetails = await fetchUserDetails(randevu.userId);
+            const courtName = await fetchCourtName(randevu.courtId);
+  
+            return {
+              id: randevu.id,
+              date: randevu.date,
+              hour: randevu.hour,
+              firstName: userDetails?.firstName || '',
+              lastName: userDetails?.lastName || '',
+              phoneNumber: userDetails?.phoneNumber || '',
+              courtName: courtName || '',
+            };
+          })
+      );
+  
+      setReservations(reservationsData);
+      setApprovedReservations(approvedReservations1);
+      console.log("Rezervasyonlar yüklendi (bugünden itibaren):", approvedReservations1);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchReservations = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/v1/reservations?type=owner&status=PENDING`, {
+        headers: {
+          Authorization: `Bearer ${authState.user?.access_token}`,
+        },
+      });
+  
+      const reservationsData = response.data;
+  
+      const pendingReservations1 = await Promise.all(
+        reservationsData.map(async (randevu:any) => {
+          const userDetails = await fetchUserDetails(randevu.userId);
+          const courtName = await fetchCourtName(randevu.courtId);
+  
+          return {
+            id: randevu.id,
+            date: randevu.date,
+            hour: randevu.hour,
+            firstName: userDetails?.firstName || '',
+            lastName: userDetails?.lastName || '',
+            phoneNumber: userDetails?.phoneNumber || '',
+            courtName: courtName || '',
+          };
+        })
+      );
+  
+      setReservations(reservationsData);
+      setPendingReservations(pendingReservations1);
+      console.log("Rezervasyonlar yüklendi:", pendingReservations1);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
+  const acceptReservation = async (id: string) => {
+    try {
+      const response = await axios.patch(
+        `${apiUrl}/api/v1/reservation/${id}/approve`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authState.user?.access_token}`,
+          },
+        }
+      );
+      console.log('Rezervasyon onaylandı:', response.data);
+  
+      await fetchReservations();
+      await fetchApprovedReservations(); // Onaylanan rezervasyonları yeniden yükle
+    } catch (error) {
+      console.error('Randevu onaylama hatası:');
+    }
+  };
+
+  const rejectReservation = async (id: string) => {
+    try {
+      const userConfirmed = window.confirm("Bu rezervasyonu iptal etmek istediğinize emin misiniz?");
+      if (!userConfirmed) return;
+  
+      const response = await axios.post(
+        `${apiUrl}/api/v1/reservations/${id}/reject`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authState.user?.access_token}`, // JWT token
+          },
+        }
+      );
+      await fetchReservations();
+      console.log("Rezervasyon başarıyla iptal edildi:", response.data);
+
+    } catch (error) {
+
+    }
+  };
   
   interface RandevuKartiProps {
-    randevu: Randevu;
+    randevu: pendingReservations;
     onay: boolean;
+    status: string;
   }
 
-  const RandevuKarti: React.FC<RandevuKartiProps> = ({ randevu, onay }) => (
+  const RandevuKarti: React.FC<RandevuKartiProps> = ({ randevu, onay,status }) => (
     <Card sx={{ mb: 2, p: 2, display: 'flex', justifyContent: 'space-between' }}>
       <CardContent>
         <Box>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <Calendar size={20} style={{ marginRight: 8, color: '#1976d2' }} />
             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-              {randevu.tarih}
+              {randevu.date}
             </Typography>
             <Clock size={20} style={{ margin: '0 8px', color: '#43a047' }} />
-            <Typography variant="body2">{randevu.saat}</Typography>
+            <Typography variant="body2">{randevu.hour}</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <MapPin size={20} style={{ marginRight: 8, color: '#d32f2f' }} />
-            <Typography variant="body2">{randevu.halaSaha}</Typography>
+            <Typography variant="body2">{randevu.courtName}</Typography>
           </Box>
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-            {randevu.kullaniciAdi}
+            {randevu.firstName} {randevu.lastName}
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            {randevu.telefon}
+            {randevu.phoneNumber}
           </Typography>
         </Box>
-        <Box sx={{ textAlign: 'right' }}>
-          {randevu.durum === 'bekleyen' && onay && (
-            <Button
-              variant="contained"
-              color="success"
-              size="small"
-              onClick={() => randevuOnayla(randevu.id)}
-              sx={{ mb: 1 }}
-            >
-              Onayla
-            </Button>
+        <Box sx={{ textAlign: 'right',paddingTop:"1rem"}}>
+          {status === 'bekleyen' && onay && (
+            <>
+              <Button
+                variant="contained"
+                color="success"
+                size="small"
+                onClick={() => acceptReservation(randevu.id)}
+                sx={{ mb: 1 }}
+              >
+                Onayla
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                size="small"
+                onClick={() => rejectReservation(randevu.id)}
+                sx={{ mb: 1, ml: 1 }}
+              >
+                Reddet
+              </Button>
+            </>
           )}
-          <Badge sx={{paddingLeft:"2rem",paddingTop:"0.5rem"}}
-            badgeContent={randevu.durum === 'bekleyen' ? 'Bekliyor' : 'Onaylandı'}
-            color={randevu.durum === 'bekleyen' ? 'warning' : 'success'}
+          <Badge sx={{ paddingLeft: '2rem', paddingTop: '0.5rem' }}
+            badgeContent={status === 'bekleyen' ? 'Bekliyor' : 'Onaylandı'}
+            color={status === 'bekleyen' ? 'warning' : 'success'}
           />
         </Box>
       </CardContent>
@@ -106,22 +242,50 @@ const FacilityReservationManagement: React.FC = () => {
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
             <CheckCircle size={20} style={{ marginRight: 8, color: '#ffb300' }} />
-            Bekleyen Randevular ({bekleyenRandevular.length})
+            Bekleyen Randevular ({pendingReservations.length})
           </Typography>
-          {bekleyenRandevular.map((randevu) => (
-            <RandevuKarti key={randevu.id} randevu={randevu} onay={true} />
+          {pendingReservations.map((randevu) => (
+            <RandevuKarti key={randevu.id} randevu={randevu} onay={true} status={"bekleyen"} />
           ))}
         </Box>
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
             <CheckCircle size={20} style={{ marginRight: 8, color: '#43a047' }} />
-            Onaylanan Randevular ({onaylananRandevular.length})
+            Onaylanan Randevular ({approvedReservations.length})
           </Typography>
-          {onaylananRandevular.map((randevu) => (
-            <RandevuKarti key={randevu.id} randevu={randevu} onay={false} />
+          {approvedReservations.map((randevu) => (
+            <RandevuKarti key={randevu.id} randevu={randevu} onay={false} status={"reddedildi"} />
           ))}
         </Box>
       </Box>
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'rgba(0, 0, 0, 0.8)', // Dark background with transparency
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ color: '#fff' }}>
+            Randevu Reddedildi
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2, color: '#fff' }}>
+            Randevu başarıyla reddedildi.
+          </Typography>
+        </Box>
+      </Modal>
     </Box>
   );
 };

@@ -705,9 +705,9 @@ const Homepage: React.FC = () => {
                 color={theme.palette.tx.primary.w100}
                 className="homepage-contactus-fqa-question-desc"
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quas, quae, voluptate, voluptas aperiam quia natus
-                dolorum asperiores quod voluptates.
+               Sahan Cepte, aynı anda birden fazla sahada rezervasyon yapmanıza olanak tanır.
+                İster arkadaş grubunuzla farklı saatlerde oynayın, ister turnuvalar için birden fazla saha ayırtın,
+                 tümünü kolayca yönetebilirsiniz.
               </Typography>
             </Box>
             <Box className="homepage-contactus-fqa-box">
@@ -723,9 +723,7 @@ const Homepage: React.FC = () => {
                 color={theme.palette.tx.primary.w100}
                 className="homepage-contactus-fqa-question-desc"
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quas, quae, voluptate, voluptas aperiam quia natus
-                dolorum asperiores quod voluptates.
+                Hesabım-Rezervasyonlarım bölümünden aktif rezervasyonlarınızı iptal edebilirsiniz.
               </Typography>
             </Box>
             <Box className="homepage-contactus-fqa-box">
@@ -741,9 +739,8 @@ const Homepage: React.FC = () => {
                 color={theme.palette.tx.primary.w100}
                 className="homepage-contactus-fqa-question-desc"
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quas, quae, voluptate, voluptas aperiam quia natus
-                dolorum asperiores quod voluptates.
+               Evet, değiştirebilirsiniz, ancak bu durum tesisin izin vermesine bağlıdır.
+                Rezervasyon yaptığınız tesisin değişiklik politikalarını kontrol edebilir veya tesis yetkilileriyle iletişime geçerek talebinizi iletebilirsiniz.
               </Typography>
             </Box>
           </Stack>

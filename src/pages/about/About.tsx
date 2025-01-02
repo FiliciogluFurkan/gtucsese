@@ -112,9 +112,8 @@ const SahanCepte: React.FC = () => {
                   marginTop: "-0.2rem",
                 }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
+                Tek bir tıkla istediğiniz spor tesisine rezervasyon yapın.
+                 İstediğiniz tarih ve saatte spor yapmanın keyfini çıkarın!
               </Box>
             </Box>
             <Box
@@ -159,9 +158,8 @@ const SahanCepte: React.FC = () => {
                   marginTop: "-0.2rem",
                 }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
+               Anlaşmalı spor tesisleri ile en iyi hizmeti sunuyoruz.
+                Sahan Cepte, spor severler ve tesis sahipleri arasında güvenilir bir köprü kurar.
               </Box>
             </Box>
             <Box
@@ -206,9 +204,8 @@ const SahanCepte: React.FC = () => {
                   marginTop: "-0.2rem",
                 }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
+                Zamanınızın değerini biliyoruz. 
+                Sahan Cepte ile uzun telefon görüşmelerine gerek kalmadan hızlı ve pratik bir şekilde rezervasyon yapabilirsiniz.
               </Box>
             </Box>
           </Box>
@@ -254,9 +251,7 @@ const SahanCepte: React.FC = () => {
                   width: "45vw",
                 }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
+               Platforma üye olmak sadece birkaç dakika sürer. Kredi kartı bilgisi gerektirmeden hızlıca üye olabilir ve hemen rezervasyon yapmaya başlayabilirsiniz.
               </Box>
             </Box>
             <Box
@@ -286,9 +281,8 @@ const SahanCepte: React.FC = () => {
                   width: "45vw",
                 }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
+               Rezervasyon yapmadan önce tesislerin fotoğraflarını görüntüleyebilir, sundukları olanaklar hakkında detaylı bilgi alabilirsiniz.
+                Örneğin: soyunma odaları, duş alanları, otopark veya çocuk oyun alanı.
               </Box>
             </Box>
             <Box
@@ -318,9 +312,8 @@ const SahanCepte: React.FC = () => {
                   width: "45vw",
                 }}
               >
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
+               Rezervasyon yaptığınız tesisi değerlendirin ve diğer kullanıcılara fikir verin.
+                Ayrıca, diğer kullanıcıların değerlendirmelerine göz atarak en iyi tesisi seçebilirsiniz.
               </Box>
             </Box>
           </Box>
@@ -338,9 +331,9 @@ const SahanCepte: React.FC = () => {
             alt="Sahan Cepte"
             style={{
               width: "100%",
-              height: "calc(100vh - 2.5rem)",
+              height: "100%",
               objectFit: "cover",
-              position: "relative"
+
             }}
           />
         </Box>
