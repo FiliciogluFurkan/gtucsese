@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -17,6 +18,7 @@ import {
 import { useEffect, useState } from "react";
 import { Court } from "@/interfaces/Court";
 import axios from "axios";
+import { Label } from "@mui/icons-material";
 
 interface ReservationProps {
   courts: Court[];
@@ -86,16 +88,16 @@ const Reservation = ({
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        sx={{
-          padding: { lg: "1rem", xs: "0.6rem" },
-          paddingTop: "0.4rem !important",
-        }}
+        sx={{}}
         width="100%"
       >
         <Stack
           sx={{
             fontFamily: "Poppins",
-            justifyContent: "flex-start",
+
+            borderRadius: "0.5rem",
+            flexDirection: "row",
+            justifyContent: "space-between",
             width: "100%",
             fontSize: { lg: "1.4rem", xs: "0.8rem" },
           }}
@@ -103,19 +105,49 @@ const Reservation = ({
           <FormControl
             sx={{
               zIndex: 10,
+              display: "flex",
+              border: "1px solid rgb(130,130,130) !important",
+              outline: 0,
+              borderRadius: "0.5rem !important",
+              flexDirection: "row",
+              padding: "0 !important",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "49%",
               position: "relative",
+              fontSize: { lg: "0.8rem", xs: "0.6rem" },
             }}
-            fullWidth
           >
-            <InputLabel id="court-select-label">Saha</InputLabel>
+            <Box
+              sx={{
+                position: "absolute",
+                marginLeft: "0.5rem",
+              }}
+            >
+              Saha
+            </Box>
+
             <Select
-              labelId="court-select-label"
               id="court-select"
               MenuProps={{
-                style: { zIndex: 35001 },
+                style: { zIndex: 35001, padding: "0 !important" },
               }}
               value={selectedCourt?.name}
-              label="Age"
+              sx={{
+                outline: 0,
+                /* border: "1px solid rgb(130,130,130) !important", */
+                borderRadius: "0.2rem",
+                width: "100%",
+                height: { lg: "3.3rem", xs: "2rem" },
+                fontFamily: "Poppins",
+                padding: "0",
+                "& fieldset": {
+                  border: "0 !important",
+                  outline: 0,
+                },
+                textAlign: "right",
+                fontSize: { lg: "0.8rem", xs: "0.6rem" },
+              }}
               defaultValue={selectedCourt ? selectedCourt.name : "UCAN"}
               onChange={(event) => {
                 setSelectedCourt(
@@ -125,26 +157,89 @@ const Reservation = ({
               }}
             >
               {courts.map((court, index) => (
-                <MenuItem key={index} value={court.name}>
+                <MenuItem
+                  sx={{
+                    padding: "0 !important",
+                  }}
+                  key={index}
+                  value={court.name}
+                >
                   {court.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
+          <FormControl
+            sx={{
+              zIndex: 10,
+              display: "flex",
+              outline: 0,
+
+              border: "1px solid rgb(130,130,130) !important",
+              borderRadius: "0.5rem !important",
+              /* boxShadow: "0px 0px 12px rgba(200, 200, 200, 0.45)", */
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "49%",
+              position: "relative",
+              fontSize: { lg: "0.8rem", xs: "0.6rem" },
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                marginLeft: "0.5rem",
+              }}
+            >
+              Tarih
+            </Box>
+            <Box
+              component="input"
+              id="court-select"
+              value={formatInstantAsDate(selectedDate.toISOString())}
+              sx={{
+                width: "100%",
+                fontFamily: "Poppins",
+                outline: 0,
+                borderRadius: "0.5rem",
+
+                /* "& fieldset": { border: "none" }, */
+                height: { lg: "3.3rem", xs: "2rem" },
+                /*  border: "1px solid rgb(130,130,130)", */
+                textAlign: "right",
+                padding: { lg: "1rem", xs: "0.3rem" },
+                border: "none",
+                fontSize: { lg: "0.8rem", xs: "0.6rem" },
+              }}
+              defaultValue={selectedCourt ? selectedCourt.name : "UCAN"}
+              onChange={(event) => {
+                setSelectedCourt(
+                  courts.find((court) => court.name === event.target.value) ||
+                    null
+                );
+              }}
+            />
+          </FormControl>
         </Stack>
         <Box
           sx={{
             fontFamily: "Poppins",
-            marginTop: "1rem",
-            fontSize: { lg: "1.4rem", xs: "0.8rem" },
+            marginTop: "0.5rem",
+            paddingY: "0.5rem",
+            paddingX: "2rem",
+            borderRadius: "0.5rem",
+            /*   boxShadow: "0px 4px 12px rgba(200, 200, 200, 0.45)", */
+            fontSize: { lg: "1.2rem", xs: "0.8rem" },
           }}
         >
           {formatInstantAsDate(selectedDate.toISOString())}
         </Box>
         <Stack
           sx={{
-            marginTop: { xl: "1.3rem", xs: "1.5rem" },
+            marginTop: { xl: "1rem", xs: "1rem" },
             fontSize: { xl: "0.9rem", md: "0.8rem", xs: "0.8rem" },
+            padding: { xl: "0.5rem", xs: "0.3rem" },
           }}
           width="100%"
           flexDirection="row"
@@ -165,7 +260,7 @@ const Reservation = ({
       <Stack
         flexDirection="row"
         flexWrap="wrap"
-        sx={{ marginTop: { xl: "0.1rem", xs: "0.1rem" } }}
+        sx={{ marginTop: { xl: "1rem", xs: "0.1rem" } }}
       >
         {timeSlots.map((slot, index) => (
           <TimeSlot
