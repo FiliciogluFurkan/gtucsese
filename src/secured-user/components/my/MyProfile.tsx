@@ -151,9 +151,10 @@ const MyProfile = (): JSX.Element => {
           />
         </Box> */}
 
-        <Box sx={{ paddingLeft: "2rem", paddingTop: "1.25rem" }}>
+        <Box sx={{ paddingLeft: "2rem", paddingTop: "1.25rem" , backgroundColor: ""}}>
           <Box
             sx={{
+              
               fontWeight: 500,
               fontFamily: "Poppins",
               fontSize: "1.1rem",

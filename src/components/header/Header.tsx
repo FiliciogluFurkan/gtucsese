@@ -74,41 +74,41 @@ const Header = ({ currentTheme }: HeaderProps): JSX.Element => {
           </div>
           <div
             className={`header-tab ${
-              isSelected("/facilities") ? "selected" : ""
+              isSelected("/halisahalar") ? "selected" : ""
             }`}
           >
             <Link
               color="inherit"
               className="header-tab-text"
-              href="/facilities"
+              href="/halisahalar"
             >
               HALI SAHALAR
             </Link>
           </div>
           <div
             className={`header-tab ${
-              isSelected("/createteam") ? "selected" : ""
+              isSelected("/kadro-olustur") ? "selected" : ""
             }`}
           >
             <Link
               color="inherit"
               className="header-tab-text"
-              href="/createteam"
+              href="/kadro-olustur"
             >
               KADRO KUR
             </Link>
           </div>
           <div
-            className={`header-tab ${isSelected("/about") ? "selected" : ""}`}
+            className={`header-tab ${isSelected("/hakkimizda") ? "selected" : ""}`}
           >
-            <Link color="inherit" className="header-tab-text" href="/about">
+            <Link color="inherit" className="header-tab-text" href="/hakkimizda">
               HAKKIMIZDA
             </Link>
           </div>
           <div
-            className={`header-tab ${isSelected("/help") ? "selected" : ""}`}
+            className={`header-tab ${isSelected("/destek") ? "selected" : ""}`}
           >
-            <Link color="inherit" className="header-tab-text" href="/help">
+            <Link color="inherit" className="header-tab-text" href="/destek">
               DESTEK
             </Link>
           </div>

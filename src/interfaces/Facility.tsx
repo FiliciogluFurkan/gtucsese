@@ -19,5 +19,6 @@ export interface Facility {
   upperPriceLimit: number;
   amenities: any;
   courts: Court[];
+  capacities: number[];
   isActive: boolean;
 }

@@ -41,16 +41,16 @@ const App = (): JSX.Element => {
         />
         <Routes>
           <Route path="/" Component={HomePage}></Route>
-          <Route path="/about" Component={About}></Route>
-          <Route path="/facilities" Component={FootballCourts}></Route>
-          <Route path="/createteam" Component={CreateTeam}></Route>
-          <Route path="/help" Component={Support}></Route>
-          <Route path="/facility/:uuid" Component={CourtDetails} />
-          <Route path="/login" Component={Login}></Route>
-          <Route path="/signup" Component={SignUp}></Route>
-          <Route path="/password-reset" Component={PasswordReset}></Route>
+          <Route path="/hakkimizda" Component={About}></Route>
+          <Route path="/halisahalar" Component={FootballCourts}></Route>
+          <Route path="/kadro-olustur" Component={CreateTeam}></Route>
+          <Route path="/destek" Component={Support}></Route>
+          <Route path="/halisaha/:uuid" Component={CourtDetails} />
+          <Route path="/giris-yap" Component={Login}></Route>
+          <Route path="/kayit-ol" Component={SignUp}></Route>
+          <Route path="/sifre-degistirme" Component={PasswordReset}></Route>
 
-          <Route path="/reservations" Component={Reservations}></Route>
+          <Route path="/reservasyonlar" Component={Reservations}></Route>
 
           <Route element={<SecuredRoute />}>
             <Route

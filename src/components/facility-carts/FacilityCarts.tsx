@@ -1,18 +1,26 @@
 import "src/components/facility-carts/FacilityCarts.css";
-import { useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
 import { Box } from "@mui/material";
 import { Facility } from "@/interfaces/Facility";
 
-interface CourtCartProps {
+interface FacilityCartProps {
   facility: Facility;
 }
 
-const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
+const FacilityCarts = ({ facility }: FacilityCartProps): JSX.Element => {
   const fieldId = facility.id;
   console.log(facility);
-
+ 
   const [isFavorited, setIsFavorited] = useState(false);
+  
+  
+
+  
+
+
+
+
 
   const handleFavoriteToggle = async () => {
     const newFavoriteStatus = !isFavorited;
@@ -111,7 +119,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           }}
         /> */}
       <Box          
-            sx={{display: "flex" , flexDirection: "row"}}        
+            sx={{display: "flex" , flexDirection: "row" , }}        
           >         
         {facility.amenities.map((amenity: { name: string; id: string; imageUrl: string }, ) => (
           
@@ -126,7 +134,24 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
             }}
           />
         ))}
-      </Box>       
+      </Box>
+
+      <Box          
+            sx={{display: "flex" , flexDirection: "row" ,marginTop: "0.6rem"}}        
+          >         
+        {facility.capacities.map((capacity) => (
+          <Box sx={{width: "1.5rem",
+            height: "1.5rem",
+            textAlign: "center",
+            fontFamily: "Roboto",
+            fontSize: "15px",
+            minWidth: "3rem",
+            margin: "0.3rem 0 0 0.5rem",}} >
+            {capacity / 2}+{capacity / 2}
+          </Box>
+            
+        ))}
+      </Box>        
         
         {/*
         <hr
