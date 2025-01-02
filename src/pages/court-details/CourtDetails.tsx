@@ -109,9 +109,7 @@ const CourtDetails: React.FC = () => {
 
   const auth = useAuthWithRoles();
   const [newReview, setNewReview] = useState("");
-  const [author, setAuthor] = useState(
-    auth ? auth.user?.access_token : "Guest"
-  ); 
+  const [author, setAuthor] = useState(auth?.user?.access_token || "");
   console.log(author);
 
   const handleReviewChange = (event: any) => {
@@ -691,18 +689,22 @@ const CourtDetails: React.FC = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleSubmit}
+                    onClick={() => {
+                      if (auth) {
+                        handleSubmit();
+                      } 
+                    }}
                     sx={{
                       borderRadius: "8px",
                       textTransform: "none",
                       padding: "0.5rem 2rem",
-                      backgroundColor: "#4CAF50",
+                      backgroundColor:  auth ? "#4CAF50" : "#f44336", 
                       "&:hover": {
-                        backgroundColor: "#388E3C",
+                        backgroundColor: auth ? "#388E3C" : "#d32f2f",
                       },
                     }}
                   >
-                    Submit Review
+                    Değerlendir
                   </Button>
                 </Box>
               </Box>
