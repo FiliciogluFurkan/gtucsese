@@ -690,17 +690,19 @@ const CourtDetails: React.FC = () => {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      if (auth) {
+                      
                         handleSubmit();
-                      } 
+                       
+
                     }}
+                    disabled={!auth.isAuthenticated}
                     sx={{
                       borderRadius: "8px",
                       textTransform: "none",
                       padding: "0.5rem 2rem",
-                      backgroundColor:  auth ? "#4CAF50" : "#f44336", 
+                      backgroundColor:  "#4CAF50", 
                       "&:hover": {
-                        backgroundColor: auth ? "#388E3C" : "#d32f2f",
+                        backgroundColor: "#388E3C",
                       },
                     }}
                   >
