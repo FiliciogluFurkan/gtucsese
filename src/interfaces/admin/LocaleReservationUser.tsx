@@ -1,4 +1,4 @@
-    export interface localeReservationUser{
+    export interface LocaleReservationUser{
     name: string;
     phoneNumber: string;
   }

@@ -20,14 +20,14 @@ import BlockIcon from '@mui/icons-material/Block';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material';
 import { TimeSlot } from 'src/interfaces/admin/TimeSlot';
 import { Court } from '@/interfaces/Court';
 import axios from 'axios';
 import { useAuth } from 'react-oidc-context';
-import { localeReservationUser} from '@/interfaces/admin/LocaleReservationUser';
+import { LocaleReservationUser } from '@/interfaces/admin/LocaleReservationUser';
 import { Account } from '@/interfaces/Account';
 import { Facility } from '@/interfaces/Facility';
+import { getFormattedDate } from '@/services/TimeServices';
 
 const ReservationSystem = (): JSX.Element => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -55,7 +55,7 @@ const ReservationSystem = (): JSX.Element => {
 
   useEffect(() => {
     console.log("Selected date:", selectedDate);
-    const formattedDate = formatDateToDayMonthYear(selectedDate);
+    const formattedDate = getFormattedDate(selectedDate);
     console.log("Formatted date:", formattedDate);
 
     const fetchTimeSlots = async (date: string, courtId: string) => {
@@ -78,7 +78,7 @@ const ReservationSystem = (): JSX.Element => {
             return slotGroup[0];
           } else {
             // Alt dizide birden fazla obje varsa, `null` olmayanı al
-            return slotGroup.find((slot: TimeSlot) => (slot.reservable !== null) && (slot.reservable.status === "APPROVED") || ((slot.reservable !== null) && (slot.reservable.type === "LOCAL")) ) || slotGroup[0];
+            return slotGroup.find((slot: TimeSlot) => (slot.reservable !== null) && (slot.reservable.status === "APPROVED") || ((slot.reservable !== null) && (slot.reservable.type === "LOCAL"))) || slotGroup[0];
           }
         });
 
@@ -105,13 +105,6 @@ const ReservationSystem = (): JSX.Element => {
     setAllTimeSlots(referenceTimes);
   }, []);
 
-  const formatDateToDayMonthYear = (date: Date) => {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Aylar 0'dan başlar
-    const year = date.getFullYear();
-
-    return `${day}-${month}-${year}`;
-  };
 
 
   useEffect(() => {
@@ -119,9 +112,6 @@ const ReservationSystem = (): JSX.Element => {
     const fetchFacility = async () => {
       try {
         let facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-          headers: {
-            Authorization: `Bearer ${authState.user?.access_token}`,
-          },
         });
 
         console.log(facilityResponse.data);
@@ -139,7 +129,7 @@ const ReservationSystem = (): JSX.Element => {
 
 
   const [userDetails, setUserDetails] = useState<{ [key: string]: Account }>({});
-  const [localUserDetails, setLocalUserDetails] = useState<{ [key: string]: localeReservationUser }>({});
+  const [localUserDetails, setLocalUserDetails] = useState<{ [key: string]: LocaleReservationUser }>({});
   const fetchUserDetails = async (userId: string) => {
     if (userDetails[userId]) return; // Eğer kullanıcı zaten yüklenmişse yeniden yükleme
 
@@ -153,7 +143,6 @@ const ReservationSystem = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log("Kullanıcı bilgileri yükleniyor...");
 
     const processSlot = (slot: any) => {
       const reservable = slot.reservable;
@@ -187,11 +176,10 @@ const ReservationSystem = (): JSX.Element => {
     }
   };
 
-  const handleCourtChange = (event: SelectChangeEvent<string>) => {
-    const selected = facilityCourts.find(court => String(court.id) === event.target.value);
+  const handleCourtChange = (courtId: string) => {
+    const selected = facilityCourts.find(court => String(court.id) === courtId);
     setSelectedCourt(selected);
   };
-
 
   const handleDialogClose = () => {
     setOpenDialog(false);
@@ -218,7 +206,7 @@ const ReservationSystem = (): JSX.Element => {
       courtId: selectedCourt?.id,
       fullName: userName ? `${userName} ${userSurname}` : "",
       phoneNumber: userPhone,
-      date: formatDateToDayMonthYear(selectedDate), // YYYY-MM-DD formatında olmalı
+      date: getFormattedDate(selectedDate), // YYYY-MM-DD formatında olmalı
       hour: hourAsNumber, // Sadece sayı olarak saat
     };
 
@@ -355,7 +343,7 @@ const ReservationSystem = (): JSX.Element => {
           <InputLabel sx={{ color: '#90caf9' }}>Saha Seç</InputLabel>
           <Select
             value={String(selectedCourt?.id) || ''}
-            onChange={handleCourtChange}
+            onChange={(event) => handleCourtChange(event.target.value)} // Sadece courtId ile çağırıyoruz
             displayEmpty
             label="Saha Seç"
             sx={{
@@ -475,7 +463,7 @@ const ReservationSystem = (): JSX.Element => {
                       ? "#e0e0e0"
                       : isApproved || slot.reservable?.type === "LOCAL"
                         ? "#ffcdd2" // Kırmızı renk, "APPROVED" rezervasyonlar için
-                          : "#c8e6c9",
+                        : "#c8e6c9",
                   flex: "1 1 calc(16.66% - 16px)",
                   boxSizing: "border-box",
                   display: "flex",
@@ -495,8 +483,8 @@ const ReservationSystem = (): JSX.Element => {
                         ? "Boş"
                         : isApproved || slot.reservable?.type === "LOCAL"
                           ? "Dolu"
-                            : "Boş"
-                            }
+                          : "Boş"
+                    }
                   </Typography>
                 </Box>
                 <Box sx={{ marginTop: 1 }}>

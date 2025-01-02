@@ -20,9 +20,6 @@ const Review = (): JSX.Element => {
       try {
         // Facilities verisini çek
         const facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-          headers: {
-            Authorization: `Bearer ${authState.user?.access_token}`,
-          },
         });
           console.log("FacilityResponse:")
           console.log(facilityResponse.data)
@@ -77,9 +74,6 @@ const Review = (): JSX.Element => {
     fetchFacilityAndReviews();
   },[]); // Sadece bir kez çalıştır
 
-  useEffect(() => {
-    console.log("emreyi çok seviyorum.");
-  },[]);
 
 
   const [startIndex, setStartIndex] = useState(0);

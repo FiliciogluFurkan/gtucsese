@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 import { Account } from '@/interfaces/Account';
 import { useRef } from 'react';
 import { Modal } from '@mui/material';
-import { parseJwt } from '@/services/ParseJwt';
+import { getIdFromToken } from '@/services/DecodedJwt';
 
 const ManageFacility = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState('genel');
@@ -43,9 +43,6 @@ const ManageFacility = (): JSX.Element => {
     const fetchFacility = async () => {
       try {
         facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-          headers: {
-            Authorization: `Bearer ${authState.user?.access_token}`,
-          },
         });
 
         // Gelen veriyi formData'ya set et
@@ -68,7 +65,7 @@ const ManageFacility = (): JSX.Element => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userId = parseJwt(authState.user?.access_token)?.sub;
+      const userId = getIdFromToken(authState.user?.access_token)?.sub;
       console.log("userId:");
       console.log(userId);
 
@@ -152,7 +149,7 @@ const ManageFacility = (): JSX.Element => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const userId = parseJwt(authState.user?.access_token)?.sub;
+        const userId = getIdFromToken(authState.user?.access_token)?.sub;
         console.log(userId)
         const response = await axios.get(`${apiUrl}/api/v1/account/${userId}`, {
           headers: {

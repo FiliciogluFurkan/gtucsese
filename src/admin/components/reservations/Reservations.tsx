@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Button, Box, Badge, Modal } from '@mui/m
 import { Clock, Calendar, MapPin, CheckCircle } from 'lucide-react';
 import { useEffect } from 'react';
 import { useAuth } from 'react-oidc-context';
-import { pendingReservations } from '@/interfaces/admin/PendingAppointments';
+import { PendingReservations } from '@/interfaces/admin/PendingAppointments';
 import axios from 'axios';
 
 const FacilityReservationManagement: React.FC = () => {
@@ -12,8 +12,8 @@ const FacilityReservationManagement: React.FC = () => {
   const [reservations, setReservations] = useState<any[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
   const authState = useAuth();
-  const [pendingReservations, setPendingReservations] = useState<pendingReservations[]>([]);
-  const [approvedReservations, setApprovedReservations] = useState<pendingReservations[]>([]);
+  const [pendingReservations, setPendingReservations] = useState<PendingReservations[]>([]);
+  const [approvedReservations, setApprovedReservations] = useState<PendingReservations[]>([]);
 
 
   const fetchUserDetails = async (userId: string) => {
@@ -173,7 +173,7 @@ const FacilityReservationManagement: React.FC = () => {
   };
   
   interface RandevuKartiProps {
-    randevu: pendingReservations;
+    randevu: PendingReservations;
     onay: boolean;
     status: string;
   }

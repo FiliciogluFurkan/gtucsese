@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Typography, Card, CardContent, Grid, Chip, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { CalendarToday, AccessTime, LocationOn, Cancel, Block } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
@@ -10,8 +10,8 @@ import { TimeSlot } from '@/interfaces/admin/TimeSlot';
 import axios from 'axios';
 import { useAuth } from 'react-oidc-context';
 import { useEffect } from 'react';
-import { SelectChangeEvent } from '@mui/material';
-import { AppointmentCard  } from '@/interfaces/admin/AppointmentCard';
+import { AppointmentCard } from '@/interfaces/admin/AppointmentCard';
+import { getFormattedDate } from '@/services/TimeServices';
 
 const AppointmentCardBlock = ({ randevu, status }: { randevu: any, status: string }) => (
 
@@ -57,8 +57,6 @@ const Analyzes = (): JSX.Element => {
   const [facility, setFacility] = useState<Facility | null>(null);
   const [selectedCourt, setSelectedCourt] = useState<Court>();
   const [courts, setCourts] = useState<Court[]>([]);
-  const [rejectedRandevular, setRejectedRandevular] = useState<any[]>([]);
-  const [cancelledRandevular, setCancelledRandevular] = useState<any[]>([]);
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const [cancelledReservations, setCancelledReservations] = useState<AppointmentCard[]>([]);
   const [rejectedReservations, setRejectedReservations] = useState<AppointmentCard[]>([]);
@@ -86,9 +84,6 @@ const Analyzes = (): JSX.Element => {
     const fetchFacility = async () => {
       try {
         let facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-          headers: {
-            Authorization: `Bearer ${authState.user?.access_token}`,
-          },
         });
 
         console.log(facilityResponse.data);
@@ -105,13 +100,6 @@ const Analyzes = (): JSX.Element => {
   }, []);
 
 
-  const formatDateToDayMonthYear = (date: Date) => {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-
-    return `${day}-${month}-${year}`;
-  };
 
   const fetchTimeSlots = async (date: string, courtId: string) => {
     try {
@@ -126,13 +114,10 @@ const Analyzes = (): JSX.Element => {
 
       console.log("Raw time slots response:", response);
 
-      // Gelen veriyi dönüştür: sadece CANCELLED ve REJECTED olanları al
       const processedTimeSlots = response.data.timeSlots.map((slotGroup: any) => {
         if (slotGroup.length === 1) {
-          // Alt dizide yalnızca 1 obje varsa, onu al
           return slotGroup[0];
         } else {
-          // Alt dizide birden fazla obje varsa, sadece CANCELLED ve REJECTED olmayanları al
           return slotGroup.find(
             (slot: TimeSlot) =>
               slot.reservable !== null &&
@@ -142,85 +127,57 @@ const Analyzes = (): JSX.Element => {
       });
 
       console.log("Processed time slots:", processedTimeSlots);
-
-      // İşlenmiş veriyi state'e ata
       setTimeSlots(processedTimeSlots);
 
-      const dummycancelledRandevular: any[] = [];
-      const dummyrejectedRandevular: any[] = [];
-
-      processedTimeSlots.forEach((slot) => {
-        if (!slot || !slot.reservable) {
-          // Eğer slot ya da slot.reservable null veya undefined ise burada işlem yapılmaz
-          console.log("Invalid slot:", slot);
-          return;  // İlgili slot'u geçiyoruz
-        }
-
-        if (slot.reservable.status === "CANCELLED") {
-          dummycancelledRandevular.push(slot.reservable);
-        } else if (slot.reservable.status === "REJECTED") {
-          dummyrejectedRandevular.push(slot.reservable);
-        }
-      });
-
-      setCancelledRandevular(dummycancelledRandevular);
-      setRejectedRandevular(dummyrejectedRandevular);
-
-      console.log("Cancelled randevularrr:", cancelledRandevular);
-      console.log("Rejected randevularrr:", rejectedRandevular);
-
-      const cancelledReservations1 = await Promise.all(
-        dummycancelledRandevular.map(async (randevu) => {
-          const userDetails = await fetchUserDetails(randevu.userId);  // userDetails'ı almak için await kullanıyoruz
-          console.log("User details:", userDetails);
-          return {
-            id: randevu.id,
-            date: randevu.date,
-            hour: randevu.hour,
-            firstName: userDetails?.firstName || '',
-            lastName: userDetails?.lastName || '',
-            phoneNumber: userDetails?.phoneNumber || '',
-            courtName: selectedCourt?.name || '',
-          };
-        })
+      // CANCELLED rezervasyonları işle
+      const cancelledReservations = await Promise.all(
+        processedTimeSlots
+          .filter((slot) => slot?.reservable?.status === "CANCELLED")
+          .map(async (randevu) => {
+            const userDetails = await fetchUserDetails(randevu.reservable.userId);
+            return {
+              id: randevu.reservable.id,
+              date: randevu.reservable.date,
+              hour: randevu.reservable.hour,
+              firstName: userDetails?.firstName || '',
+              lastName: userDetails?.lastName || '',
+              phoneNumber: userDetails?.phoneNumber || '',
+              courtName: selectedCourt?.name || '',
+            };
+          })
       );
-      setCancelledReservations(cancelledReservations1);
+      setCancelledReservations(cancelledReservations);
 
-  
-
-      const rejectedReservations1 = await Promise.all(
-        dummyrejectedRandevular.map(async (randevu) => {
-          const userDetails = await fetchUserDetails(randevu.userId);  // fetchUserDetails'ı await ile çağırıyoruz
-          return {
-            id: randevu.id,
-            date: randevu.date,
-            hour: randevu.hour,
-            firstName: userDetails?.firstName || '',
-            lastName: userDetails?.lastName || '',
-            phoneNumber: userDetails?.phoneNumber || '',
-            courtName: selectedCourt?.name || '',
-          };
-        })
+      // REJECTED rezervasyonları işle
+      const rejectedReservations = await Promise.all(
+        processedTimeSlots
+          .filter((slot) => slot?.reservable?.status === "REJECTED")
+          .map(async (randevu) => {
+            const userDetails = await fetchUserDetails(randevu.reservable.userId);
+            return {
+              id: randevu.reservable.id,
+              date: randevu.reservable.date,
+              hour: randevu.reservable.hour,
+              firstName: userDetails?.firstName || '',
+              lastName: userDetails?.lastName || '',
+              phoneNumber: userDetails?.phoneNumber || '',
+              courtName: selectedCourt?.name || '',
+            };
+          })
       );
+      setRejectedReservations(rejectedReservations);
 
-      // State'e yeni veriyi set et
-      console.log("rejectedReservations1:", rejectedReservations1);
-      console.log("cancelledReservations1:", cancelledReservations1);
-      setRejectedReservations(rejectedReservations1);
-
-
-      console.log("Cancelled randevular:", cancelledReservations);
-      console.log("Rejected randevular:", rejectedReservations);
-
-
+      console.log("Cancelled reservations:", cancelledReservations);
+      console.log("Rejected reservations:", rejectedReservations);
     } catch (error) {
       console.error("Error fetching time slots:", error);
     }
   };
 
+
   useEffect(() => {
     console.log("Selected date:", selectedDate);
-    const formattedDate = formatDateToDayMonthYear(selectedDate);
+    const formattedDate = getFormattedDate(selectedDate);
     console.log("Formatted date:", formattedDate);
     console.log("Selected court:", selectedCourt?.id);
 
@@ -232,16 +189,18 @@ const Analyzes = (): JSX.Element => {
   }, [selectedDate, selectedCourt]);
 
 
-  const handleCourtChange = (event: SelectChangeEvent<string>) => {
-    const selectedCourtId = event.target.value;
-    console.log("Selected court id:", selectedCourtId);
-    console.log("helllooooo")
-    const selectedCourt = courts.find((court) => String(court.id) === String(selectedCourtId));
+  const handleCourtChange = (courtId: string) => {
+    const selectedCourt = courts.find((court) => String(court.id) === String(courtId));
     setSelectedCourt(selectedCourt);
   };
-  const handleDateChange = (date: any) => {
-    setSelectedDate(date);
+
+  const handleDateChange = (date: Date | null, event?: React.SyntheticEvent) => {
+    console.log(event)
+    if (date) {
+      setSelectedDate(date);
+    }
   };
+
 
   return (
     <Box sx={{ maxWidth: 900, mx: 'auto', p: 3 }}>
@@ -256,14 +215,14 @@ const Analyzes = (): JSX.Element => {
           onClick={() => setActiveTab('iptal')}
           sx={{ mr: 1 }}
         >
-          İptal Edilenler ({cancelledRandevular.length})
+          İptal Edilenler ({cancelledReservations.length})
         </Button>
         <Button
           variant={activeTab === 'reddedildi' ? 'contained' : 'outlined'}
           color="warning"
           onClick={() => setActiveTab('reddedildi')}
         >
-          Reddedilenler ({rejectedRandevular.length})
+          Reddedilenler ({rejectedReservations.length})
         </Button>
       </Box>
 
@@ -275,19 +234,18 @@ const Analyzes = (): JSX.Element => {
             id="saha-select"
             value={String(selectedCourt?.id)}
             label="Saha Seç"
-            onChange={handleCourtChange}
+            onChange={(event) => handleCourtChange(event.target.value)} // Burada sadece court ID'sini iletiyoruz
             sx={{
               '& .MuiSelect-outlined': { borderRadius: 2 },
             }}
           >
             {courts.map((court) => (
-              <MenuItem key={court.id} value={court.id}> {/* Burada value'yu court.id olarak ayarlıyoruz */}
+              <MenuItem key={court.id} value={court.id}>
                 {court.name}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <DatePicker
@@ -315,13 +273,13 @@ const Analyzes = (): JSX.Element => {
         {activeTab === 'iptal' &&
           cancelledReservations.map((randevu) => (
             <Grid item xs={12} sm={6} key={randevu.id}>
-              <AppointmentCardBlock  randevu={randevu} status={"CANCELLED"} />
+              <AppointmentCardBlock randevu={randevu} status={"CANCELLED"} />
             </Grid>
           ))}
         {activeTab === 'reddedildi' &&
           rejectedReservations.map((randevu) => (
             <Grid item xs={12} sm={6} key={randevu.id}>
-              <AppointmentCardBlock  randevu={randevu} status={"REJECTED"} />
+              <AppointmentCardBlock randevu={randevu} status={"REJECTED"} />
             </Grid>
           ))}
       </Grid>

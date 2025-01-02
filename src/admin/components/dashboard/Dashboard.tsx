@@ -12,7 +12,7 @@ import axios from "axios";
 import { Facility } from "src/interfaces/Facility";
 import { ConvertedReview  } from "@/interfaces/admin/ConvertedReview";
 import { Account } from "@/interfaces/Account";
-import { parseJwt } from "@/services/ParseJwt";
+import { getIdFromToken } from "@/services/DecodedJwt";
 
 const Dashboard = (): JSX.Element => {
 
@@ -40,7 +40,7 @@ const Dashboard = (): JSX.Element => {
     console.log(facilities)
 
     const fetchUser = async () => {
-      const userId = parseJwt(authState.user?.access_token).sub;
+      const userId = getIdFromToken(authState.user?.access_token).sub;
       console.log("userId:");
       console.log(userId);
 
@@ -68,9 +68,6 @@ const Dashboard = (): JSX.Element => {
       try {
         // Facilities verisini çek
         const facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-          headers: {
-            Authorization: `Bearer ${authState.user?.access_token}`,
-          },
         });
 
         if (facilityResponse.data && facilityResponse.data.length > 0) {

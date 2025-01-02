@@ -37,9 +37,6 @@ const PhotographGallery = (): JSX.Element => {
     const fetchFacility = async () => {
       try {
         const facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-          headers: {
-            Authorization: `Bearer ${authState.user?.access_token}`,
-          },
         });
 
         // Gelen veriyi formData'ya set et

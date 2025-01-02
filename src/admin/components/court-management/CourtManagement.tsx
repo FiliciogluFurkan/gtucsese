@@ -4,7 +4,7 @@ import { Modal } from '@mui/material';
 import axios from 'axios';
 import { Court } from '@/interfaces/Court';
 import { useAuth } from 'react-oidc-context';
-import { parseJwt } from '@/services/ParseJwt';
+import { getIdFromToken } from '@/services/DecodedJwt';
 
 
 const CourtManagement = (): JSX.Element => {
@@ -19,9 +19,6 @@ const CourtManagement = (): JSX.Element => {
         const fetchFacility = async () => {
             try {
                 let facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-                    headers: {
-                        Authorization: `Bearer ${authState.user?.access_token}`,
-                    },
                 });
 
                 console.log(facilityResponse.data);
@@ -151,7 +148,7 @@ const CourtManagement = (): JSX.Element => {
                 return;
             }
 
-            const parsedToken = parseJwt(authState.user?.access_token);
+            const parsedToken = getIdFromToken(authState.user?.access_token);
             const fileBlob = base64ToBlob(selectedImage, 'image/jpeg');
 
             const formData = new FormData();

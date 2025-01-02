@@ -3,7 +3,8 @@ import { Card, Avatar, Typography, Divider, Box, CircularProgress, Grid } from '
 import axios from 'axios';
 import { useAuth } from 'react-oidc-context';
 import { Account } from '@/interfaces/Account';
-import { parseJwt } from '@/services/ParseJwt';
+import { getIdFromToken } from '@/services/DecodedJwt';
+
 
 const AdminAccount = () => {
   const [user, setUser] = useState<Account | null>(null);
@@ -11,6 +12,7 @@ const AdminAccount = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const authState = useAuth();
+
 
 
   const fetchUserDetails = async (userId: string) => {
@@ -25,7 +27,7 @@ const AdminAccount = () => {
   };
 
   useEffect(() => {
-    const userId = parseJwt(authState.user?.access_token).sub;
+    const userId = getIdFromToken(authState.user?.access_token).sub;
     fetchUserDetails(userId);
   }, []);
 
