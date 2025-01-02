@@ -19,18 +19,23 @@ import { useEffect, useState } from "react";
 import { Court } from "@/interfaces/Court";
 import axios from "axios";
 import { Label } from "@mui/icons-material";
+import ReservationFinalizeModal from "./ReservationFinalizeModal";
+import { Facility } from "@/interfaces/Facility";
 
 interface ReservationProps {
+  facility: Facility;
   courts: Court[];
-  handleMakeReservation: (courtId: string, date: Date, hour: number) => void;
+  handleMakeReservation: (court: Court, date: Date, hour: number) => void;
 }
 
 const Reservation = ({
+  facility,
   courts,
   handleMakeReservation,
 }: ReservationProps): JSX.Element => {
-  const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  const [timeSlots, setTimeSlots] = useState<TimeSlotStatus[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<number>(-1);
   const [selectedCourt, setSelectedCourt] = useState<Court | null>(() => {
     if (courts.length > 0) {
@@ -39,17 +44,22 @@ const Reservation = ({
     console.log("No courts found", courts);
     return null;
   });
+
   const [selectedDate] = useState<Date>(() => {
     const date = new Date();
     date.setHours(date.getHours() + 3);
     return date;
   });
 
-  useEffect(() => {
-    if (courts.length > 0) {
-      setSelectedCourt(courts[0]);
-    }
-  }, [courts]);
+  const [isFinalizeModalOpen, setIsFinalizeModalOpen] = useState(false);
+
+  const closeFinalizeModal = () => {
+    setIsFinalizeModalOpen(false);
+  };
+
+  const handleOpenFinalizeModal = () => {
+    setIsFinalizeModalOpen(true);
+  };
 
   const fetchTimeSlots = async (date: string, courtId: string) => {
     try {
@@ -58,13 +68,18 @@ const Reservation = ({
         url: `${apiUrl}/api/v1/reservations/slots/${courtId}/${date}`,
       });
       // Handle the response here
-      console.log(response.data["timeSlots"]);
       setTimeSlots(response.data["timeSlots"]);
     } catch (error) {
       // Handle any errors here
       console.error("Error fetching data:", error);
     }
   };
+
+  useEffect(() => {
+    if (courts.length > 0) {
+      setSelectedCourt(courts[0]);
+    }
+  }, [courts]);
 
   useEffect(() => {
     const currentDate = getFormattedDate(selectedDate);
@@ -276,10 +291,22 @@ const Reservation = ({
       <Stack>
         <Button
           onClick={() => {
-            handleMakeReservation(selectedCourt.id, selectedDate, 1);
+            handleOpenFinalizeModal();
           }}
-        ></Button>
+        >
+          FINALIZE
+        </Button>
       </Stack>
+      <ReservationFinalizeModal
+        isOpen={isFinalizeModalOpen}
+        onClose={closeFinalizeModal}
+        facility={facility}
+        courts={courts}
+        initialCourt={selectedCourt}
+        initialDate={selectedDate}
+        initialHour={selectedTimeSlot}
+        handleMakeReservation={handleMakeReservation}
+      />
     </Stack>
   );
 };

@@ -57,8 +57,9 @@ const CourtDetails: React.FC = () => {
     fetchFacility();
   }, []);
 
-  const makeReservation = async (courtId: string, date: Date, hour: number) => {
+  const makeReservation = async (court: Court, date: Date, hour: number) => {
     try {
+      const courtId = court.id;
       const response = await axios.post(
         `${apiUrl}/api/v1/reservations`,
         {
@@ -785,6 +786,7 @@ const CourtDetails: React.FC = () => {
               </Box>
 
               <Reservation
+                facility={facility}
                 courts={courts}
                 handleMakeReservation={makeReservation}
               />
