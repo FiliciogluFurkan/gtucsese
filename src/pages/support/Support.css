@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: row;
     width: 95vw;
+    font-family: 'Roboto';
 }
 
 .support-question-titles {
@@ -18,6 +19,7 @@
     align-items: end;
     display: flex;
     flex-direction: column;
+    font-family: 'Roboto';
 }
 
 
@@ -25,16 +27,17 @@
     margin: 0.625rem 0 0.9375rem 0; 
     font-size: 1.5rem;
     color: #333;
-    font-family: 'Source Sans Pro', sans-serif;
     width: 11.875rem;
     height: 2rem;
     padding-top: 0.9375rem; 
     padding-bottom: 2.5rem; 
     margin-right: 0.75rem; 
     font-weight: 400; 
+    font-family: 'Roboto';
 }
 
 .support-question-titles-title-items {
+    font-family: 'Roboto';
     width: 12.5rem;
     height: 2.5rem; 
     margin-top: 0.625rem; 
@@ -49,8 +52,8 @@ ul {
 }
 .support-question-titles-title-item {
     font-weight: 400;
-    font-size: 0.875rem;
-    font-family: 'source_sans_proregular', sans-serif !important;
+    font-size: 1rem;
+    font-family: 'Roboto';
     padding: 0.6rem;
     color: #333;
     cursor: pointer;
