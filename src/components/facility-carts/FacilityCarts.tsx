@@ -3,12 +3,12 @@ import {  useState } from "react";
 import axios from "axios";
 import { Box } from "@mui/material";
 import { Facility } from "@/interfaces/Facility";
-import {  } from "react-router-dom";
-interface CourtCartProps {
+
+interface FacilityCartProps {
   facility: Facility;
 }
 
-const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
+const FacilityCarts = ({ facility }: FacilityCartProps): JSX.Element => {
   const fieldId = facility.id;
   console.log(facility);
  
