@@ -1,9 +1,10 @@
 import "src/components/facility-carts/FacilityCarts.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Box } from "@mui/material";
 import { Facility } from "@/interfaces/Facility";
-
+import { Court } from "@/interfaces/Court";
+import { useParams } from "react-router-dom";
 interface CourtCartProps {
   facility: Facility;
 }
@@ -11,8 +12,42 @@ interface CourtCartProps {
 const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
   const fieldId = facility.id;
   console.log(facility);
-
+  const { uuid } = useParams<{ uuid: string }>();
   const [isFavorited, setIsFavorited] = useState(false);
+  const [courts , setCourts] = useState<Court[]>([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    
+    if (facility != null) {
+      const fetchCourts = async () => {
+        try {
+          const response = await axios.get(apiUrl + '/api/v1/courts', {
+            params: { facility: uuid }, 
+          });
+
+          console.log("Courts fetched successfully:", response.data);
+          if(response.status === 200){
+            const courts = response.data as Court[];
+            
+            setCourts(courts);
+          }
+          console.log(courts);
+        } catch (error) {
+          console.error("Error fetching courts:", error);
+        }
+        
+      };
+      
+      fetchCourts();
+      
+      
+    }
+  }, [facility]); 
+
+
+
+
 
   const handleFavoriteToggle = async () => {
     const newFavoriteStatus = !isFavorited;
@@ -111,7 +146,7 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
           }}
         /> */}
       <Box          
-            sx={{display: "flex" , flexDirection: "row"}}        
+            sx={{display: "flex" , flexDirection: "row" , }}        
           >         
         {facility.amenities.map((amenity: { name: string; id: string; imageUrl: string }, ) => (
           
@@ -126,7 +161,24 @@ const FacilityCarts = ({ facility }: CourtCartProps): JSX.Element => {
             }}
           />
         ))}
-      </Box>       
+      </Box>
+
+      <Box          
+            sx={{display: "flex" , flexDirection: "row" ,marginTop: "0.6rem"}}        
+          >         
+        {facility.courts.map((court) => (
+          <Box sx={{width: "1.5rem",
+            height: "1.5rem",
+            textAlign: "center",
+            fontFamily: "Roboto",
+            fontSize: "15px",
+            minWidth: "3rem",
+            margin: "0.3rem 0 0 0.5rem",}} >
+            {court.capacity / 2}+{court.capacity / 2}
+          </Box>
+            
+        ))}
+      </Box>        
         
         {/*
         <hr
