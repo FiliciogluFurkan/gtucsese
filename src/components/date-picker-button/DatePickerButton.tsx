@@ -80,7 +80,12 @@ const AnchoredDatePicker = ({
           slots={{
             field: () => (
               <Stack
+                onClick={() => {
+                  scrollForDatePicker();
+                  setDatePickerOpen(true);
+                }}
                 sx={{
+                  cursor: "pointer",
                   zIndex: 10,
                   display: "flex",
                   outline: 0,
@@ -138,10 +143,6 @@ const AnchoredDatePicker = ({
                 </Stack>
                 <Box
                   id="date-picker-button"
-                  onClick={() => {
-                    scrollForDatePicker();
-                    setDatePickerOpen(true);
-                  }}
                   sx={{
                     fontSize: { xl: "1.2rem", xs: "0.8rem" },
                     padding: "0 !important",
@@ -154,12 +155,7 @@ const AnchoredDatePicker = ({
                     borderRadius: "0.5rem",
                   }}
                 >
-                  <FiCalendar
-                    cursor="pointer"
-                    color="#00B074"
-                    fontWeight={600}
-                    size={22}
-                  />
+                  <FiCalendar color="#00B074" fontWeight={600} size={22} />
                 </Box>
               </Stack>
             ),
