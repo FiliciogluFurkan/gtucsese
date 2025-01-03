@@ -10,11 +10,19 @@ import {
 } from "@mui/material";
 import { Upload } from "@mui/icons-material";
 import axios from "axios";
+import { useEffect } from "react";
+import { Facility } from "@/interfaces/Facility";
+import { useAuth } from 'react-oidc-context';
 
 const PhotographGallery = (): JSX.Element => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [facility, setFacility] = useState<Facility>();
+
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const authState = useAuth();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -24,25 +32,55 @@ const PhotographGallery = (): JSX.Element => {
     }
   };
 
-  const handleSave = () => {
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
 
-      axios
-        .post("http://server.aymoose.ozkuls.com/api/v1/images", formData)
-        .then((response) => {
-          console.log("Success:", response.data);
-          setShowSaveButton(false);
-          setSelectedFile(null);
-
-          setImageUrls((prevUrls) => [...prevUrls, response.data.url]);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
+  useEffect(() => {
+    const fetchFacility = async () => {
+      try {
+        const facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
         });
+
+        // Gelen veriyi formData'ya set et
+        if (facilityResponse.data && facilityResponse.data.length > 0) {
+          setFacility(facilityResponse.data[0]);
+          setImageUrls(facilityResponse.data[0].imageUrls);
+        }
+        console.log(facilityResponse);
+        console.log(facility);
+      } catch (err) {
+        console.error('Error fetching facilities:', err);
+      }
+    };
+    fetchFacility();
+  }, []);
+
+
+  const handleSave = async () => {
+    if (!selectedFile) {
+        console.error("No file selected");
+        return;
     }
-  };
+
+    const formData = new FormData();
+    formData.append('images', selectedFile);
+    formData.append('data', new Blob([JSON.stringify(facility)], { type: 'application/json' }));
+
+    try {
+        const response = await axios.patch(`${apiUrl}/api/v1/facilities/${facility?.id}`, formData, {
+            headers: {
+                Authorization: `Bearer ${authState.user?.access_token}`,
+                'Accept': 'application/json',
+            },
+        });
+
+        console.log(response);
+        imageUrls.push(response.data.url);
+
+    } catch (error) {
+        console.error('Error saving edited facility:', error);
+    }
+};
+
+
 
   return (
     <Card>
