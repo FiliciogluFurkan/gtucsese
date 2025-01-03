@@ -14,11 +14,13 @@ export const useAuthWithRoles = () => {
       const token = user.access_token;
       const decoded = new DecodedJwt(token);
       setDecodedJwt(decoded);
+      console.log("Decoded Jwt:",decoded)
       setId(decoded.getPayload().sub);
+      console.log("ID:",decoded.getPayload().sub)
       const userRoles = decoded.getPayload().realm_access.roles as string[];
       setRoles(userRoles);
     }
-  }, [user]);
+  }, [user,isAuthenticated]);
 
   // Custom logic to check if the user has a certain role
   const hasRole = (role: string) => roles.includes(role);

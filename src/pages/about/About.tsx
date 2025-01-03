@@ -29,7 +29,7 @@ const SahanCepte: React.FC = () => {
         >
           <Box
             sx={{
-              fontFamily: "Roboto",
+              fontFamily: "OpenSans",
               fontSize: "2.2rem",
               fontWeight: "bold",
               background: "linear-gradient(90deg, #2d854b, #3a5ba0, #8e44ad)",
@@ -44,7 +44,7 @@ const SahanCepte: React.FC = () => {
             sx={{
               color: "#252F40",
               fontSize: "2.5rem",
-              fontFamily: "Roboto",
+              fontFamily: "OpenSans",
               fontWeight: "bold",
             }}
           >
@@ -55,7 +55,6 @@ const SahanCepte: React.FC = () => {
               width: "40vw",
               fontSize: "1.3rem",
               color: "#67748E",
-              fontFamily: "Roboto",
               paddingTop: "2.5rem",
             }}
           >
@@ -76,7 +75,6 @@ const SahanCepte: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               paddingTop: "4rem",
-              fontFamily: "Roboto",
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "row", width: "40vw" }}>
@@ -106,7 +104,6 @@ const SahanCepte: React.FC = () => {
                 sx={{
                   fontSize: "1.1rem",
                   fontWeight: 400,
-                  fontFamily: "Roboto",
                   color: "#67748E",
                   paddingTop: "0.4rem",
                   paddingLeft: "1rem",
@@ -115,7 +112,8 @@ const SahanCepte: React.FC = () => {
                   marginTop: "-0.2rem",
                 }}
               >
-                Spor Severler için: Anlaşmalı tesislere kolayca rezervasyon yapabilir, güncel programları görüntüleyebilirsiniz.
+                Tek bir tıkla istediğiniz spor tesisine rezervasyon yapın.
+                 İstediğiniz tarih ve saatte spor yapmanın keyfini çıkarın!
               </Box>
             </Box>
             <Box
@@ -160,7 +158,8 @@ const SahanCepte: React.FC = () => {
                   marginTop: "-0.2rem",
                 }}
               >
-                Spor Tesisleri için: Rezervasyon taleplerini anında görebilir, yönetebilir ve hizmetlerinizi geniş kitlelere duyurabilirsiniz.
+               Anlaşmalı spor tesisleri ile en iyi hizmeti sunuyoruz.
+                Sahan Cepte, spor severler ve tesis sahipleri arasında güvenilir bir köprü kurar.
               </Box>
             </Box>
             <Box
@@ -205,15 +204,15 @@ const SahanCepte: React.FC = () => {
                   marginTop: "-0.2rem",
                 }}
               >
-                7/24 Rezervasyon İmkanı:
-İster sabah, ister gece; Sahan Cepte ile istediğiniz zaman spor yapma planlarınızı organize edin!
+                Zamanınızın değerini biliyoruz. 
+                Sahan Cepte ile uzun telefon görüşmelerine gerek kalmadan hızlı ve pratik bir şekilde rezervasyon yapabilirsiniz.
               </Box>
             </Box>
           </Box>
 
           <Box
             sx={{
-              fontFamily: "Roboto",
+              fontFamily: "OpenSans",
               fontSize: "2.2rem",
               fontWeight: 900,
               color: "#252F40",
@@ -252,7 +251,7 @@ const SahanCepte: React.FC = () => {
                   width: "45vw",
                 }}
               >
-                Dakikalar içinde üye olun, spor dünyasına adım atın! Üstelik üyelik tamamen ücretsiz.
+               Platforma üye olmak sadece birkaç dakika sürer. Kredi kartı bilgisi gerektirmeden hızlıca üye olabilir ve hemen rezervasyon yapmaya başlayabilirsiniz.
               </Box>
             </Box>
             <Box
@@ -282,7 +281,8 @@ const SahanCepte: React.FC = () => {
                   width: "45vw",
                 }}
               >
-                Sevdiğiniz tesislerin açık saatlerinden sundukları hizmetlere kadar tüm detaylara hızlıca ulaşın.
+               Rezervasyon yapmadan önce tesislerin fotoğraflarını görüntüleyebilir, sundukları olanaklar hakkında detaylı bilgi alabilirsiniz.
+                Örneğin: soyunma odaları, duş alanları, otopark veya çocuk oyun alanı.
               </Box>
             </Box>
             <Box
@@ -312,7 +312,8 @@ const SahanCepte: React.FC = () => {
                   width: "45vw",
                 }}
               >
-                Rezervasyon yaptığınız tesisleri değerlendirin ve diğer spor severlere fikir verin. Aynı zamanda diğer kullanıcıların yorumlarını okuyarak en iyi seçimi yapabilirsiniz.
+               Rezervasyon yaptığınız tesisi değerlendirin ve diğer kullanıcılara fikir verin.
+                Ayrıca, diğer kullanıcıların değerlendirmelerine göz atarak en iyi tesisi seçebilirsiniz.
               </Box>
             </Box>
           </Box>
@@ -330,9 +331,9 @@ const SahanCepte: React.FC = () => {
             alt="Sahan Cepte"
             style={{
               width: "100%",
-              height: "calc(100vh - 4.4rem)",
+              height: "100%",
               objectFit: "cover",
-              position: "relative"
+
             }}
           />
         </Box>

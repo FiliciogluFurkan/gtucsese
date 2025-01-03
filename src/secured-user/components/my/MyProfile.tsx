@@ -7,6 +7,10 @@ import { useSendAuthenticatedRequest } from "@/services/UseSendAuthenticatedRequ
 import { useSnackbar } from "@/components/snackbar/Snackbar";
 import { formatInstantAsDate } from "@/services/TimeServices";
 import { useCustomTheme } from "@/themes/Theme";
+import axios from "axios";
+import { useAuth } from "react-oidc-context";
+import ImageModal from "@/services/ImageModal";
+
 
 const MyProfile = (): JSX.Element => {
   const theme = useCustomTheme();
@@ -17,6 +21,8 @@ const MyProfile = (): JSX.Element => {
   const [mailAddress, setMailAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [createdAt, setCreatedAt] = useState("");
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const authState = useAuth();
 
   const showSnackbar = useSnackbar();
 
@@ -70,6 +76,41 @@ const MyProfile = (): JSX.Element => {
     fetchAccount();
   }, []);
 
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Dosya kontrolü
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      // API'ye istek gönderimi
+      const response = await axios.patch(
+        `${apiUrl}/api/v1/account/my/profile-picture`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${authState.user?.access_token}`,
+          },
+        }
+      );
+
+      setIsImageModalOpen(false);
+      console.log("Image uploaded successfully:", response.data);
+    } catch (error: any) {
+      console.error("Error uploading image:", error);
+
+      if (error.response) {
+        console.error("Response error:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Request setup error:", error.message);
+      }
+    }
+  };
+
+
   return (
     <Stack
       sx={{
@@ -84,13 +125,30 @@ const MyProfile = (): JSX.Element => {
           width: "100%",
         }}
       >
-        <Box>
+
+        <Box
+          onClick={() => setIsImageModalOpen(true)}
+          sx={{
+            cursor: "pointer",
+            '&:hover': {
+              opacity: 0.8,
+            }
+          }}
+        >
+          <img
+            src={account?.profilePicture || frieren}
+            alt="profile"
+            style={{ width: "90", height: "90", objectFit: "cover", borderRadius: "50%" }}
+          />
+        </Box>
+
+        {/*  <Box>
           <img
             src={account?.profilePicture || frieren}
             alt="your image"
-            style={{ width: "auto", height: "auto", objectFit: "cover" }}
+            style={{ width: "90", height: "90", objectFit: "cover", borderRadius: "50%" }}
           />
-        </Box>
+        </Box> */}
 
         <Box sx={{ paddingLeft: "2rem", paddingTop: "1.25rem" , backgroundColor: ""}}>
           <Box
@@ -431,6 +489,11 @@ const MyProfile = (): JSX.Element => {
         >
           Değişiklikleri Kaydet
         </Button>
+        <ImageModal
+        isOpen={isImageModalOpen}
+        onClose={() => setIsImageModalOpen(false)}
+        handleImageUpload={handleImageUpload}
+      />
       </Box>
     </Stack>
   );

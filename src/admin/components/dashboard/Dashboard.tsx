@@ -6,20 +6,29 @@ import currentrezervation from "src/assets/images/admindashboard/Group118.png";
 import canceledrezervation from "src/assets/images/admindashboard/Group121.png";
 import totalprice from "src/assets/images/admindashboard/Group84.png";
 import icon2 from "src/assets/images/admindashboard/Icon1.png";
-import CourtsCommentsCards from "@/admin/components/facility-comment-cards/FacilityCommentCards";
-import { Review } from "@/interfaces/Review";
+import CourtsCommentsCards from "src/admin/components/court-comment-cards/CourtCommentCard";
+import { useAuth } from 'react-oidc-context';
+import axios from "axios";
+import { Facility } from "src/interfaces/Facility";
+import { ConvertedReview  } from "@/interfaces/admin/ConvertedReview";
+import { Account } from "@/interfaces/Account";
+import { getIdFromToken } from "@/services/DecodedJwt";
 
 const Dashboard = (): JSX.Element => {
-  const [name, setName] = React.useState<string>("Ahmet");
+
   const [currentRezervations, setCurrentRezervations] =
     React.useState<number>(75);
   const [totalRezervations, setTotalRezervations] = React.useState<number>(380);
   const [cancelledRezervations, setCancelledRezervations] =
     React.useState<number>(21);
   const [totalPrice, setTotalPrice] = React.useState<number>(100);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const authState = useAuth();
+  const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [reviews, setReview] = useState<ConvertedReview []>([]);
+  const [user, setUser] = useState< Account>();
 
   useEffect(() => {
-    setName("Ahmet");
     setCurrentRezervations(75);
     setTotalRezervations(380);
     setCancelledRezervations(21);
@@ -27,107 +36,106 @@ const Dashboard = (): JSX.Element => {
     console.log(totalPrice);
   }, []);
 
-  // nice mock n3gger
-  // TODO: change with real comments
-  const comments = [
-    {
-      id: "1",
-      author: "Ahmet Yılmaz",
-      content:
-        "Harika bir saha, zemini çok iyi. Yiyecek ve içecek olsa daha iyi olurdu. Maçtan sonra terli terli dışarıda yemek yemeden burada yiyip evimize giderdik.",
-      rating: 5,
-      title: "Güzel saha",
-      createdAt: "2",
-      updatedAt: "2",
-      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
-      facilityName: "Saha 1",
-    },
-    {
-      id: "2",
-      author: "Mehmet Kaya",
-      content: "Işıklandırma yetersizdi. Saat 8 oldu hala ışıklar açılmamıştı.",
-      rating: 3.5,
-      title: "Güzel saha",
-      createdAt: "2",
-      updatedAt: "2",
-      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
-      facilityName: "Saha 1",
-    },
-    {
-      id: "3",
-      author: "Elif Demir",
-      content: "Çalışanlar çok ilgiliydi, sahada oynamak keyifliydi.",
-      rating: 4.5,
-      title: "Güzel saha",
-      createdAt: "2",
-      updatedAt: "2",
-      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
-      facilityName: "Saha 1",
-    },
-    {
-      id: "4",
-      author: "Hüseyin Çelik",
-      content: "Saha biraz bakımsız ama yine de keyifliydi.",
-      day: "5",
-      rating: 3,
-    },
-    {
-      id: "5",
-      author: "Ayşe Öztürk",
-      content: "Oldukça ferah ve geniş bir saha. Tavsiye ederim.",
-      rating: 5,
-      title: "Güzel saha",
-      createdAt: "2",
-      updatedAt: "2",
-      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
-      facilityName: "Saha 1",
-    },
-    {
-      id: "6",
-      author: "Emre Şahin",
-      content: "Otopark sorunluydu, biraz daha iyi olabilirdi.",
-      rating: 3,
-      title: "Güzel saha",
-      createdAt: "2",
-      updatedAt: "2",
-      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
-      facilityName: "Saha 1",
-    },
-    {
-      id: "7",
-      author: "Fatma Aydın",
-      content: "Fiyat performans olarak gayet iyi.",
-      rating: 4,
-      title: "Güzel saha",
-      createdAt: "2",
-      updatedAt: "2",
-      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
-      facilityName: "Saha 1",
-    },
-    {
-      id: "8",
-      author: "Ali Yıldırım",
-      content: "Saha güzel ama duşlar biraz kirliydi.",
-      rating: 3,
-      title: "Güzel saha",
-      createdAt: "2",
-      updatedAt: "2",
-      profilePicture: "https://avatarfiles.alphacoders.com/766/76686.png",
-      facilityName: "Saha 1",
-    },
-  ] as Review[];
+  useEffect(() => {
+    console.log(facilities)
+
+    const fetchUser = async () => {
+      const userId = getIdFromToken(authState.user?.access_token).sub;
+      console.log("userId:");
+      console.log(userId);
+
+      try {
+        const response = await axios.get(`${apiUrl}/api/v1/account/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${authState.user?.access_token}`,
+          },
+        });
+        console.log("User:");
+        console.log(response.data);
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchUser();
+
+  }, []);
+
+
+
+  useEffect(() => {
+    const fetchFacilityAndReviews = async () => {
+      try {
+        // Facilities verisini çek
+        const facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
+        });
+
+        if (facilityResponse.data && facilityResponse.data.length > 0) {
+          const facilitiesData = facilityResponse.data;
+          setFacilities(facilitiesData);
+
+          // Reviews verisini çek (ilk facility.id'yi kullanarak)
+          const reviewResponse = await axios.get(`${apiUrl}/api/v1/reviews`, {
+            headers: {
+              Authorization: `Bearer ${authState.user?.access_token}`,
+            },
+            params: {
+              facility: facilitiesData[0]?.id,
+            },
+          });
+
+          if (reviewResponse.data && reviewResponse.data.length > 0) {
+            const reviews = reviewResponse.data;
+            console.log("Reviews:");
+            console.log(reviews);
+
+            const transformedReviews = reviews.map((review: any) => {
+
+              const createdAtDate = new Date(review.createdAt);
+              const today = new Date();
+              const daysAgo = Math.floor(
+                (today.getTime() - createdAtDate.getTime()) / (1000 * 60 * 60 * 24)
+              );
+
+
+              return {
+                fullName: review.author || "Anonim Kullanıcı", // Backend'den gelen "author" alanını kullan
+                content: review.content, // Backend'den gelen yorumu al
+                day: daysAgo, // Hesaplanan gün farkı
+                rating: review.rating, // Backend'den gelen rating
+                title: review.title, // Backend'den gelen başlık
+                imageSrc: review.profilePicture, // Backend'den gelen profil fotoğrafı
+              };
+            });
+            console.log("Transformed reviews:");
+            console.log(transformedReviews);
+            setReview(transformedReviews);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchFacilityAndReviews();
+  }, []); // Sadece bir kez çalıştır
+
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const reviewPerPage = 3;
 
   const handleNext = () => {
-    if (currentIndex < comments.length - 3) {
-      setCurrentIndex(currentIndex + 1);
+    if (currentIndex + reviewPerPage < reviews.length) {
+      setCurrentIndex(currentIndex + reviewPerPage);
     }
   };
 
   const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+
+    if (currentIndex - reviewPerPage >= 0) {
+      setCurrentIndex(currentIndex - reviewPerPage)
+
     }
   };
 
@@ -165,7 +173,7 @@ const Dashboard = (): JSX.Element => {
             marginTop: "1rem",
           }}
         >
-          Merhaba {name}.Halısahalarını admin olarak yönetebilirsin.
+          Merhaba {user?.firstName} {user?.lastName}.Halısahalarını admin olarak yönetebilirsin.
         </Box>
       </Box>
       <Box
@@ -219,7 +227,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain",
+                  objectFit: "contain"
                 }}
               />
             </Box>
@@ -314,7 +322,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain",
+                  objectFit: "contain"
                 }}
               />
             </Box>
@@ -409,7 +417,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain",
+                  objectFit: "contain"
                 }}
               />
             </Box>
@@ -504,7 +512,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain",
+                  objectFit: "contain"
                 }}
               />
             </Box>
@@ -559,14 +567,7 @@ const Dashboard = (): JSX.Element => {
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          marginTop: "3rem",
-          marginBottom: "2rem",
-        }}
-      >
+      <Box sx={{ display: "flex", flexDirection: "row", marginTop: "3rem", marginBottom: "2rem" }}>
         <Box
           sx={{
             fontFamily: "Barlow",
@@ -601,7 +602,7 @@ const Dashboard = (): JSX.Element => {
               backgroundColor: "white",
               "&:hover": {
                 backgroundColor: "white",
-                opacity: 0.9,
+                opacity: 0.9
               },
             }}
           >
@@ -623,7 +624,7 @@ const Dashboard = (): JSX.Element => {
               backgroundColor: "white",
               "&:hover": {
                 backgroundColor: "white",
-                opacity: 0.9,
+                opacity: 0.9
               },
             }}
           >
@@ -643,7 +644,7 @@ const Dashboard = (): JSX.Element => {
           width: "100%",
         }}
       >
-        {comments.slice(currentIndex, currentIndex + 3).map((review, index) => (
+        {reviews.slice(currentIndex, currentIndex + 3).map((review, index) => (
           <Box
             key={index}
             sx={{
