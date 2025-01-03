@@ -13,6 +13,8 @@
 
 body {
     overflow-x: hidden; /* Hide horizontal scrollbar */
+    width: 100vw !important;
+    padding: 0 !important;
 }
 
 .header-image-container {

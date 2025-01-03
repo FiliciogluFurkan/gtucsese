@@ -24,19 +24,111 @@ import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
 import { Court } from "@/interfaces/Court";
 import { useAuthWithRoles } from "@/hooks/UseAuthWithRoles";
-import { formatInstantAsDate } from "../../services/TimeServices";
+import {
+  formatInstantAsDate,
+  getFormattedDate,
+} from "../../services/TimeServices";
+import { useSendAuthenticatedRequest } from "@/services/UseSendAuthenticatedRequest";
+import { useSnackbar } from "@/components/snackbar/Snackbar";
 
-const CourtDetails: React.FC = () => {
+const FacilityDetails: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const [facility, setFacility] = useState<Facility | null>();
   const [courts, setCourts] = useState<Court[]>([]);
   const theme = useCustomTheme();
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const auth = useAuthWithRoles();
+  const [newReview, setNewReview] = useState("");
+  const [title, setTitle] = useState<string>("");
+
   const handleRatingChange = (newValue: any) => {
     setRating(newValue); // Update rating state
   };
   const apiUrl = import.meta.env.VITE_API_URL;
+  const { sendAuthenticatedRequest } = useSendAuthenticatedRequest();
+  const showSnackbar = useSnackbar();
+  const makeReservation = async (court: Court, date: Date, hour: number) => {
+    try {
+      const courtId = court.id;
+      const response = await sendAuthenticatedRequest({
+        method: "post",
+        url: apiUrl + "/api/v1/reservations",
+        data: {
+          courtId: courtId,
+          date: getFormattedDate(date),
+          hour: hour,
+          userId: auth.user?.profile.sub,
+        },
+      });
+
+      if (response.status === 200) {
+        // Başarılı rezervasyon
+        showSnackbar(
+          "Rezervasyon başarılı bir şekilde oluşturuldu.",
+          "success"
+        );
+      }
+    } catch (error) {
+      console.error("Rezervasyon oluşturulurken hata:", error);
+      showSnackbar("Rezervasyon oluşturulurken bir hata oluştu.", "error");
+    }
+  };
+
+  const fetchReviews = async () => {
+    try {
+      const response = await axios({
+        method: "GET",
+        url: apiUrl + "/api/v1/reviews",
+        params: {
+          facility: uuid,
+        },
+      });
+
+      console.log(response.data);
+      setReviews(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const handleReviewChange = (event: any) => {
+    setNewReview(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    if (newReview) {
+      try {
+        const response = await axios.post(
+          apiUrl + "/api/v1/reviews",
+          {
+            userId: auth.user?.profile.sub,
+            facilityId: facility?.id,
+            title: title,
+            content: newReview,
+            rating: rating,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${auth.user?.access_token}`,
+            },
+          }
+        );
+        console.log(response.status);
+        setNewReview(""); // Reset the input field
+        setTitle("");
+        setRating(0);
+        if (response.status === 200) {
+          showSnackbar("Review added successfully", "success");
+          fetchReviews();
+        } else {
+          showSnackbar("Failed to add review", "error");
+        }
+      } catch (error) {
+        // Log the error
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchFacility = async () => {
@@ -56,10 +148,6 @@ const CourtDetails: React.FC = () => {
 
     fetchFacility();
   }, []);
-
-  const makeReservation = (courtId: string, date: Date, hour: number) => {
-    console.log("Making reservation for", courtId, date, hour);
-  };
 
   useEffect(() => {
     if (facility != null) {
@@ -81,68 +169,12 @@ const CourtDetails: React.FC = () => {
       };
 
       fetchCourts();
-      
-      
     }
   }, [facility]);
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios({
-          method: "GET",
-          url: apiUrl + "/api/v1/reviews",
-          params: {
-            facility: uuid,
-          },
-        });
-
-        console.log(response.data);
-        setReviews(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchReviews();
   }, []);
-
-  const auth = useAuthWithRoles();
-  const [newReview, setNewReview] = useState("");
-  const [author, setAuthor] = useState(auth?.user?.access_token || "");
-  console.log(author);
-
-  const handleReviewChange = (event: any) => {
-    setNewReview(event.target.value);
-  };
-
-  const handleSubmit = async () => {
-    if (newReview) {
-      
-      try {
-        const response = await axios.post(
-          apiUrl + "/api/v1/reviews",
-          {
-            userId: auth.user?.profile.sub,
-            facilityId: facility?.id,
-            title: "New Review",
-            content: newReview,
-            rating: rating,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${auth.user?.access_token}`,
-            },
-          }
-        );
-        console.log(response.status)
-        setNewReview(""); // Reset the input field
-      } catch (error) {
-        // Log the error
-        console.error("Error fetching data:", error);
-      }
-    }
-  };
 
   return (
     <Box
@@ -158,8 +190,8 @@ const CourtDetails: React.FC = () => {
     >
       <Box
         sx={{
-          width: { xl: "75%", lg: "80%", sm: "80%", xs: "90%" },
-          maxWidth: { xl: "75%", lg: "80%", sm: "80%", xs: "90%" },
+          width: { xl: "70%", lg: "75%", sm: "80%", xs: "90%" },
+          maxWidth: { xl: "70%", lg: "75%", sm: "80%", xs: "90%" },
           marginTop: { xl: "3rem", lg: "2rem" },
           gap: { xl: "2rem", lg: "1.5rem", xs: "1rem" },
           display: "flex",
@@ -174,7 +206,7 @@ const CourtDetails: React.FC = () => {
 
                 flexDirection: { md: "column", xs: "column" },
                 gap: "1rem",
-                width: { xl: "60%", lg: "60%", sm: "60%" },
+                width: { xl: "70%", lg: "70%", sm: "70%" },
               }}
             >
               {/* Sol Box */}
@@ -317,86 +349,96 @@ const CourtDetails: React.FC = () => {
                       Tesis Özellikleri
                     </Typography>
 
-                    <Box
+                    <Stack
+                      direction="row"
                       sx={{
-                        display: "grid",
-                        gridTemplateColumns: {
-                          xs: "1fr 1fr",
-                          sm: "1fr 1fr 1fr 1fr",
-                        },
-                        gap: "1rem",
-                        color: "#4F4F4F",
+                        flexWrap: "wrap", // Enable wrapping
+                        gap: "2rem", // Optional: Additional gap between rows
+                        margin: "0.5rem", // Optional: Add margin around the Stack
+                        justifyContent: "flex-start",
+                        flexDirection: "row",
+                        width: "100%",
+                        maxWidth: "100%",
+                        minWidth: "100%",
+                        marginLeft: "0px",
                       }}
                     >
-                    <Stack
-                        direction="row"
-                               
-                          sx={{  flexWrap: "wrap", // Enable wrapping
-                            gap: "2rem", // Optional: Additional gap between rows
-                            margin: "0.5rem", // Optional: Add margin around the Stack
-                            justifyContent: "flex-start",
-                            width: "80rem",
-                            maxWidth: "100%",
-                            marginLeft: "0px"}}      
-                        >         
-                      {facility.amenities.map((amenity: { name: string; id: string; imageUrl: string }, ) => (
-                        <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center", // Center items vertically
-                          gap: "0.7rem",
-                          flex: "1 1 calc(15% - 1rem)", // Dynamically size items (adjust for more per row)
-                          minWidth: "6rem", // Minimum width to prevent elements from becoming too small
-                          maxWidth: "15%", // Ensure consistent sizing
-                          boxSizing: "border-box", // Include padding/borders in width calculation
-                      }}
-                      >
-                        <img
-                          src={amenity.imageUrl || "/images/placeholder.png"}
-                          style={{
-                            width: "1.5rem",
-                            height: "1.5rem",
-                            borderRadius: "0.3rem",
-                            objectFit: "cover",
-                           
-                          }}
-                        />
-                        <Typography variant="body2">{amenity.name}</Typography>
-                      </Box>  
-                          
-                      ))}
-                    </Stack>                     
-                    </Box>
+                      {facility.amenities.map(
+                        (amenity: {
+                          name: string;
+                          id: string;
+                          imageUrl: string;
+                        }) => (
+                          <Box
+                            key={amenity.id}
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center", // Center items vertically
+                              gap: "0.7rem",
+                              flex: "1 1 calc(15% - 1rem)", // Dynamically size items (adjust for more per row)
+                              minWidth: "6rem", // Minimum width to prevent elements from becoming too small
+                              maxWidth: "15%", // Ensure consistent sizing
+                              boxSizing: "border-box", // Include padding/borders in width calculation
+                            }}
+                          >
+                            <img
+                              key={amenity.id}
+                              alt="Amenity"
+                              src={
+                                amenity.imageUrl || "/images/placeholder.png"
+                              }
+                              style={{
+                                width: "1.5rem",
+                                height: "1.5rem",
+                                borderRadius: "0.3rem",
+                                objectFit: "cover",
+                              }}
+                            />
+                            <Typography variant="body2">
+                              {amenity.name}
+                            </Typography>
+                          </Box>
+                        )
+                      )}
+                    </Stack>
                   </Box>
                 </Box>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" , flexWrap: "wrap",}}>
-              {courts.map((court : Court) => (
-                <Box
+              <Box
                 sx={{
-                  border: "1px solid #E0E0E0",
-                  borderRadius: "8px",
-                  backgroundColor: "#FFFFFF",
-                  marginTop: "2rem",
-                  minHeight: "30rem",
-                  width: "32%",
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
                   gap: "1rem",
+                  flexWrap: "wrap",
                 }}
               >
-                <img
-                  src={court1}
-                  alt="court1"
-                  style={{
-                    width: "100%",
-                    height: "50%",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                    paddingBottom: "1rem",
-                  }}
-                />
+                {courts.map((court: Court) => (
+                  <Box
+                    key={court.id}
+                    sx={{
+                      border: "1px solid #E0E0E0",
+                      borderRadius: "8px",
+                      backgroundColor: "#FFFFFF",
+                      marginTop: "2rem",
+                      minHeight: "30rem",
+                      width: "32%",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "1rem",
+                    }}
+                  >
+                    <img
+                      src={court1}
+                      alt="court1"
+                      style={{
+                        width: "100%",
+                        height: "50%",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                        paddingBottom: "1rem",
+                      }}
+                    />
 
                     <Typography
                       sx={{
@@ -416,7 +458,7 @@ const CourtDetails: React.FC = () => {
                         flexDirection: "row",
                         gap: "0.75rem",
                         paddingLeft: "1rem",
-                    marginTop: "0.5rem",
+                        marginTop: "0.5rem",
                       }}
                     >
                       <img
@@ -447,7 +489,7 @@ const CourtDetails: React.FC = () => {
                         flexDirection: "row",
                         gap: "0.75rem",
                         paddingLeft: "1rem",
-                    marginTop: "0.25rem",
+                        marginTop: "0.25rem",
                       }}
                     >
                       <img
@@ -476,7 +518,7 @@ const CourtDetails: React.FC = () => {
                         display: "flex",
                         flexDirection: "row",
                         gap: "0.75rem",
-                    marginTop: "0.25rem",
+                        marginTop: "0.25rem",
                         paddingLeft: "1rem",
                       }}
                     >
@@ -511,7 +553,7 @@ const CourtDetails: React.FC = () => {
                   padding: "2rem",
                   backgroundColor: "#FFFFFF",
                   marginTop: "2rem",
-                  minHeight: "300px",
+
                   marginBottom: "8rem",
                 }}
               >
@@ -526,10 +568,23 @@ const CourtDetails: React.FC = () => {
                 >
                   Değerlendirmeler
                 </Typography>
-
+                {/* Reviews */}
+                {reviews.length === 0 && (
+                  <Typography
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "1rem",
+                      fontFamily: "Roboto",
+                      color: "#000000",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    Henüz hiç yorum yapılmamış.
+                  </Typography>
+                )}
                 {reviews.map((review, index) => (
                   <Box
-                    key={index}
+                    key={review.id}
                     sx={{
                       borderBottom:
                         index < reviews.length - 1
@@ -554,17 +609,35 @@ const CourtDetails: React.FC = () => {
                           color: "#000000",
                         }}
                       >
-                        {review.author}
+                        {review.title}
                       </Box>
                       <Box
                         sx={{
                           fontWeight: "300",
-                          fontSize: "1rem",
+                          fontSize: {
+                            xl: "0.9rem",
+                            lg: "0.8rem",
+                            sm: "0.7rem",
+                          },
                           fontFamily: "Roboto",
                           color: "#000000",
                         }}
                       >
-                        {formatInstantAsDate(review.createdAt)}
+                        {" "}
+                        <Box
+                          sx={{
+                            fontSize: {
+                              xl: "0.8rem",
+                              lg: "0.7rem",
+                              sm: "0.7rem",
+                            },
+                          }}
+                          display="inline"
+                          fontWeight={500}
+                        >
+                          {review.author}
+                        </Box>{" "}
+                        - {formatInstantAsDate(review.createdAt)}
                       </Box>
                     </Box>
                     <Box
@@ -599,13 +672,41 @@ const CourtDetails: React.FC = () => {
                     </Box>
                   </Box>
                 ))}
-
+                {!auth.isAuthenticated && (
+                  <Typography
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "1rem",
+                      fontFamily: "Roboto",
+                      color: "#000000",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    Yorum yapabilmek için{" "}
+                    <Box
+                      sx={{
+                        cursor: "pointer",
+                        color: "#4CAF50",
+                        display: "inline",
+                      }}
+                      onClick={() =>
+                        auth.signinRedirect({
+                          redirect_uri: window.location.href,
+                        })
+                      }
+                    >
+                      giriş
+                    </Box>
+                    &nbsp; yapmalısınız.
+                  </Typography>
+                )}
                 {/* Add a new review section */}
                 <Box
                   sx={{
                     marginTop: "2rem",
                     borderTop: "1px solid #E0E0E0",
                     paddingTop: "1rem",
+                    display: auth.isAuthenticated ? "block" : "none",
                   }}
                 >
                   <Typography
@@ -617,32 +718,28 @@ const CourtDetails: React.FC = () => {
                       marginBottom: "1rem",
                     }}
                   >
-                    Add a Review
+                    Yorum Yap
                   </Typography>
                   <TextField
                     variant="outlined"
+                    label="Başlık"
                     fullWidth
-                    value={
-                      auth
-                        ? (auth.decodedJwt?.getPayload().name as string)
-                        : "Anonim Kullanıcı"
-                    }
-                    onChange={(e) => setAuthor(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     sx={{
                       marginBottom: "1rem",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: "8px",
                       },
                     }}
-                    disabled
                   />
                   <TextField
-                    label="Write your review"
+                    label="Yorum Ekle"
                     variant="outlined"
                     multiline
                     rows={4}
                     fullWidth
-                    value={newReview}
+                    value={newReview || ""}
                     onChange={handleReviewChange}
                     sx={{
                       marginBottom: "1.5rem",
@@ -690,17 +787,14 @@ const CourtDetails: React.FC = () => {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      
-                        handleSubmit();
-                       
-
+                      handleSubmit();
                     }}
                     disabled={!auth.isAuthenticated}
                     sx={{
                       borderRadius: "8px",
                       textTransform: "none",
                       padding: "0.5rem 2rem",
-                      backgroundColor:  "#4CAF50", 
+                      backgroundColor: "#4CAF50",
                       "&:hover": {
                         backgroundColor: "#388E3C",
                       },
@@ -718,7 +812,7 @@ const CourtDetails: React.FC = () => {
                 display: "flex",
                 marginTop: { xl: "10rem", lg: "8rem", sm: "7rem" },
                 flexDirection: "column",
-                width: { md: "30%", sm: "40%" },
+                width: { xl: "30%", md: "30%", sm: "30%" },
               }}
             >
               <Button
@@ -727,6 +821,7 @@ const CourtDetails: React.FC = () => {
                   justifyContent: "space-between",
                   paddingBottom: "0.5rem",
                   paddingLeft: "0",
+                  paddingTop: "0rem",
                   fontFamily: "Poppins",
                   color: theme.palette.tx.primary.w500,
                   fontSize: { xl: "0.9rem", xs: "0.8rem" },
@@ -750,6 +845,7 @@ const CourtDetails: React.FC = () => {
               </Box>
 
               <Reservation
+                facility={facility}
                 courts={courts}
                 handleMakeReservation={makeReservation}
               />
@@ -776,4 +872,4 @@ const CourtDetails: React.FC = () => {
   );
 };
 
-export default CourtDetails;
+export default FacilityDetails;

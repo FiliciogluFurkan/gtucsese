@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useCustomTheme } from "@/themes/Theme";
+import success from "src/assets/images/success.svg";
+import error from "src/assets/images/error.svg";
 
 // Define the types for the Snackbar context
 type SnackbarContextType = (
@@ -33,6 +36,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const theme = useCustomTheme();
   const [severity, setSeverity] = useState<
     "success" | "error" | "warning" | "info"
   >("success");
@@ -49,16 +53,83 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
     setOpen(false);
   };
 
+  if (severity === "success") {
+    return (
+      <SnackbarContext.Provider value={showSnackbar}>
+        {children}
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <MuiAlert
+            slots={{
+              closeIcon: () => (
+                <img style={{ width: "24px", height: "24px" }} src={success} />
+              ),
+            }}
+            icon={false}
+            closeText=""
+            sx={{
+              backgroundColor: theme.palette.background.primary.w250,
+              borderRadius: "0.4rem",
+              borderWidth: "2px",
+              fontWeight: 500,
+              borderColor: "rgba(204, 204, 204, 0.35)",
+              fontFamily: "Outfit",
+              paddingX: "2rem",
+              display: "flex",
+              alignItems: "center",
+              color: theme.palette.tx.primary.w500,
+            }}
+            elevation={6}
+            variant="outlined"
+            onClose={handleClose}
+          >
+            {message}
+          </MuiAlert>
+        </Snackbar>
+      </SnackbarContext.Provider>
+    );
+  }
+
+  if (severity === "error") {
+    return (
+      <SnackbarContext.Provider value={showSnackbar}>
+        {children}
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <MuiAlert
+            slots={{
+              closeIcon: () => (
+                <img style={{ width: "24px", height: "24px" }} src={error} />
+              ),
+            }}
+            icon={false}
+            closeText=""
+            sx={{
+              backgroundColor: theme.palette.background.primary.w250,
+              borderRadius: "0.4rem",
+              borderColor: "rgba(204, 204, 204, 0.35)",
+              borderWidth: "1px",
+              fontWeight: 500,
+              fontFamily: "Outfit",
+              paddingX: "2rem",
+              display: "flex",
+              alignItems: "center",
+              color: "rgb(99, 11, 11)",
+            }}
+            elevation={6}
+            variant="outlined"
+            onClose={handleClose}
+          >
+            {message}
+          </MuiAlert>
+        </Snackbar>
+      </SnackbarContext.Provider>
+    );
+  }
+
   return (
     <SnackbarContext.Provider value={showSnackbar}>
       {children}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <MuiAlert
-          elevation={6}
-          variant="filled"
-          severity={severity}
-          onClose={handleClose}
-        >
+        <MuiAlert elevation={6} variant="filled" onClose={handleClose}>
           {message}
         </MuiAlert>
       </Snackbar>
