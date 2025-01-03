@@ -10,20 +10,21 @@ import { TimeSlot } from '@/interfaces/admin/TimeSlot';
 import axios from 'axios';
 import { useAuth } from 'react-oidc-context';
 import { useEffect } from 'react';
-import { AppointmentCard } from '@/interfaces/admin/AppointmentCard';
+import { Reservation } from '@/interfaces/admin/Reservation';
 import { getFormattedDate } from '@/services/TimeServices';
 
-const AppointmentCardBlock = ({ randevu, status }: { randevu: any, status: string }) => (
+
+const ReservationCardBlock = ({ reservation, status }: { reservation:Reservation, status: string }) => (
 
   <Card sx={{ mb: 2, borderRadius: 2, boxShadow: 3, transition: '0.3s', '&:hover': { boxShadow: 6 }, p: 2 }}>
     <CardContent>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box>
           <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-            {randevu.firstName} {randevu.lastName}
+            {reservation.firstName} {reservation.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            {randevu.phoneNumber}
+            {reservation.phoneNumber}
           </Typography>
         </Box>
         <Chip
@@ -35,15 +36,15 @@ const AppointmentCardBlock = ({ randevu, status }: { randevu: any, status: strin
       <Box sx={{ mt: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
           <CalendarToday sx={{ color: 'primary.main', mr: 1 }} />
-          <Typography variant="body2">{randevu.date}</Typography>
+          <Typography variant="body2">{reservation.date}</Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
           <AccessTime sx={{ color: 'success.main', mr: 1 }} />
-          <Typography variant="body2">{randevu.hour}</Typography>
+          <Typography variant="body2">{reservation.hour}</Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <LocationOn sx={{ color: 'error.main', mr: 1 }} />
-          <Typography variant="body2">{randevu.courtName}</Typography>
+          <Typography variant="body2">{reservation.courtName}</Typography>
         </Box>
       </Box>
     </CardContent>
@@ -58,8 +59,8 @@ const Analyzes = (): JSX.Element => {
   const [selectedCourt, setSelectedCourt] = useState<Court>();
   const [courts, setCourts] = useState<Court[]>([]);
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
-  const [cancelledReservations, setCancelledReservations] = useState<AppointmentCard[]>([]);
-  const [rejectedReservations, setRejectedReservations] = useState<AppointmentCard[]>([]);
+  const [cancelledReservations, setCancelledReservations] = useState<Reservation[]>([]);
+  const [rejectedReservations, setRejectedReservations] = useState<Reservation[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
   const authState = useAuth();
 
@@ -133,12 +134,12 @@ const Analyzes = (): JSX.Element => {
       const cancelledReservations = await Promise.all(
         processedTimeSlots
           .filter((slot) => slot?.reservable?.status === "CANCELLED")
-          .map(async (randevu) => {
-            const userDetails = await fetchUserDetails(randevu.reservable.userId);
+          .map(async (reservation) => {
+            const userDetails = await fetchUserDetails(reservation.reservable.userId);
             return {
-              id: randevu.reservable.id,
-              date: randevu.reservable.date,
-              hour: randevu.reservable.hour,
+              id: reservation.reservable.id,
+              date: reservation.reservable.date,
+              hour: reservation.reservable.hour,
               firstName: userDetails?.firstName || '',
               lastName: userDetails?.lastName || '',
               phoneNumber: userDetails?.phoneNumber || '',
@@ -152,12 +153,12 @@ const Analyzes = (): JSX.Element => {
       const rejectedReservations = await Promise.all(
         processedTimeSlots
           .filter((slot) => slot?.reservable?.status === "REJECTED")
-          .map(async (randevu) => {
-            const userDetails = await fetchUserDetails(randevu.reservable.userId);
+          .map(async (reservation) => {
+            const userDetails = await fetchUserDetails(reservation.reservable.userId);
             return {
-              id: randevu.reservable.id,
-              date: randevu.reservable.date,
-              hour: randevu.reservable.hour,
+              id: reservation.reservable.id,
+              date: reservation.reservable.date,
+              hour: reservation.reservable.hour,
               firstName: userDetails?.firstName || '',
               lastName: userDetails?.lastName || '',
               phoneNumber: userDetails?.phoneNumber || '',
@@ -205,7 +206,7 @@ const Analyzes = (): JSX.Element => {
   return (
     <Box sx={{ maxWidth: 900, mx: 'auto', p: 3 }}>
       <Typography variant="h4" align="center" sx={{ mb: 4, fontWeight: 'bold' }}>
-        Halısaha Randevu Yönetimi
+        Halısaha reservation Yönetimi
       </Typography>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
@@ -271,15 +272,15 @@ const Analyzes = (): JSX.Element => {
 
       <Grid container spacing={3}>
         {activeTab === 'iptal' &&
-          cancelledReservations.map((randevu) => (
-            <Grid item xs={12} sm={6} key={randevu.id}>
-              <AppointmentCardBlock randevu={randevu} status={"CANCELLED"} />
+          cancelledReservations.map((reservation) => (
+            <Grid item xs={12} sm={6} key={reservation.id}>
+              <ReservationCardBlock reservation={reservation} status={"CANCELLED"} />
             </Grid>
           ))}
         {activeTab === 'reddedildi' &&
-          rejectedReservations.map((randevu) => (
-            <Grid item xs={12} sm={6} key={randevu.id}>
-              <AppointmentCardBlock randevu={randevu} status={"REJECTED"} />
+          rejectedReservations.map((reservation) => (
+            <Grid item xs={12} sm={6} key={reservation.id}>
+              <ReservationCardBlock reservation={reservation} status={"REJECTED"} />
             </Grid>
           ))}
       </Grid>

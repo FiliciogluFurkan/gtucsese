@@ -4,6 +4,7 @@ import { Clock, Calendar, MapPin, CheckCircle } from 'lucide-react';
 import { useEffect } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { PendingReservations } from '@/interfaces/admin/PendingAppointments';
+import { ReservationResponse } from '@/interfaces/admin/Reservation';
 import axios from 'axios';
 
 const FacilityReservationManagement: React.FC = () => {
@@ -60,21 +61,21 @@ const FacilityReservationManagement: React.FC = () => {
   
       const approvedReservations1 = await Promise.all(
         reservationsData
-          .filter((randevu: any) => {
+          .filter((reservation: ReservationResponse) => {
             // Tarihi dönüştür
-            const [day, month, year] = randevu.date.split('-').map(Number); // Gün, Ay, Yıl olarak ayır
+            const [day, month, year] = reservation.date.split('-').map(Number); // Gün, Ay, Yıl olarak ayır
             const reservationDate = new Date(year, month - 1, day); // Ay 0 tabanlıdır
             reservationDate.setHours(0, 0, 0, 0); // Saatleri sıfırla
             return reservationDate >= today; // Karşılaştır
           })
-          .map(async (randevu: any) => {
-            const userDetails = await fetchUserDetails(randevu.userId);
-            const courtName = await fetchCourtName(randevu.courtId);
+          .map(async (reservation: ReservationResponse) => {
+            const userDetails = await fetchUserDetails(reservation.userId);
+            const courtName = await fetchCourtName(reservation.courtId);
   
             return {
-              id: randevu.id,
-              date: randevu.date,
-              hour: randevu.hour,
+              id: reservation.id,
+              date: reservation.date,
+              hour: reservation.hour,
               firstName: userDetails?.firstName || '',
               lastName: userDetails?.lastName || '',
               phoneNumber: userDetails?.phoneNumber || '',
@@ -98,18 +99,18 @@ const FacilityReservationManagement: React.FC = () => {
           Authorization: `Bearer ${authState.user?.access_token}`,
         },
       });
-  
+      console.log("Pending reservations response:", response.data);
       const reservationsData = response.data;
   
       const pendingReservations1 = await Promise.all(
-        reservationsData.map(async (randevu:any) => {
-          const userDetails = await fetchUserDetails(randevu.userId);
-          const courtName = await fetchCourtName(randevu.courtId);
+        reservationsData.map(async (reservation:ReservationResponse) => {
+          const userDetails = await fetchUserDetails(reservation.userId);
+          const courtName = await fetchCourtName(reservation.courtId);
   
           return {
-            id: randevu.id,
-            date: randevu.date,
-            hour: randevu.hour,
+            id: reservation.id,
+            date: reservation.date,
+            hour: reservation.hour,
             firstName: userDetails?.firstName || '',
             lastName: userDetails?.lastName || '',
             phoneNumber: userDetails?.phoneNumber || '',
@@ -172,33 +173,33 @@ const FacilityReservationManagement: React.FC = () => {
     }
   };
   
-  interface RandevuKartiProps {
-    randevu: PendingReservations;
+  interface ReservationCardProp {
+    reservation: PendingReservations;
     onay: boolean;
     status: string;
   }
 
-  const RandevuKarti: React.FC<RandevuKartiProps> = ({ randevu, onay,status }) => (
+  const ReservationCard: React.FC<ReservationCardProp> = ({ reservation, onay,status }) => (
     <Card sx={{ mb: 2, p: 2, display: 'flex', justifyContent: 'space-between' }}>
       <CardContent>
         <Box>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <Calendar size={20} style={{ marginRight: 8, color: '#1976d2' }} />
             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-              {randevu.date}
+              {reservation.date}
             </Typography>
             <Clock size={20} style={{ margin: '0 8px', color: '#43a047' }} />
-            <Typography variant="body2">{randevu.hour}</Typography>
+            <Typography variant="body2">{reservation.hour}</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <MapPin size={20} style={{ marginRight: 8, color: '#d32f2f' }} />
-            <Typography variant="body2">{randevu.courtName}</Typography>
+            <Typography variant="body2">{reservation.courtName}</Typography>
           </Box>
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-            {randevu.firstName} {randevu.lastName}
+            {reservation.firstName} {reservation.lastName}
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            {randevu.phoneNumber}
+            {reservation.phoneNumber}
           </Typography>
         </Box>
         <Box sx={{ textAlign: 'right',paddingTop:"1rem"}}>
@@ -208,7 +209,7 @@ const FacilityReservationManagement: React.FC = () => {
                 variant="contained"
                 color="success"
                 size="small"
-                onClick={() => acceptReservation(randevu.id)}
+                onClick={() => acceptReservation(reservation.id)}
                 sx={{ mb: 1 }}
               >
                 Onayla
@@ -217,7 +218,7 @@ const FacilityReservationManagement: React.FC = () => {
                 variant="contained"
                 color="error"
                 size="small"
-                onClick={() => rejectReservation(randevu.id)}
+                onClick={() => rejectReservation(reservation.id)}
                 sx={{ mb: 1, ml: 1 }}
               >
                 Reddet
@@ -244,8 +245,8 @@ const FacilityReservationManagement: React.FC = () => {
             <CheckCircle size={20} style={{ marginRight: 8, color: '#ffb300' }} />
             Bekleyen Randevular ({pendingReservations.length})
           </Typography>
-          {pendingReservations.map((randevu) => (
-            <RandevuKarti key={randevu.id} randevu={randevu} onay={true} status={"bekleyen"} />
+          {pendingReservations.map((reservation) => (
+            <ReservationCard key={reservation.id} reservation={reservation} onay={true} status={"bekleyen"} />
           ))}
         </Box>
         <Box sx={{ flex: 1 }}>
@@ -253,8 +254,8 @@ const FacilityReservationManagement: React.FC = () => {
             <CheckCircle size={20} style={{ marginRight: 8, color: '#43a047' }} />
             Onaylanan Randevular ({approvedReservations.length})
           </Typography>
-          {approvedReservations.map((randevu) => (
-            <RandevuKarti key={randevu.id} randevu={randevu} onay={false} status={"reddedildi"} />
+          {approvedReservations.map((reservation) => (
+            <ReservationCard key={reservation.id} reservation={reservation} onay={false} status={"reddedildi"} />
           ))}
         </Box>
       </Box>
