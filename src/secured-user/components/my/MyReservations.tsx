@@ -1,13 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
-import fieldImage2 from "src/assets/images/reservations/fieldImage2.webp";
 import calendar from "src/assets/images/reservations/calendar.png";
 import arrowdown from "src/assets/images/reservations/arrow-down.png";
-import Reservation from "@/components/reservation/Reservation";
 import { useEffect, useState } from "react";
 import { ReservationResponse } from "@/interfaces/admin/Reservation";
 import axios from "axios";
-import { useAuthWithRoles } from "@/hooks/UseAuthWithRoles";
-import { getIdFromToken } from "@/services/DecodedJwt";
 import { useSnackbar } from "@/components/snackbar/Snackbar";
 import { useSendAuthenticatedRequest } from "@/services/UseSendAuthenticatedRequest";
 import { ImagedReservation } from "@/secured-user/interfaces/ImagedReservation";
@@ -28,7 +24,6 @@ const MyReservations = (): JSX.Element => {
     ImagedReservation[]
   >([]);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const auth = useAuthWithRoles();
   const theme = useCustomTheme();
   const { sendAuthenticatedRequest } = useSendAuthenticatedRequest();
   const showSnackbar = useSnackbar();
@@ -216,7 +211,7 @@ const MyReservations = (): JSX.Element => {
                 >
                   <img
                     src={arrowdown}
-                    alt="your image"
+                    alt="see more"
                     style={{
                       width: "auto",
                       height: "auto",
