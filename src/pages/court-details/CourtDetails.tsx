@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Divider,
+  Modal,
   Rating,
   Stack,
   TextField,
@@ -41,7 +42,27 @@ const FacilityDetails: React.FC = () => {
   const auth = useAuthWithRoles();
   const [newReview, setNewReview] = useState("");
   const [title, setTitle] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
+  const handleNext = (): void => {
+    if (facility && facility.imageUrls.length > 0) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === facility.imageUrls.length - 1 ? 0 : prevIndex + 1
+      );
+    }
+  };
+  
+  const handlePrev = (): void => {
+    if (facility && facility.imageUrls.length > 0) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? facility.imageUrls.length - 1 : prevIndex - 1
+      );
+    }
+  };
+  
   const handleRatingChange = (newValue: any) => {
     setRating(newValue); // Update rating state
   };
@@ -816,19 +837,80 @@ const FacilityDetails: React.FC = () => {
               }}
             >
               <Button
+                onClick={handleOpen}
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   paddingBottom: "0.5rem",
                   paddingLeft: "0",
-                  paddingTop: "0rem",
                   fontFamily: "Poppins",
-                  color: theme.palette.tx.primary.w500,
+                  color: "primary.main",
                   fontSize: { xl: "0.9rem", xs: "0.8rem" },
                 }}
               >
                 Tüm Görselleri İncele <Box>&rarr;</Box>
               </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                BackdropProps={{
+                  style: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                  },
+                }}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Box sx={{ position: 'relative', width: '90vw', maxWidth: '800px' }}>
+                  <Button
+                    onClick={handlePrev}
+                    sx={{
+                      position: 'absolute',
+                      left: '-75px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      backgroundColor: 'transparent',
+                      color: 'white',
+                      border: 'none',
+                      fontSize: '3rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                  &lt;
+                  </Button>
+                  <img
+                    src={facility?.imageUrls[currentImageIndex] || ''}
+                    alt={`Görsel ${currentImageIndex + 1}`}
+                    style={{
+                      width: '100%',
+                      maxHeight: '90vh',
+                      objectFit: 'contain',
+                      borderRadius: '8px',
+                    }}
+                  />
+                  <Button
+                    onClick={handleNext}
+                    sx={{
+                      position: 'absolute',
+                      right: '-75px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      backgroundColor: 'transparent',
+                      color: 'white',
+                      border: 'none',
+                      fontSize: '3rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    &gt;
+                  </Button>
+                </Box>
+              </Modal>
               <Divider sx={{ borderColor: "rgb(240,240,240) !important" }} />
               <Box sx={{ marginBottom: "1rem" }}>
                 <img

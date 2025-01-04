@@ -109,6 +109,7 @@ const Footer: React.FC = () => {
                     color: theme.palette.tx.secondary.w300,
                     textDecoration: "none",
                     fontSize: { xs: "0.95rem", sm: "1.1rem" },
+                    fontFamily: "Roboto",
                     fontWeight: 400,
                     "&:hover": {
                       color: theme.palette.tx.secondary.w600,
