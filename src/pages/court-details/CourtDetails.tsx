@@ -20,7 +20,6 @@ import Map from "src/assets/images/CourtDetails/Map.png";
 import { Review } from "@/interfaces/Review";
 import axios from "axios";
 import Reservation from "@/components/reservation/Reservation";
-import { useCustomTheme } from "@/themes/Theme";
 import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
 import { Court } from "@/interfaces/Court";
@@ -36,7 +35,6 @@ const FacilityDetails: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const [facility, setFacility] = useState<Facility | null>();
   const [courts, setCourts] = useState<Court[]>([]);
-  const theme = useCustomTheme();
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState<Review[]>([]);
   const auth = useAuthWithRoles();
