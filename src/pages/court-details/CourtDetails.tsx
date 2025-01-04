@@ -449,7 +449,7 @@ const FacilityDetails: React.FC = () => {
                     }}
                   >
                     <img
-                      src={court1}
+                      src={court.images && court.images.length > 0 ? court.images[0] : court1}
                       alt="court1"
                       style={{
                         width: "100%",
