@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { GoChevronLeft , GoChevronRight} from "react-icons/go";
 import "@/pages/court-details/CourtDetails.css";
 import locationSymbol from "src/assets/images/CourtDetails/locationSymbol.png";
 import court1 from "src/assets/images/CourtDetails/court1.png";
@@ -869,43 +870,72 @@ const FacilityDetails: React.FC = () => {
                     onClick={handlePrev}
                     sx={{
                       position: 'absolute',
-                      left: '-75px',
-                      top: '50%',
+                      left: '-100px',
+                      top: '45%',
                       transform: 'translateY(-50%)',
                       backgroundColor: 'transparent',
                       color: 'white',
                       border: 'none',
-                      fontSize: '3rem',
+                      fontSize: '4rem',
                       cursor: 'pointer',
                     }}
                   >
-                  &lt;
+                  <GoChevronLeft style={{ fontSize: '4rem', color: 'white' }} />
                   </Button>
                   <img
                     src={facility?.imageUrls[currentImageIndex] || ''}
                     alt={`Görsel ${currentImageIndex + 1}`}
                     style={{
                       width: '100%',
-                      maxHeight: '90vh',
-                      objectFit: 'contain',
+                      aspectRatio: '16 / 9',
+                      objectFit: 'cover',
                       borderRadius: '8px',
                     }}
                   />
+                  <Box sx={{ display: 'flex', marginTop: '10px', overflowX: 'auto', padding: '10px' ,justifyContent: 'center', flexWrap: 'wrap',}}>
+                    {facility?.imageUrls.map((imageUrl, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          marginRight: '10px',
+                          cursor: 'pointer',
+                          border: currentImageIndex === index ? '3px solid #ffffff' : 'none', // Highlight the current image
+                          padding: '2px',
+                          borderRadius: '5px',
+                          '&:hover': {
+                            border: '3px solidrgb(252, 252, 252)', // Border on hover
+                          },
+                        }}
+                        onClick={() => setCurrentImageIndex(index)}
+                      >
+                        <img
+                          src={imageUrl}
+                          alt={`Small Image ${index + 1}`}
+                          style={{
+                            width: '96px',
+                            height: '54px',
+                            objectFit: 'cover',
+                            borderRadius: '5px',
+                          }}
+                        />
+                      </Box>
+                    ))}
+                  </Box>
                   <Button
                     onClick={handleNext}
                     sx={{
                       position: 'absolute',
-                      right: '-75px',
-                      top: '50%',
+                      right: '-100px',
+                      top: '45%',
                       transform: 'translateY(-50%)',
                       backgroundColor: 'transparent',
                       color: 'white',
                       border: 'none',
-                      fontSize: '3rem',
+                      fontSize: '4rem', // This is for the button size
                       cursor: 'pointer',
                     }}
                   >
-                    &gt;
+                    <GoChevronRight style={{ fontSize: '4rem', color: 'white' }} />
                   </Button>
                 </Box>
               </Modal>
