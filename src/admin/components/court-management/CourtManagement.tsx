@@ -288,8 +288,7 @@ const CourtManagement = (): JSX.Element => {
                                         fontWeight: 500,
                                         fontSize: '0.9rem',
                                         cursor: 'pointer',
-
-                                    }}
+                                    }}    
                                 >
                                     {!court.isActive ? 'Aktif' : 'Pasif'}
                                 </Box>

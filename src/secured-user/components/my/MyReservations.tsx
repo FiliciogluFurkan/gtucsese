@@ -145,7 +145,7 @@ const MyReservations = (): JSX.Element => {
               <Typography
                 sx={{ fontSize: "1rem", color: "gray", textAlign: "center" }}
               >
-                Henüz aktif rezervasyonunuz bulunmamaktadır.
+                 Henüz aktif rezervasyonunuz bulunmamaktadır.
               </Typography>
             )}
           </Stack>
