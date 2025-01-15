@@ -18,13 +18,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
+import { City } from "@/interfaces/CityDistrict";
+import { District } from "@/interfaces/CityDistrict";
 
 
-const cities = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya"];
 
-const districts = ["Kadıköy", "Çankaya", "Bornova", "Osmangazi", "Muratpaşa"];
+
+
 
 const Facilities = (): JSX.Element => {
+  const [cities, setCities] = useState<City[]>([]);
+  const [districts, setDistricts] = useState<District[]>([]);
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string>(
     "Cumhuriyet, Gebze teknik üniversitesi tenis kulübü, 41400 Gebze/Kocaeli"
@@ -36,6 +40,27 @@ const Facilities = (): JSX.Element => {
   const apiUrl = "https://server.sahancepte.com";
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get(        
+          apiUrl + "/api/v1/cities",
+          {
+            
+          }
+        );
+        setCities(response.data);
+        console.log(response.data);
+      } catch (err) {
+        
+      }
+    };
+    fetchCities();
+    console.log(cities);
+  }, []);
+
+
 
   useEffect(() => {
     const fetchFields = async () => {
@@ -75,49 +100,47 @@ const Facilities = (): JSX.Element => {
   const [selectedCity, setSelectedCity] = React.useState<string>("");
   const [selectedDistrict, setSelectedDistrict] = React.useState<string>("");
 
-  const handleSelect = (item: string) => {
-    if (listType === "cities") {
-      setSelectedCity(item);
+  const handleSelect = (item: string | City | District) => {
+    if (listType === "cities" && typeof item !== "string") {
+      const city = item as City;  // Cast item to City type
+      setSelectedCity(city.name);
+      setDistricts(city.districts || []);
       setSelectedDistrict("");
-    } else if (listType === "districts") {
-      setSelectedDistrict(item);
+    } else if (listType === "districts" && typeof item !== "string") {
+      const district = item as District;  // Cast item to District type
+      setSelectedDistrict(district.name);
     }
-    handleClose();
+    handleClose();  // Close the popover after selection
   };
-
   const handleSortChange = (event: SelectChangeEvent<string>) => {
     const selectedValue = event.target.value;
 
     setSortOption(selectedValue);
-    fetchSortedData(selectedValue);
+    sortFacilities(selectedValue);
   };
 
-  type SortOption =
-    | "recommended"
-    | "priceAsc"
-    | "priceDesc"
-    | "ratingAsc"
-    | "ratingDesc";
-  const fetchSortedData = async (sortOption: string) => {
-    const validSortOptions: SortOption[] = [
-      "recommended",
-      "priceAsc",
-      "priceDesc",
-      "ratingAsc",
-      "ratingDesc",
-    ];
-
-    if (validSortOptions.includes(sortOption as SortOption)) {
-      try {
-        // const response = await axios.get(`/api/items?sortOption=${sortOption}`);
-        //  setFields(response.data);
-      } catch (error) {
-        console.error("Error fetching sorted data:", error);
+ 
+    const sortFacilities = (sortOption: string) => {
+      let sortedFacilities;
+      switch (sortOption) {
+        case "priceAsc":
+          sortedFacilities = [...facilities].sort((a, b) => a.lowerPriceLimit - b.lowerPriceLimit);
+          break;
+        case "priceDesc":
+          sortedFacilities = [...facilities].sort((a, b) => b.lowerPriceLimit - a.lowerPriceLimit);
+          break;
+        case "ratingAsc":
+          sortedFacilities = [...facilities].sort((a, b) => parseFloat(a.rating) - parseFloat(b.rating));
+          break;
+        case "ratingDesc":
+          sortedFacilities = [...facilities].sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+          break;
+        default:  // "recommended" or any default case
+          sortedFacilities = facilities;  // Keep original order for "recommended"
+          break;
       }
-    } else {
-      console.error("Invalid sort option");
-    }
-  };
+      setFacilities(sortedFacilities);  // Update state with sorted data
+    };
 
   return (
     <div>
@@ -209,18 +232,21 @@ const Facilities = (): JSX.Element => {
           >
             {(listType === "cities" ? cities : districts).map((item, index) => (
               <ListItem
-                component="li"
-                key={index}
-                onClick={() => handleSelect(item)}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "#d3e3fd",
-                  },
-                  backgroundColor: "rgba(0, 0, 0, 50, 0.5)",
-                }}
-              >
-                <ListItemText primary={item} sx={{ color: "#333" }} />
-              </ListItem>
+              component="li"
+              key={index}
+              onClick={() => handleSelect(item)}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#d3e3fd",
+                },
+                backgroundColor: "rgba(0, 0, 0, 50, 0.5)",
+              }}
+            >
+              <ListItemText 
+                primary={typeof item === "string" ? item : item.name}  // Access name if item is a City or District object
+                sx={{ color: "#333" }} 
+              />
+            </ListItem>
             ))}
           </List>
         </Popover>
@@ -312,27 +338,32 @@ const Facilities = (): JSX.Element => {
         <Box sx={{ width: "60%", overflowY: "auto", height: "100vh", flex: 1 }}>
         
           <div className="footballcourts-list-fields-section">
-            {facilities.map((facility) => { 
-              
-              const handleMouseEnter = () => {
-                setSelectedLocation(facility.location);
-              };
+          {facilities
+      .filter(
+        (facility) =>
+          (!selectedCity || facility.city === selectedCity) &&
+          (!selectedDistrict || facility.district === selectedDistrict)
+      )
+      .map((facility) => {
+        const handleMouseEnter = () => {
+          setSelectedLocation(facility.location);
+        };
 
-              const handleClick = () => {
-                navigate(`/halisaha/${facility.id}`);
-              };
+        const handleClick = () => {
+          navigate(`/halisaha/${facility.id}`);
+        };
 
-              return (
-                <div
-                  key={facility.id}
-                  onMouseEnter={handleMouseEnter}
-                  onClick={handleClick}
-                >
-                  <FacilityCarts facility={facility} />
-                  <hr className="footballcourts-container-informations-hr-list-section" />
-                </div>
-              );
-            })}
+        return (
+          <div
+            key={facility.id}
+            onMouseEnter={handleMouseEnter}
+            onClick={handleClick}
+          >
+            <FacilityCarts facility={facility} />
+            <hr className="footballcourts-container-informations-hr-list-section" />
+          </div>
+        );
+      })}
           </div>
           
         </Box>
