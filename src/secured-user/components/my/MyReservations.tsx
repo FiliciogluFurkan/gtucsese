@@ -126,7 +126,7 @@ const MyReservations = (): JSX.Element => {
               paddingBottom: "1.5rem",
             }}
           >
-            Lorem Ipsum is simply dummy text of the printing
+
           </Box>
           <Stack
             sx={{
@@ -134,13 +134,22 @@ const MyReservations = (): JSX.Element => {
               gap: { xl: "1rem", lg: "0.8rem" },
             }}
           >
-            {pendingReservations.map((reservation) => (
-              <ReservationCard
-                key={reservation.reservation.id}
-                imagedReservation={reservation}
-              />
-            ))}
+            {pendingReservations.length > 0 ? (
+              pendingReservations.map((reservation) => (
+                <ReservationCard
+                  key={reservation.reservation.id}
+                  imagedReservation={reservation}
+                />
+              ))
+            ) : (
+              <Typography
+                sx={{ fontSize: "1rem", color: "gray", textAlign: "center" }}
+              >
+                Henüz aktif rezervasyonunuz bulunmamaktadır.
+              </Typography>
+            )}
           </Stack>
+
         </Box>
 
         <Box
@@ -196,7 +205,7 @@ const MyReservations = (): JSX.Element => {
                       paddingBottom: "1.5rem",
                     }}
                   >
-                    Lorem Ipsum is simply dummy text of the printing
+
                   </Box>
                 </Stack>
                 <Box
@@ -226,12 +235,21 @@ const MyReservations = (): JSX.Element => {
                   gap: { xs: "1rem", lg: "0.5rem" },
                 }}
               >
-                {restOfReservations.map((reservation) => (
-                  <ReservationCard
-                    key={reservation.reservation.id}
-                    imagedReservation={reservation}
-                  />
-                ))}
+                {restOfReservations.length > 0 ? (
+                  restOfReservations.map((reservation) => (
+                    <ReservationCard
+                      key={reservation.reservation.id}
+                      imagedReservation={reservation}
+                    />
+                  ))
+                ) : (
+                  <Typography
+                    sx={{ fontSize: "1rem", color: "gray", textAlign: "center" }}
+                  >
+                    Henüz aktif rezervasyonunuz bulunmamaktadır.
+                  </Typography>
+                )}
+
               </Stack>
             </Box>
           </Box>
@@ -362,32 +380,6 @@ const ReservationCard = ({
             justifyContent: "space-between",
           }}
         >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#36C191",
-              color: "#ffffff",
-              width: "123px",
-              height: "30px",
-              padding: "0.5rem 3rem",
-              borderRadius: "7.5px",
-              fontSize: "13px",
-              fontWeight: "400",
-              fontFamily: "Poppins",
-              cursor: "pointer",
-              transition: "background-color 0.3s ease",
-              marginRight: { xl: "1.4rem", lg: "1rem", xs: "0.5rem" },
-              marginTop: "1rem",
-              "&:hover": {
-                backgroundColor: "#57AE76",
-              },
-            }}
-          >
-            Değerlendir
-          </Box>
-
           <Box
             sx={{
               fontFamily: "Quicksand",
