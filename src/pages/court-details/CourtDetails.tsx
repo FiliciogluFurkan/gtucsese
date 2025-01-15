@@ -3,11 +3,13 @@ import {
   Box,
   Button,
   Divider,
+  Modal,
   Rating,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
+import { GoChevronLeft , GoChevronRight} from "react-icons/go";
 import "@/pages/court-details/CourtDetails.css";
 import locationSymbol from "src/assets/images/CourtDetails/locationSymbol.png";
 import court1 from "src/assets/images/CourtDetails/court1.png";
@@ -19,7 +21,6 @@ import Map from "src/assets/images/CourtDetails/Map.png";
 import { Review } from "@/interfaces/Review";
 import axios from "axios";
 import Reservation from "@/components/reservation/Reservation";
-import { useCustomTheme } from "@/themes/Theme";
 import { useParams } from "react-router-dom";
 import { Facility } from "@/interfaces/Facility";
 import { Court } from "@/interfaces/Court";
@@ -35,13 +36,32 @@ const FacilityDetails: React.FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const [facility, setFacility] = useState<Facility | null>();
   const [courts, setCourts] = useState<Court[]>([]);
-  const theme = useCustomTheme();
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState<Review[]>([]);
   const auth = useAuthWithRoles();
   const [newReview, setNewReview] = useState("");
   const [title, setTitle] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
+  const handleNext = (): void => {
+    if (facility && facility.imageUrls.length > 0) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === facility.imageUrls.length - 1 ? 0 : prevIndex + 1
+      );
+    }
+  };
+  
+  const handlePrev = (): void => {
+    if (facility && facility.imageUrls.length > 0) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? facility.imageUrls.length - 1 : prevIndex - 1
+      );
+    }
+  };
+  
   const handleRatingChange = (newValue: any) => {
     setRating(newValue); // Update rating state
   };
@@ -429,7 +449,7 @@ const FacilityDetails: React.FC = () => {
                     }}
                   >
                     <img
-                      src={court1}
+                      src={court.images && court.images.length > 0 ? court.images[0] : court1}
                       alt="court1"
                       style={{
                         width: "100%",
@@ -816,19 +836,109 @@ const FacilityDetails: React.FC = () => {
               }}
             >
               <Button
+                onClick={handleOpen}
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   paddingBottom: "0.5rem",
                   paddingLeft: "0",
-                  paddingTop: "0rem",
                   fontFamily: "Poppins",
-                  color: theme.palette.tx.primary.w500,
+                  color: "primary.main",
                   fontSize: { xl: "0.9rem", xs: "0.8rem" },
                 }}
               >
                 Tüm Görselleri İncele <Box>&rarr;</Box>
               </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+                BackdropProps={{
+                  style: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+                  },
+                }}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Box sx={{ position: 'relative', width: '90vw', maxWidth: '800px' }}>
+                  <Button
+                    onClick={handlePrev}
+                    sx={{
+                      position: 'absolute',
+                      left: '-100px',
+                      top: '45%',
+                      transform: 'translateY(-50%)',
+                      backgroundColor: 'transparent',
+                      color: 'white',
+                      border: 'none',
+                      fontSize: '4rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                  <GoChevronLeft style={{ fontSize: '4rem', color: 'white' }} />
+                  </Button>
+                  <img
+                    src={facility?.imageUrls[currentImageIndex] || ''}
+                    alt={`Görsel ${currentImageIndex + 1}`}
+                    style={{
+                      width: '100%',
+                      aspectRatio: '16 / 9',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                    }}
+                  />
+                  <Box sx={{ display: 'flex', marginTop: '10px', overflowX: 'auto', padding: '10px' ,justifyContent: 'center', flexWrap: 'wrap',}}>
+                    {facility?.imageUrls.map((imageUrl, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          marginRight: '10px',
+                          cursor: 'pointer',
+                          border: currentImageIndex === index ? '3px solid #ffffff' : 'none', // Highlight the current image
+                          padding: '2px',
+                          borderRadius: '5px',
+                          '&:hover': {
+                            border: '3px solidrgb(252, 252, 252)', // Border on hover
+                          },
+                        }}
+                        onClick={() => setCurrentImageIndex(index)}
+                      >
+                        <img
+                          src={imageUrl}
+                          alt={`Small Image ${index + 1}`}
+                          style={{
+                            width: '96px',
+                            height: '54px',
+                            objectFit: 'cover',
+                            borderRadius: '5px',
+                          }}
+                        />
+                      </Box>
+                    ))}
+                  </Box>
+                  <Button
+                    onClick={handleNext}
+                    sx={{
+                      position: 'absolute',
+                      right: '-100px',
+                      top: '45%',
+                      transform: 'translateY(-50%)',
+                      backgroundColor: 'transparent',
+                      color: 'white',
+                      border: 'none',
+                      fontSize: '4rem', // This is for the button size
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <GoChevronRight style={{ fontSize: '4rem', color: 'white' }} />
+                  </Button>
+                </Box>
+              </Modal>
               <Divider sx={{ borderColor: "rgb(240,240,240) !important" }} />
               <Box sx={{ marginBottom: "1rem" }}>
                 <img
