@@ -1,9 +1,5 @@
 import React from "react";
 import "src/pages/homepage/Homepage.css";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { Box, Divider, List, ListItem, ListItemText, Popover, Stack, Typography } from "@mui/material";
 import { useCustomTheme } from "src/themes/Theme";
@@ -21,7 +17,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
-import { FaG } from "react-icons/fa6";
 
 const Homepage: React.FC = () => {
   const [cities, setCities] = useState<City[]>([]);
@@ -29,8 +24,7 @@ const Homepage: React.FC = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);4
   const [filteredFacilities, setFilteredFacilities] = useState<Facility[]>([]);
   const [listType, setListType] = useState<"cities" | "districts" | "facilities" | null>(null);
-  const [days] = React.useState<string[]>([]);
-  const [day, setDay] = React.useState<string>("");
+ 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const theme = useCustomTheme();
   const [selectedCity, setSelectedCity] = React.useState<string>("");
@@ -96,6 +90,7 @@ const Homepage: React.FC = () => {
         setSelectedDistrict(district.name);
       } else if (listType === "facilities" && typeof item !== "string") {
         const facility = item as Facility;
+        setSelectedFacility(facility.name);
         navigate(`/halisaha/${facility.id}`);  
                
       }
