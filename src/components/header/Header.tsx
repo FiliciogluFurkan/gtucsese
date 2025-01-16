@@ -63,7 +63,7 @@ const Header = ({ currentTheme }: HeaderProps): JSX.Element => {
     if (userId) {
       fetchUserDetails(userId);
     }
-  });
+  },[authState.user?.access_token]);
   
   const isSelected = (path: string) => location.pathname === path;
 
