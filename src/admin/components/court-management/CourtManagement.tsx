@@ -265,7 +265,7 @@ const CourtManagement = (): JSX.Element => {
                                     onClick={() => toggleStatus(index)}
                                     sx={{
                                         padding: '0.3rem 0.8rem',
-                                        backgroundColor: court.isActive ? '#8bc34a' : '#e57373',
+                                        backgroundColor: !court.isActive ? '#8bc34a' : '#e57373',
                                         color: '#fff',
                                         borderRadius: '15px',
                                         fontWeight: 500,
@@ -276,22 +276,21 @@ const CourtManagement = (): JSX.Element => {
                                         },
                                     }}
                                 >
-                                    {court.isActive ? 'Aktif' : 'Pasif'}
+                                    {!court.isActive ? 'Aktif' : 'Pasif'}
                                 </Box>
                             ) : (
                                 <Box
                                     sx={{
                                         padding: '0.3rem 0.8rem',
-                                        backgroundColor: court.isActive ? '#8bc34a' : '#e57373',
+                                        backgroundColor: !court.isActive ? '#8bc34a' : '#e57373',
                                         color: '#fff',
                                         borderRadius: '15px',
                                         fontWeight: 500,
                                         fontSize: '0.9rem',
                                         cursor: 'pointer',
-
-                                    }}
+                                    }}    
                                 >
-                                    {court.isActive ? 'Aktif' : 'Pasif'}
+                                    {!court.isActive ? 'Aktif' : 'Pasif'}
                                 </Box>
                             )}
 
