@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, List, ListItem, ListItemText, Popover, Stack, Typography } from "@mui/material";
 import { useCustomTheme } from "src/themes/Theme";
 import { IoBookmarksOutline, IoLocateOutline, IoSearch } from "react-icons/io5";
 import { TbSoccerField } from "react-icons/tb";
@@ -14,16 +14,105 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { GoComment } from "react-icons/go";
 import { PiCityLight } from "react-icons/pi";
 import BlackBg5 from "src/assets/images/black-bg-5.svg";
+import { Facility } from "@/interfaces/Facility";
+import { City } from "@/interfaces/CityDistrict";
+import { District } from "@/interfaces/CityDistrict";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import SearchIcon from "@mui/icons-material/Search";
+import { FaG } from "react-icons/fa6";
+
 const Homepage: React.FC = () => {
-  const [cities] = React.useState<string[]>([]);
-  const [city, setCity] = React.useState<string>("");
-  const [towns] = React.useState<string[]>([]);
-  const [town, setTown] = React.useState<string>("");
+  const [cities, setCities] = useState<City[]>([]);
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [facilities, setFacilities] = useState<Facility[]>([]);4
+  const [filteredFacilities, setFilteredFacilities] = useState<Facility[]>([]);
+  const [listType, setListType] = useState<"cities" | "districts" | "facilities" | null>(null);
   const [days] = React.useState<string[]>([]);
   const [day, setDay] = React.useState<string>("");
-
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const theme = useCustomTheme();
+  const [selectedCity, setSelectedCity] = React.useState<string>("");
+  const [selectedDistrict, setSelectedDistrict] = React.useState<string>("");
+  const [selectedFacility, setSelectedFacility] = React.useState<string>("");
+  const apiUrl = "https://server.sahancepte.com";
+  
+  const navigate = useNavigate();
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get(        
+          apiUrl + "/api/v1/cities",
+          {
+            
+          }
+        );
+        setCities(response.data);
+        console.log(response.data);
+      } catch (err) {
+        
+      }
+    };
+    fetchFacilities();
+    fetchCities();
+    console.log(cities);
+  }, []);
 
+  const fetchFacilities = async () => {
+    const response = await axios.get(apiUrl + "/api/v1/facilities");
+
+    if(response.status === 200) {
+      const facilities = response.data;
+      setFacilities(facilities);
+    }
+  }
+
+  const filterFacilities = () => {
+    const filteredFacilities = facilities
+    .filter(
+      (facility) =>
+        (!selectedCity || facility.city === selectedCity) &&
+        (!selectedDistrict || facility.district === selectedDistrict)
+    )
+    
+    setFilteredFacilities(filteredFacilities);
+  }
+
+  useEffect(() => {
+   filterFacilities();
+  }, [facilities]); 
+  
+  const handleSelect = (item: string | City | District | Facility) => {
+      if (listType === "cities" && typeof item !== "string") {
+        const city = item as City;  // Cast item to City type
+        setSelectedCity(city.name);
+        setDistricts(city.districts || []);
+        setSelectedDistrict("");
+      } else if (listType === "districts" && typeof item !== "string") {
+        const district = item as District;  // Cast item to District type
+        setSelectedDistrict(district.name);
+      } else if (listType === "facilities" && typeof item !== "string") {
+        const facility = item as Facility;
+        navigate(`/halisaha/${facility.id}`);  
+               
+      }
+      handleClose();  // Close the popover after selection
+    };
+    const handleClick = (
+        event: React.MouseEvent<HTMLButtonElement>,
+        type: "cities" | "districts" | "facilities"
+      ) => {
+        setAnchorEl(event.currentTarget);
+        setListType(type);
+      };
+      fetchFacilities();
+      const handleClose = () => {
+        setAnchorEl(null);
+        setListType(null);
+      };
   return (
     <Box className="homepage" bgcolor={theme.palette.background.primary.w250}>
       <div className="welcome-container">
@@ -35,103 +124,140 @@ const Homepage: React.FC = () => {
                 Favori Sahanı Seç, Hemen Randevunu Al
               </h2>
             </div>
-            <div className="homepage-welcome-appointment">
-              <FormControl fullWidth>
-                <InputLabel id="city-select-label">İl Seçin</InputLabel>
-                <Select
-                  className="homepage-welcome-appointment-form"
-                  labelId="city-select-label"
-                  id="city-select"
-                  style={{ borderRadius: '5rem',
-                    backgroundColor: '#ffffff',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',}}
-                  value={city}
-                  label="Şehir"
-                  onChange={(event) => {
-                    setCity(event.target.value);
-                  }}
-                >
-                  {cities.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            border: "1px solid #ccc",
+            borderRadius: 2,
+            overflow: "hidden",
+            width: "40rem",
+            marginTop: "2.5rem",
+            
+            height: "3.5rem",
+          }}
+        >
+          <Button
+            onClick={(e) => handleClick(e, "cities")}
+            sx={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0.5rem 0.75rem",
+              borderRight: "1px solid #ccc",
+              borderRadius: 0,
+              color: "#333",
+              textTransform: "none",
+              height: "100%",
+              minHeight: "3.5rem",
+              "&:hover": { backgroundColor: "#f0f0f0" },
+            }}
+          >
+            <Typography variant="body1" sx={{ color: "#888" }}>
+              {selectedCity ? selectedCity : "İl Seçiniz"}
+            </Typography>
+            <SearchIcon sx={{ color: "#1976d2" }} />
+          </Button>
 
-              <FormControl fullWidth>
-                <InputLabel
-                  className="homepage-welcome-appointment-label"
-                  id="town-select-label"
-                >
-                  İlçe Seçin
-                </InputLabel>
-                <Select
-                  className="homepage-welcome-appointment-form"
-                  labelId="town-select-label"
-                  id="town-select"
-                  value={town}
-                  label="İlçe"
-                  style={{ borderRadius: '5rem',
-                    backgroundColor: '#ffffff',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',}}
-                  onChange={(event) => {
-                    setTown(event.target.value);
-                  }}
-                >
-                  {towns.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+          <Button
+            onClick={(e) => handleClick(e, "districts")}
+            sx={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0.5rem 0.75rem",
+              borderRadius: 0,
+              color: "#333",
+              textTransform: "none",
+              height: "100%",
+              minHeight: "3rem",
+              "&:hover": { backgroundColor: "#f0f0f0" },
+            }}
+          >
+            <Typography variant="body1" sx={{ color: "#888" }}>
+              {selectedDistrict ? selectedDistrict : "İlçe Seçiniz"}
+            </Typography>
+            <SearchIcon sx={{ color: "#1976d2" }} />
+          </Button>
 
-              <FormControl fullWidth>
-                <InputLabel id="day-select-label">Saha</InputLabel>
-                <Select
-                  className="homepage-welcome-appointment-form"
-                  labelId="day-select-label"
-                  id="day-select"
-                  value={day}
-                  label="Gün"
-                  style={{ borderRadius: '5rem',
-                    backgroundColor: '#ffffff',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                  }}
-                  onChange={(event) => {
-                    setDay(event.target.value);
-                  }}
-                >
-                  {days.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                  <MenuItem value="Yeni Gün">Yeni Gün</MenuItem>
-                  <MenuItem value="Sonraki Gün">Sonraki Gün</MenuItem>
-                  <MenuItem value="Son Gün">Son Gün</MenuItem>
-                </Select>
-              </FormControl>
-
-              <Button
-                id="homepage-welcome-appointment-button"
-                variant="contained"
-                color="success"
-              >
-                Randevu Al
-              </Button>
-            </div>
+          <Button
+            onClick={(e) => handleClick(e, "facilities")}
+            sx={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0.5rem 0.75rem",
+              borderRadius: 0,
+              color: "#333",
+              textTransform: "none",
+              height: "100%",
+              minHeight: "3rem",
+              "&:hover": { backgroundColor: "#f0f0f0" },
+            }}
+          >
+            <Typography variant="body1" sx={{ color: "#888" }}>
+              {selectedFacility ? selectedFacility : "Tesis Seçiniz"}
+            </Typography>
+            <SearchIcon sx={{ color: "#1976d2" }} />
+          </Button>
+        </Box>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          sx={{
+            "& .MuiPaper-root": {
+              backgroundColor: "#f5f5f5",
+            },
+          }}
+        >
+          <List
+            sx={{
+              width: "14rem",
+              maxHeight: "15rem",
+              overflowY: "auto",
+            }}
+          >
+            {
+            (listType === "cities" ? cities : listType === "facilities" ? filteredFacilities : districts).map((item, index) => (
+              <ListItem
+              component="li"
+              key={index}
+              onClick={() => handleSelect(item)}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#d3e3fd",
+                },
+                backgroundColor: "rgba(0, 0, 0, 50, 0.5)",
+              }}
+            >
+              <ListItemText 
+                primary={typeof item === "string" ? item : item.name}  // Access name if item is a City or District object
+                sx={{ color: "#333" }} 
+              />
+            </ListItem>
+            ))}
+          </List>
+        </Popover>
             <h2 className="homepage-welcome-inner-down">
             Sahancepte'ye Hoş Geldin <br />Saha Kiralamak Şimdi Çok Kolay
               </h2>
           </div>
         </div>
       </div>
-
+      
       <Stack
         width="full"
         bgcolor={theme.palette.background.primary.w253}

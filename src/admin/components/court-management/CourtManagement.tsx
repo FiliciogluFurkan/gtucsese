@@ -59,7 +59,7 @@ const CourtManagement = (): JSX.Element => {
 
         try {
             // Backend URL
-            const baseURL = "http://localhost:5858/api/v1/courts";
+            const baseURL = "https://server.sahancepte.com/api/v1/courts";
 
             console.log("Güncelleme yapılıyor:");
 
@@ -173,7 +173,7 @@ const CourtManagement = (): JSX.Element => {
                 headers: {
                     'Authorization': `Bearer ${authState.user?.access_token}`,
                     'Accept': 'application/json',
-                    // 'Content-Type': 'multipart/form-data', // Axios automatically sets this
+                   
                 },
             });
 
