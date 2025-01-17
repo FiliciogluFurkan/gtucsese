@@ -7,15 +7,14 @@ import canceledrezervation from "src/assets/images/admindashboard/Group121.png";
 import totalprice from "src/assets/images/admindashboard/Group84.png";
 import icon2 from "src/assets/images/admindashboard/Icon1.png";
 import CourtsCommentsCards from "src/admin/components/court-comment-cards/CourtCommentCard";
-import { useAuth } from 'react-oidc-context';
+import { useAuth } from "react-oidc-context";
 import axios from "axios";
 import { Facility } from "src/interfaces/Facility";
-import { ConvertedReview  } from "@/interfaces/admin/ConvertedReview";
+import { ConvertedReview } from "@/interfaces/admin/ConvertedReview";
 import { Account } from "@/interfaces/Account";
 import { getIdFromToken } from "@/services/DecodedJwt";
 
 const Dashboard = (): JSX.Element => {
-
   const [currentRezervations, setCurrentRezervations] =
     React.useState<number>(75);
   const [totalRezervations, setTotalRezervations] = React.useState<number>(380);
@@ -25,8 +24,8 @@ const Dashboard = (): JSX.Element => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const authState = useAuth();
   const [facilities, setFacilities] = useState<Facility[]>([]);
-  const [reviews, setReview] = useState<ConvertedReview []>([]);
-  const [user, setUser] = useState< Account>();
+  const [reviews, setReview] = useState<ConvertedReview[]>([]);
+  const [user, setUser] = useState<Account>();
 
   useEffect(() => {
     setCurrentRezervations(75);
@@ -37,7 +36,7 @@ const Dashboard = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(facilities)
+    console.log(facilities);
 
     const fetchUser = async () => {
       const userId = getIdFromToken(authState.user?.access_token).sub;
@@ -58,17 +57,18 @@ const Dashboard = (): JSX.Element => {
       }
     };
     fetchUser();
-
   }, []);
-
-
 
   useEffect(() => {
     const fetchFacilityAndReviews = async () => {
       try {
         // Facilities verisini çek
-        const facilityResponse = await axios.get(`${apiUrl}/api/v1/facilities`, {
-        });
+        const facilityResponse = await axios.get(
+          `${apiUrl}/api/v1/facilities?userId=${
+            getIdFromToken(authState.user?.access_token).sub
+          }`,
+          {}
+        );
 
         if (facilityResponse.data && facilityResponse.data.length > 0) {
           const facilitiesData = facilityResponse.data;
@@ -90,13 +90,12 @@ const Dashboard = (): JSX.Element => {
             console.log(reviews);
 
             const transformedReviews = reviews.map((review: any) => {
-
               const createdAtDate = new Date(review.createdAt);
               const today = new Date();
               const daysAgo = Math.floor(
-                (today.getTime() - createdAtDate.getTime()) / (1000 * 60 * 60 * 24)
+                (today.getTime() - createdAtDate.getTime()) /
+                  (1000 * 60 * 60 * 24)
               );
-
 
               return {
                 fullName: review.author || "Anonim Kullanıcı", // Backend'den gelen "author" alanını kullan
@@ -120,8 +119,6 @@ const Dashboard = (): JSX.Element => {
     fetchFacilityAndReviews();
   }, []); // Sadece bir kez çalıştır
 
-
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const reviewPerPage = 3;
 
@@ -132,10 +129,8 @@ const Dashboard = (): JSX.Element => {
   };
 
   const handlePrevious = () => {
-
     if (currentIndex - reviewPerPage >= 0) {
-      setCurrentIndex(currentIndex - reviewPerPage)
-
+      setCurrentIndex(currentIndex - reviewPerPage);
     }
   };
 
@@ -173,7 +168,8 @@ const Dashboard = (): JSX.Element => {
             marginTop: "1rem",
           }}
         >
-          Merhaba {user?.firstName} {user?.lastName}.Halısahalarını admin olarak yönetebilirsin.
+          Merhaba {user?.firstName} {user?.lastName}.Halısahalarını admin olarak
+          yönetebilirsin.
         </Box>
       </Box>
       <Box
@@ -227,7 +223,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -322,7 +318,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -417,7 +413,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -512,7 +508,7 @@ const Dashboard = (): JSX.Element => {
                 style={{
                   width: "60%",
                   height: "60%",
-                  objectFit: "contain"
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -567,7 +563,14 @@ const Dashboard = (): JSX.Element => {
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "row", marginTop: "3rem", marginBottom: "2rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: "3rem",
+          marginBottom: "2rem",
+        }}
+      >
         <Box
           sx={{
             fontFamily: "Barlow",
@@ -602,7 +605,7 @@ const Dashboard = (): JSX.Element => {
               backgroundColor: "white",
               "&:hover": {
                 backgroundColor: "white",
-                opacity: 0.9
+                opacity: 0.9,
               },
             }}
           >
@@ -624,7 +627,7 @@ const Dashboard = (): JSX.Element => {
               backgroundColor: "white",
               "&:hover": {
                 backgroundColor: "white",
-                opacity: 0.9
+                opacity: 0.9,
               },
             }}
           >
